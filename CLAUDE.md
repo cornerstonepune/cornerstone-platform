@@ -1,165 +1,77 @@
-# cornerstone-platform — how this repository is built
+# CLAUDE.md — this repo runs the loop
 
-The design is `ARCHITECTURE.md` (what runs what, and where n8n is) and `SPEC.md`. Both implement
-`docs/sources/assessment-workflow-v1.md`, the twelve-node workflow agreed with the school's staff. **When any of them
-disagree, the workflow wins**: its decisions were taken with the school and are not to be re-derived. `STATE.md` and
-`HANDOFF.md` were frozen on 2026-10-21; the newest files in `docs/notes/` carry both since. `docs/adr/` is why.
-`goals/` (retired 2026-11-07) and the Athena harness (removed 2026-11-09) stay in git history only; old `specs/CP-*`
-folders keep their scopes and proofs as plain tests.
+Personal rules (honesty, Karpathy, reuse, tokens) live in `~/.claude/CLAUDE.md`. This file is only how work happens here.
 
-**Read `docs/notes/standing-orders.md` first.** It holds Nimish's standing decisions; follow them without being reminded.
+## 0. Start of every session
+The SessionStart hook has already given you your role, HANDOFF.md, PROJECT.md §1–4, the current milestone and the wireframe approvals. Don't re-read them. State in 2 lines: the goal, and your first step. For code context, `graphify query "<question>"` before opening files.
 
-## How work is done (spec-driven, no harness)
+## 1. Files (the whole memory system)
+- `PROJECT.md` — locked blueprint: product, architecture, data model, screens, milestones with yes/no goals.
+- `db/schema.sql` (or ORM schema) — the data model as runnable code. `GLOSSARY.md` — domain terms; use them exactly.
+- `docs/adr/` — one file per decision and why. GitHub Issues — tickets from `to-tickets`.
+- `design/` — `tokens.css` + `DESIGN.md` (global kit, never edited here), `brand.css` (this project's ~20%), `wireframes/`, `approved.json` (Nimish's approvals).
+- `HANDOFF.md` — where the last session stopped. Overwritten and committed every session.
+- `LESSONS.md` — every failure, the layer it came from, and the durable fix. Corrections live in files, never only in chat.
 
-Nimish is a non-technical founder. He decides scope and reads plain-English summaries; he does not read code.
+## 2. How work runs
+Every session here is the loop. Nimish asks for something (or types `/loop:run`); the main session (Opus) follows the `loop-run` skill. He's needed only for product questions, `loop approve <screen>`, and escalations.
 
-1. **Spec.** A GitHub issue titled `CP-<n>: …` with three parts: *What*, *Done when* (numbered, each one a test can
-   check) and *Out of scope*. Draft it with `to-spec` (and `grill-with-docs` when the ask is fuzzy); Nimish approves it
-   in the issue. Copy it to `specs/CP-<n>/spec.md`.
-2. **Before any new table:** read `docs/data-model.md`. A new table needs one line in the spec
-   saying why it cannot be a column, a row in a shared table, a rule on a column, or a view. Reuse beats adding.
-3. **Plan** with `writing-plans`; **build** test-first with `tdd` (`subagent-driven-development` only for three or more
-   independent tasks). One test per *Done when* line, in `packages/engine/tests` or `apps/web/tests`, testing
-   behaviour through engine functions, routes or views, not table names.
-4. **Ship.** A branch named after the spec, a pull request whose body says `Closes #<issue>`, lists each *Done when*
-   line with the test that proves it, and gives a plain-English summary. Every pull request, draft or ready, runs
-   only the core (`bin/ci-plan`: the engine's `core` tests in `packages/engine/tests/core.txt`, the browser's `@core`
-   tests, under 10 minutes). Merging needs the core CI green on that head; the full suite and `bin/specs` run nightly on
-   `main` (`.github/workflows/nightly.yml`). Claude merges its own pull request when every CI check is green; never with a
-   red or missing check, never by loosening a check. A test that guards real harm joins the core by a line in `core.txt` or
-   an `@core` tag, inside the budget `test_core_budget.py` holds. Never push to `main`, never
-   force-push, never `--no-verify`.
-5. **One database change at a time.** Schema changes never run in parallel branches.
+| Who | Model | Does |
+|---|---|---|
+| main session (orchestrator) | Opus | PROJECT.md, schema, ADRs, wireframes, tickets, skeletons, visible + hidden tests, merge decisions. Never writes product code. |
+| `builder` subagent | Sonnet | Builds one ticket in `.loop/wt/<N>/` until its tests pass |
+| `builder-small` subagent | Haiku | Same, for tickets labelled `size:small` |
+| `reviewer` subagent | Opus (fresh context) | PASS/FAIL review of a ticket PR |
+| `rescuer` subagent | Fable | One last try after 3 failed attempts, then escalate |
 
-## The organism
+Build folders have no `tests/holdout/` (hidden tests); CI runs them. Hooks keep each role in its lane.
 
-One Postgres. Four rings. Every file belongs to exactly one.
+## 3. Order (fixed)
+1. **M0 = data model**: schema, migrations, invariant tests. Nothing else until it's merged.
+2. **Wireframes** for a milestone's screens → Nimish approves each with `loop approve <id>`. No frontend code before that; editing a wireframe voids its approval.
+3. Each milestone is a vertical slice (API → UI → tests) Nimish can click through.
+4. After his approval, `loop-release`: staging → his go → production → live check. Merged isn't done; live is done.
 
-| Ring | What | Where | Rule |
-|---|---|---|---|
-| A — truth | registry, ladder, blueprints, items, sheets, captures, results, evidence, prompts | `supabase/migrations`, written by engine and app | append or approve; a batch job never edits it |
-| B — derived | child_skill_state, class_card, item_stat | rebuilt by `engine graph` | TRUNCATE-able at any time; pure function of A |
-| C — adapters | Drive, Claude vision, notify | `packages/engine/adapters/` one file each | the only place an external service is named |
-| D — flows | the wiring for nodes N2–N12 | `n8n/workflows/*.json` | trigger + sequence + wait + notify; nothing else. See `ARCHITECTURE.md` §2 for which node n8n touches and how |
+## 4. Building rules
+- One ticket = one seed branch `plan/t<N>` (skeleton + tests, by the orchestrator) → one build branch → one PR, opened by `loop finish` with the ticket's `Budget:` and `Screens:` lines. CI fails PRs >20% over budget.
+- Never edit or delete a test to make it pass. 3 failed attempts → one Fable rescue → `escalated`, back to plan.
+- UI uses design tokens only (`var(--…)` / the Tailwind preset). No raw hex, rgb, or arbitrary `[..px]` values; CI rejects them.
+- Spec looks wrong mid-build → stop, write it under "Blocked" in `docs/loop/handoff/<N>.md`. Never quietly build something different.
+- Review passes and CI is green → the orchestrator merges and ticks the goal in PROJECT.md.
 
-Code where correctness is needed (arithmetic, marking, lookup, graph). A model where judgment is
-needed (reading handwriting, reading a page, writing a context or a note). Never the reverse.
-A model may *generate* what code then *verifies* — that is how the question bank is made
-(ADR 0005) — but a number is never a model's last word.
+## 5. Nothing important lives only in chat
+- A decision made in conversation becomes an ADR in the same session. A new term goes in GLOSSARY.md. Progress goes in HANDOFF.md. If it isn't in a file, assume the next session won't know it.
+- One task per session. At the context budget (default 150k) the hook stops you: write the handoff and end; the next session continues from it.
 
-## Structure
+## 6. Proof, not opinion
+Done means outside evidence: tests, CI, a working URL, a traced number. A model reviewing its own work is not a check. Anything you couldn't verify, list it as unverified.
 
-**`workflows.json` is the map, and the code follows it** — every step of the agreed workflow, the files
-that do it, and the only connections one workflow may make to another. `packages/engine/tests/test_layout.py`
-fails the day the code drifts from it (a file on no step, an undeclared connection, a file past its
-ceiling, a step with no subject mark, a command or screen that does not exist). Change the map first.
+## 7. End of every session
+Overwrite HANDOFF.md from its template and commit it. New decisions → ADR. Update issue status. (Hooks won't let you stop with a stale handoff after committing; CI fails a PR without one.)
 
-```
-workflows.json                  the map: 12 steps in 4 workflows, their files, hand-overs, ceilings
-packages/engine/engine/
-  w1_bank/                      W1 build the bank (N1–N2): skill sets, questions made and checked
-  w2_print/                     W2 assemble and print (N4–N7): prescriptions, worksheets, packs
-  w3_read/                      W3 read and graph (N3, N8–N10): reading, marking, the reader's notebook, evidence
-  assess/                       the maths library — pure, no I/O, stands alone; W1–W3 use it
-  core/                         the base: the one database connection, the seed loader, the class list
-  adapters/                     the only files that call an outside service (text model, handwriting reader)
-  checks/                       `engine audit`, scenarios and the live site's health
-  api/  cli.py                  the front doors — thin; each command or route hands straight to a workflow
-packages/engine/tests/          one test file per module; test_layout.py holds the code to the map
-goals/                          read-only history: the retired goal loop's goals (new work is scoped in specs/)
-bin/engine                      run the engine from any directory
-supabase/migrations/            numbered SQL; the only way the schema changes
-supabase/seed/                  json the loader reads: registry, rungs, levels, misconceptions, prompts, thresholds
-apps/web/app/                   the screens; server components by default
-n8n/workflows/                  exported JSON, reviewed in PRs like code
-data/                           gitignored — scans, renders, print packs
-docs/adr/                       one decision per file, numbered
-docs/sources/                   team documents this design incorporates
-docs/ux-rules.md                the eight rules of the educator's site, the shared blocks, the pages still off them
-```
+## Enforcement you can't switch off
+Hooks + CI `loop-guard`: no commits to main, no `--no-verify`; protected files and existing tests are plan-only; approvals are Nimish-only; frontend needs approved wireframes; raw styles rejected; PROJECT.md/schema changes need an ADR; every PR leaves a handoff (HANDOFF.md, or `docs/loop/handoff/<N>.md` for ticket PRs). Blocked? Don't look for a way around it — write it down and stop.
 
-A workflow imports only `core`, `assess`, `adapters`, and another workflow through a hand-over the map
-declares. The doors (`cli.py`, `api/`, `checks/`) may import anything. No new file over 400 lines; the
-files already over are frozen at their size in the map and may only shrink.
+## Project specifics
+- Stack: Python 3.12 engine (`packages/engine`), Next.js + TypeScript site (`apps/web`), one Supabase Postgres, n8n flows (`n8n/workflows/*.json`) that only trigger, wait and notify. No fourth language.
+- Truth order: `docs/sources/assessment-workflow-v1.md` (agreed with the school) wins over `ARCHITECTURE.md` and `SPEC.md`. `workflows.json` maps every step to its files; `tests/test_layout.py` fails when code drifts from it, so change the map first.
+- Engine folders: `w1_bank/`, `w2_print/`, `w3_read/` (the workflows), `assess/` (pure maths, no I/O), `core/` (database, seed loader), `adapters/` (the only files that call an outside service), `cli.py` + `api/` (thin doors). Run it from anywhere with `bin/engine …`.
+- Commands are in `.loop.json`. Locally the tests use a Postgres 17 Docker container `cornerstone-loop-pg` on port 54329, built with `bin/testdb fresh postgresql://postgres:postgres@127.0.0.1:54329/postgres` (no live data). Engine tests marked `core` run on every PR; the full suite and `bin/specs` run nightly.
+- Hidden tests go in `packages/engine/tests/holdout/` so they get the engine's fixtures.
+- Schema changes are numbered files in `supabase/migrations/` only. Seeds in `supabase/seed/`.
+- Nothing structural in code: bands, rungs, levels, thresholds and prompts are seeded rows. A prompt string in Python, TypeScript or n8n is a defect; a new prompt version needs `engine eval <purpose>` scored before it is active.
+- Code computes every number; a model only reads handwriting or writes words. A number is never a model's last word.
+- `evidence_event` is append-only: a correction is a new row that supersedes. Blank, wrong and wrong-with-working stay three distinct signals.
+- Names live only in the `pii` schema; app tables carry `child_id`. Scans and photos never enter git or a log. Prompts get images, not names.
+- The school's words: difficulty is Easy / Medium / Hard / Advance; "exchange / regroup", never "borrow"; "educator", never "teacher", in anything a parent sees.
 
-## Rules
+## graphify
 
-1. **Nothing structural in code.** Bands, rungs, levels, blueprints, misconceptions, thresholds,
-   prompts, the weekly matrix — rows in tables, seeded from `supabase/seed/`. Adding a grade or a
-   rung is an insert. `BANDS = [...]` in a `.py` is a defect.
-2. **Prompts are rows.** `prompt(purpose, version, text, json_schema)`. Fetched by purpose at
-   runtime. A change is a new version row plus its eval score in `DECISIONS-LOG.md`. A prompt
-   string inside Python, TypeScript or an n8n node is a defect.
-3. **n8n never thinks.** No Code node with logic, no prompt, no marking rule. If a workflow needs
-   logic, add an engine endpoint and call it.
-4. **Evidence is append-only.** `evidence_event` rows are never updated or deleted; a correction
-   is a new row that supersedes. The graph reads only `confirmed`.
-5. **Three signals, never two.** Blank, wrong, and wrong-with-working are distinct everywhere.
-   Nothing collapses them to "incorrect".
-6. **Names stay in `pii`.** Application tables carry `child_id` only. Scans and photos never
-   enter git or a log. Prompts receive images, not names.
-7. **Every model output ships with an eval.** New prompt version → `engine eval <purpose>` →
-   score recorded → only then active.
-9. **Migrations only.** Schema changes are numbered files in `supabase/migrations/`. No manual
-   DDL, ever, on any environment.
-10. **Reuse before write.** The prototype's `assess/` is the engine. Extend it; do not rewrite it.
-    A helper that exists a few files over is used, not re-implemented.
-11. **Root cause, in the same session, never a band-aid.** When something is found wrong — a weak
-    prompt, a failing check, a lint or aislop finding on code this session wrote, a limitation named
-    in a report — it is fixed at its cause before the session ends. Not noted for later, not worked
-    around, not deferred to a "v3" in `HANDOFF.md`. Nimish, 2026-09-19: "do not leave for anything
-    later; whenever you find an issue — don't apply a band aid; solve the root cause."
-    What that means in practice: if a model is asked to produce something code can compute, the fix
-    is to compute it, not to write a better prompt; if a file breaches a ceiling, it is split along
-    a real responsibility, not exempted; if a claim cannot be verified, the claim is downgraded, not
-    dressed up. Pre-existing debt in files this session does not touch stays frozen (baseline and
-    ratchet) — it is named in `STATE.md`, never silently inherited.
+This project has a knowledge graph at graphify-out/ with god nodes, community structure, and cross-file relationships.
 
-13. **Read the graph before reading files, and hand over commands that run anywhere.** Exploration
-    goes through `tokensave_context` / `tokensave_search` / `graft` first; `cat`, `grep` and `sed`
-    are for editing and running, not for finding out how something works — a session that greps its
-    way around the repository burns the context it needs later. Any command written for Nimish must
-    work from whatever directory he is in: `bin/engine …` or an absolute path, never `cd x && y`.
-
-14. **Nimish's time is the scarcest thing; never spend it waiting.** Nimish, 2026-11-13: "you're not supposed to waste
-    this kind of time." In practice:
-    - Nothing reaches `main` before its core CI is green on that head; one early merge costs a whole extra run for everyone.
-    - The full suite (engine shards, browser shards, `bin/specs`) runs nightly on `main`, never per pull request. A red
-      nightly opens an issue, and fixing it comes first the next morning, before any new work. A builder runs only its own specs locally, plus `bin/check`,
-      tsc and eslint. One machine's test ports are shared, so local suites queue behind each other.
-    - A builder that has not reported in 45 minutes is checked, and is cut short or finished by the orchestrator.
-    - Batch work that ships together into one PR and one CI run, instead of one PR per page.
-    - When `main` is red, fixing it comes before any new work, and every failure goes into one fix PR.
-    - Every status says plainly what is live, what is blocked, by whom, and when it will move.
-
-## Language and naming
-
-Python 3.12 (engine), TypeScript (app), SQL (schema). No fourth language. Table names singular
-(`item`, not `items`). Ids: registry skill ids as issued (`NUM.OPS.01`); rungs `R1`–`R14`, `X1`,
-`X2`; sheet instance ids are the QR string (`CS` + 6 hex). Misconception codes `M_…` (procedural)
-and `M0nn` external refs kept in `misconception.external_ref`. Bands `G1`–`G4`. Difficulty is
-`Easy` / `Medium` / `Hard` / `Advance`, the school's own vocabulary — never `L−/L0/L+` or
-`Level A/B`, both retired. Signals: Foundational, Conceptual, Procedural, Application, Stretch.
-The school's words win elsewhere too: "exchange / regroup", never "borrow"; "educator", never
-"teacher", in anything a parent sees.
-
-## Working rhythm
-
-- Non-trivial change → plan first; a chunk starts only with 3–5 machine-checkable success criteria.
-- Tests before implementation for anything with a branch, a loop, a parser, or a money/safety path.
-- Commit boundary → update the branch's own note, `docs/notes/<spec ID>.md` (`docs/notes/README.md`); never
-  edit `STATE.md` or `HANDOFF.md` on a branch, since two branches writing one file conflict on every merge; a
-  rejected alternative → an ADR.
-- Verification before any claim of done: run it, paste the output.
-- Baseline and ratchet: today's debt is frozen; no new type errors, ≥ 80 % coverage on changed
-  code, RLS on every table, no PII in logs.
-
-## Verify
-
-```
-cd packages/engine && pytest -q                       # engine
-engine load --check                                    # loader idempotence, seed counts
-engine eval <purpose>                                  # a prompt's score against its bar (threshold rows eval.*)
-cd apps/web && npx playwright test                     # one screenshot per screen
-bin/specs                                              # the old CP-* acceptance proofs that still run
-```
+Rules:
+- When graphify-out/graph.json exists, run `graphify query "<question>"` before your first grep, search or source-file read for a codebase question, and put this rule in every subagent prompt that explores code. Read raw files only for lines the graph or an earlier read already located. Use `graphify path "<A>" "<B>"` for relationships and `graphify explain "<concept>"` for focused concepts. These return a scoped subgraph, usually much smaller than GRAPH_REPORT.md or raw grep output.
+- If graphify-out/wiki/index.md exists, use it for broad navigation instead of raw source browsing.
+- Read graphify-out/GRAPH_REPORT.md only for broad architecture review or when query/path/explain do not surface enough context.
+- After modifying code, run `graphify update .` to keep the graph current (AST-only, no API cost).
+- A committed graphify-out/graph.json is rewritten whole on every build, so a large diff to it in a pull request is expected. Do not flag it as churn or suggest skipping the graph rebuild or its hooks.
