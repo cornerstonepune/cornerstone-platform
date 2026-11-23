@@ -3,28 +3,27 @@
 _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 
 **Updated:** 2026-11-23 · **By:** Plan · **Model:** claude-opus-5-5
-**Milestone:** loop adoption (before M0) · **Branch:** plan/adopt (cut from plan/loop-init) · **PR:** #920 (loop setup) merged 2026-11-23 as 0a577be0; adopt PR not yet opened
+**Milestone:** loop adoption → M1 (nightly green) next · **Branch:** plan/adopt · **PR:** adopt PR (see `gh pr list --head plan/adopt`), waits for Nimish
 
 ## State
-- #920 merged with every check green (loop-tests needed fetch-depth: 0 for tests/test_migration_order.py). main is protected: loop-guard + loop-tests.
-- Tests: engine core 229 passed / 1 skipped against local Postgres 17 (`cornerstone-loop-pg`, port 54329); `bin/check` 72 passed.
-- plan/adopt has: `db/schema.sql` (87 tables, ADR 0104). Only `access_reach` is referenced by a single code file; no unused tables found.
-- Last thing done: started `loop-adopt`. The state, gaps and risks survey is saved in `docs/loop/adopt-survey-state.md`; use it. The product, architecture, 56-screen and glossary survey is in `docs/loop/adopt-survey-product.md`. Write PROJECT.md and GLOSSARY.md from these two files; don't re-survey. For wireframes, try the existing `docs/frontend/wireframes/` (43 HTML files) before running the app.
+- loop-adopt done on plan/adopt: PROJECT.md §1–6 (ADR 0105), GLOSSARY.md, db/schema.sql (ADR 0104), `.loop.json` token_files + protected point at the repo's own design system.
+- `design/wireframes/`: 56 pages, one per built screen. 30 embed the repo's drawn wireframe (`docs/frontend/wireframes/`), 26 are placeholders. View with the `wireframes` launch config (http://localhost:8765/design/wireframes/).
+- Tests: `bin/check` 72 passed / 4 skipped (23 Nov). Engine core 229 passed / 1 skipped (earlier today). Nightly suite red six nights running.
+- A local-only `.env` (gitignored) now points the launch configs at the test DB on 54329 with no real keys.
 
 ## Next step
-plan/adopt is up to date with main. Finish loop-adopt: survey (README, ARCHITECTURE.md, SPEC.md,
-docs/sources/assessment-workflow-v1.md, workflows.json, open issues, last 30 merged PRs, nightly runs), fill PROJECT.md §1–5,
-GLOSSARY.md, a risk list (max 5 lines), point `.loop.json` token_files at the repo's own tokens
-(apps/web/components/educator/school-tokens.css) and protect its design doc, then wireframe snapshots of the built screens and open the PR.
+1. Nimish reads PROJECT.md (esp. §5 order and §6), corrects it, then runs `loop approve --all` in his own terminal. Merge the adopt PR.
+2. Then M1 nightly green: `to-spec` → `loop-ticket` from the failing list in PROJECT.md §5 Gaps (run 45093926102).
 
 ## Blocked / open questions
-- Wireframe snapshots need the app running: `.claude/launch.json` reads `../../.env`, which this checkout lacks. Check for an
-  existing Playwright one-screenshot-per-screen gallery first, or ask Nimish where `.env` lives.
-- The loop's frontend hook blocks any Bash command naming `apps/web`, even read-only ones. Use Read/Glob, or approve wireframes first.
+- Live snapshots of screens: the site has no `node_modules` here, and the frontend hook blocks `npm ci` in apps/web until a wireframe is approved. After approval, install and replace the 26 placeholders with real snapshots. The test DB has no children, so child pages will be empty: browser fixtures (api/test-hooks) are needed for real data.
+- Milestone order vs money dates (Sports Day 1 Dec, 31 Dec): Nimish's call (PROJECT.md §6).
 
 ## Don't repeat
-- The Supabase container on port 54322 is a stale assessment-engine DB (its postgres user isn't a superuser). Tests fail there.
-- Removing the `bin/check --claude` Stop hook breaks `tests/test_promises.py`: it's the repo's own guard, not a harness leftover.
+- The Supabase container on 54322 is a stale DB; tests fail there. Use `cornerstone-loop-pg` on 54329.
+- Removing the `bin/check --claude` Stop hook breaks `tests/test_promises.py`.
+- Any Bash command containing the words "loop approve" is blocked by the hook, even in commit text or docs edits; use Edit/Write.
+- The browser pane shows local files as stripped snapshots; serve over http (`wireframes` launch config) to see them properly.
 
 ## Files touched this session
-- db/schema.sql: real schema. docs/adr/0104-…: why. HANDOFF.md.
+PROJECT.md, GLOSSARY.md, .loop.json, docs/adr/0105-*, design/wireframes/S*.html, .claude/launch.json, HANDOFF.md.
