@@ -11,6 +11,8 @@ _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 - Tests: `bin/check` 72 passed / 4 skipped (23 Nov). Engine core 229 passed / 1 skipped (earlier today). Nightly suite red six nights running.
 - A local-only `.env` (gitignored) now points the launch configs at the test DB on 54329 with no real keys.
 
+- Nimish started the approve-all for the 56 wireframes in terminal tab 0 (y/N prompt, not answered when this session ended). Check `loop status` next session.
+
 ## Next step
 1. Nimish reads PROJECT.md (esp. §5 order and §6), corrects it, then runs `loop approve --all` in his own terminal. Merge the adopt PR.
 2. Then M1 nightly green: `to-spec` → `loop-ticket` from the failing list in PROJECT.md §5 Gaps (run 45093926102).
