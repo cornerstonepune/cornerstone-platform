@@ -3,7 +3,7 @@
 _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 
 **Updated:** 2026-11-23 · **By:** Plan · **Model:** claude-opus-5-5
-**Milestone:** loop adoption → M1 (nightly green) next · **Branch:** plan/adopt · **PR:** adopt PR (see `gh pr list --head plan/adopt`), waits for Nimish
+**Milestone:** loop adoption → M1 (nightly green) next · **Branch:** plan/adopt · **PR:** #921 (adopt), CI running with Auto-fix on, waits for Nimish's read + approval
 
 ## State
 - loop-adopt done on plan/adopt: PROJECT.md §1–6 (ADR 0105), GLOSSARY.md, db/schema.sql (ADR 0104), `.loop.json` token_files + protected point at the repo's own design system.
