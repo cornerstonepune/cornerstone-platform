@@ -30,3 +30,4 @@ _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 ## Don't repeat
 - `bin/testdb fresh` needs an empty database; make a new one rather than reusing `postgres`.
 - `pytest -n` is not available here.
+- Run `uv run ruff format --check tests` before stopping: the stop hook checks formatting, bin/check output alone does not show it.
