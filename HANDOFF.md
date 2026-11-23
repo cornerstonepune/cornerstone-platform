@@ -3,23 +3,28 @@
 _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 
 **Updated:** 2026-11-23 · **By:** Plan · **Model:** claude-opus-5-5
-**Milestone:** loop setup (before M0) · **Branch:** plan/loop-init · **PR:** see the plan/loop-init pull request
+**Milestone:** loop adoption (before M0) · **Branch:** plan/adopt (cut from plan/loop-init) · **PR:** #920 (loop setup) open; adopt PR not yet opened
 
 ## State
-- Tests: 229 passed, 1 skipped (engine `core`, `.loop.json` test_command, local Postgres 17 on port 54329); typecheck 3 passed; lint clean.
-- Last thing done: put the repo on the loop (`/loop:init`), removed earlier agent setups, set the four commands.
+- #920 (plan/loop-init): pushed, waiting on CI. Merge it only when every check, not just loop-guard/loop-tests, is green.
+- Tests: engine core 229 passed / 1 skipped against local Postgres 17 (`cornerstone-loop-pg`, port 54329); `bin/check` 72 passed.
+- plan/adopt has: `db/schema.sql` (87 tables, ADR 0104). Only `access_reach` is referenced by a single code file; no unused tables found.
+- Last thing done: started `loop-adopt`. The product/screens survey and the issues/PRs/nightly/gaps survey were running in subagents when context ran out, so redo them.
 
 ## Next step
-Run `loop-adopt`: fill PROJECT.md from ARCHITECTURE.md, SPEC.md and docs/sources/assessment-workflow-v1.md, without changing product code.
+Once #920 is green, merge it and rebase plan/adopt on main. Then finish loop-adopt: survey (README, ARCHITECTURE.md, SPEC.md,
+docs/sources/assessment-workflow-v1.md, workflows.json, open issues, last 30 merged PRs, nightly runs), fill PROJECT.md §1–5,
+GLOSSARY.md, a risk list (max 5 lines), point `.loop.json` token_files at the repo's own tokens
+(apps/web/components/educator/school-tokens.css) and protect its design doc, then wireframe snapshots of the built screens and open the PR.
 
 ## Blocked / open questions
-- Web typecheck and lint (`apps/web`: `npx next typegen && npx tsc --noEmit`, `npx eslint --max-warnings 0`) are not in `.loop.json`:
-  the loop's frontend hook blocks any shell command naming `apps/web` until a wireframe is approved. `ci.yml`'s `web` job still runs them on every PR.
+- Wireframe snapshots need the app running: `.claude/launch.json` reads `../../.env`, which this checkout lacks. Check for an
+  existing Playwright one-screenshot-per-screen gallery first, or ask Nimish where `.env` lives.
+- The loop's frontend hook blocks any Bash command naming `apps/web`, even read-only ones. Use Read/Glob, or approve wireframes first.
 
 ## Don't repeat
-- The Supabase container on port 54322 is an old assessment-engine database (stale schema; its `postgres` user is not a superuser). Tests fail there; use port 54329.
+- The Supabase container on port 54322 is a stale assessment-engine DB (its postgres user isn't a superuser). Tests fail there.
+- Removing the `bin/check --claude` Stop hook breaks `tests/test_promises.py`: it's the repo's own guard, not a harness leftover.
 
 ## Files touched this session
-- CLAUDE.md, .loop.json, .github/workflows/loop.yml, .claude/settings.json (loop plugin + graphify hooks; the repo's own Stop hook kept), .gitignore — loop setup
-- docs/adr/0103-the-loop-runs-this-repository.md — why
-- removed: .claude/skills/* (all but impeccable), .claude/references/, .canny.json, .ignore, AGENTS.md
+- db/schema.sql: real schema. docs/adr/0104-…: why. HANDOFF.md.
