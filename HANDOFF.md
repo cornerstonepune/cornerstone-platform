@@ -12,10 +12,13 @@ _Overwritten at the end of every session. Keep under 30 lines. Facts only._
   ceiling unit, `icons.tsx` exempt. Proven: bin/check green; test_k2_upload + test_materials_list 39 passed, test_bars 4 passed.
 - Local fresh DB for this work: `postgresql://postgres:postgres@127.0.0.1:54329/eg` (built by `bin/testdb fresh`; the
   shared `postgres` DB is older and lacks the new migration).
-- UNVERIFIED: the whole engine suite on `eg` with the new migration was started serially and not read before the session ended.
+- Whole engine suite on `eg` (43 min, serial): 15 failed / 5118 passed. Expected red: test_gates, test_settings,
+  test_states_and_subject. UNEXPLAINED 12 (green in nightly 45093926102): test_deploy x8, test_python_pin, test_sorting,
+  test_spine_provenance x2 — likely this Mac's environment, not the migration (none touch history). Not proven.
 
 ## Next step
-1. Run the whole engine suite on `eg` (`cd packages/engine && TEST_DATABASE_URL=…/eg uv run pytest -q -p no:cacheprovider tests`, no xdist installed). Expect only test_settings, test_gates, test_states_and_subject (fortnight-grid) red. Then open the plan PR and merge on green.
+1. Confirm the 12 unexplained failures also fail on main locally (`git stash`/checkout main, same command, those 4 files only);
+   if yes, they are local-only. Then open the plan PR; CI is the proof. Whole suite command for reference: on `eg` (`cd packages/engine && TEST_DATABASE_URL=…/eg uv run pytest -q -p no:cacheprovider tests`, no xdist installed). Expect only test_settings, test_gates, test_states_and_subject (fortnight-grid) red. Then open the plan PR and merge on green.
 2. Ticket (size:small, builder-small): `engine/core/people.py:171` reads `school.campus_grades` by joining `config` in SQL;
    read it with `settings.config(conn, "school.campus_grades", {}, tenant)` and pass it as a parameter. Visible test:
    `tests/test_settings.py::test_every_setting_is_read_through_one_reader`. Add a holdout test: two campuses, the grade
