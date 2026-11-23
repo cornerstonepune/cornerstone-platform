@@ -43,7 +43,9 @@ def test_every_eval_holds_its_score_to_a_bar_on_record():
     for t in rows:
         assert re.search(r"DECISIONS-LOG|STATE\.md|goals/", t["description"]), f"{t['key']} says no source"
         # a ceiling may be a count or a share (statement_match.refused_at_most, DECISIONS-LOG 2026-11-17; ADR 0106)
-        assert t["unit"] in ({"count", "proportion"} if t["key"].endswith(bars.CEILING) else {"proportion"}), t["key"]
+        assert t["unit"] in (
+            {"count", "proportion"} if t["key"].endswith(bars.CEILING) else {"proportion"}
+        ), t["key"]
 
 
 def test_a_score_below_its_bar_fails_and_says_by_how_much(monkeypatch):
