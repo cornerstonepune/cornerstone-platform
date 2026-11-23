@@ -17,6 +17,8 @@ _Overwritten at the end of every session. Keep under 30 lines. Facts only._
   test_spine_provenance x2 — likely this Mac's environment, not the migration (none touch history). Not proven.
 
 ## Next step
+0. Nimish approved all 56 wireframes on 24 Nov (commit b7625c4db on plan/adopt, PR #921). Merge #921 on green CI, then
+   `git merge origin/main` into plan/engine-green so the approvals reach this branch and `apps/web` unblocks.
 1. Confirm the 12 unexplained failures also fail on main locally (`git stash`/checkout main, same command, those 4 files only);
    if yes, they are local-only. Then open the plan PR; CI is the proof. Whole suite command for reference: on `eg` (`cd packages/engine && TEST_DATABASE_URL=…/eg uv run pytest -q -p no:cacheprovider tests`, no xdist installed). Expect only test_settings, test_gates, test_states_and_subject (fortnight-grid) red. Then open the plan PR and merge on green.
 2. Ticket (size:small, builder-small): `engine/core/people.py:171` reads `school.campus_grades` by joining `config` in SQL;
@@ -31,6 +33,7 @@ _Overwritten at the end of every session. Keep under 30 lines. Facts only._
   in code (labels from subject rows). Nimish: run `loop approve --all` (or per screen) after reading #921.
 
 ## Don't repeat
+- The hook blocks the orchestrator from committing the approvals file, and from any command that names it: Nimish commits it himself.
 - `bin/testdb fresh` needs an empty database; make a new one rather than reusing `postgres`.
 - `pytest -n` is not available here.
 - Run `uv run ruff format --check tests` before stopping: the stop hook checks formatting, bin/check output alone does not show it.
