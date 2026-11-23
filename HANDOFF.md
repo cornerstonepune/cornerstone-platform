@@ -14,11 +14,10 @@ _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 - Expected still red on this branch: test_gates, test_settings (people.py, ticket below), test_states_and_subject (fortnight-grid).
 
 ## Next step
-1. Merge the plan PR on green CI (`loop ci <pr>`).
-2. Ticket (size:small, builder-small): `engine/core/people.py:171` reads `school.campus_grades` by joining `config` in SQL;
-   read it with `settings.config(conn, "school.campus_grades", {}, tenant)` and pass it as a parameter. Visible test:
-   `tests/test_settings.py::test_every_setting_is_read_through_one_reader`. Holdout: two campuses, the grade goes to the
-   campus the setting names; one campus with no setting still works.
+1. Plan PR #922 (Auto-fix on): `loop ci 922`, merge on green.
+2. Ticket #923 (size:small) is seeded on `plan/t923` (pushed, from main): people.py reads `school.campus_grades` through
+   `settings.config`. Visible test red; 5 holdout tests in `tests/holdout/test_campus_grades_setting.py` pass today on
+   purpose (refactor guard; the last one catches `config` called without `tenant`). Next: `loop prep 923` → build → finish.
 3. Now unblocked (wireframes approved): delete the self-skipping "pictures" test at `apps/web/.../u107-my-day.spec.ts:250`
    (plan-side test edit), and ticket `components/fortnight-grid.tsx:18` — subject labels from subject rows, not words in code.
 4. Then the browser failures (~40 specs, worst u90, u49, s4) and the data-register proof (expense / stock_move owners, G1.3).
