@@ -25,6 +25,9 @@ jobs:
       TEST_DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/postgres
     steps:
       - uses: actions/checkout@v4
+        # tests/test_migration_order.py compares this change's migrations with origin/main's
+        with:
+          fetch-depth: 0
       - uses: astral-sh/setup-uv@v6
       - run: bin/ci-postgres
       - name: setup_command from .loop.json
