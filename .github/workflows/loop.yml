@@ -1,0 +1,49 @@
+name: loop
+on:
+  pull_request:
+
+jobs:
+  guard:
+    name: loop-guard
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Enforce loop rules on this PR
+        env:
+          PR_BODY: ${{ github.event.pull_request.body }}
+        run: python3 .github/loop/check_pr.py "origin/${{ github.base_ref }}" "${{ github.head_ref }}"
+
+  tests:
+    name: loop-tests
+    runs-on: ubuntu-24.04
+    # The engine lives in packages/engine (not the root), so runtime setup is explicit. Same Python and Postgres as ci.yml.
+    env:
+      UV_PYTHON: "3.12"
+      DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/postgres
+      TEST_DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/postgres
+    steps:
+      - uses: actions/checkout@v4
+        # tests/test_migration_order.py compares this change's migrations with origin/main's
+        with:
+          fetch-depth: 0
+      - uses: astral-sh/setup-uv@v6
+      - run: bin/ci-postgres
+      - name: setup_command from .loop.json
+        run: bash -c "$(python3 -c 'import json; print(json.load(open(".loop.json"))["setup_command"])')"
+      - name: the test database, built from this repository alone
+        run: bin/testdb fresh "$DATABASE_URL"
+      - name: Tests (including hidden holdout tests), typecheck, lint, coverage — from .loop.json
+        run: |
+          python3 - <<'PY' > /tmp/loop_cmds.sh
+          import json, shlex
+          c = json.load(open(".loop.json"))
+          if not c.get("test_command"):
+              print('echo "::error::Set test_command in .loop.json"; exit 1')
+          for name in ("test_command", "typecheck_command", "lint_command", "coverage_command"):
+              cmd = c.get(name)
+              if cmd:
+                  print(f'echo "::group::{name}: {cmd}"; bash -c {shlex.quote(cmd)} || exit 1; echo "::endgroup::"')
+          PY
+          bash /tmp/loop_cmds.sh

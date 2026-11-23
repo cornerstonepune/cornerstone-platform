@@ -1,0 +1,7 @@
+/* Project brand — the ~20% that may differ from the global design kit.
+   Only tokens listed in .loop.json → brand_overridable may appear here; CI rejects anything else.
+   Load order: tokens.css, then this file. Leave empty to use the global look unchanged. */
+:root {
+  /* --accent: #25394A; */
+  /* --accent-2: #B8860B; */
+}
