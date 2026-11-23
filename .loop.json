@@ -23,7 +23,14 @@
     "**/schema.prisma",
     "docs/adr/**",
     ".github/workflows/**",
-    "design/**"
+    "design/**",
+    "docs/frontend/DESIGN.md",
+    "docs/frontend/tokens.json",
+    "docs/frontend/page-charter.md",
+    "docs/ux-rules.md",
+    "apps/web/design-system/tokens.css",
+    "apps/web/components/educator/school-tokens.css",
+    "docs/frontend/wireframes/**"
   ],
   "tests": [
     "tests/**",
@@ -51,7 +58,9 @@
   "token_files": [
     "design/**",
     "**/tokens.css",
-    "**/brand.css"
+    "**/brand.css",
+    "docs/frontend/tokens.json",
+    "apps/web/components/educator/school-tokens.css"
   ],
   "brand_overridable": [
     "--accent",

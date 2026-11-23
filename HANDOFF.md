@@ -3,23 +3,29 @@
 _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 
 **Updated:** 2026-11-23 · **By:** Plan · **Model:** claude-opus-5-5
-**Milestone:** loop setup (before M0) · **Branch:** plan/loop-init · **PR:** see the plan/loop-init pull request
+**Milestone:** loop adoption → M1 (nightly green) next · **Branch:** plan/adopt · **PR:** #921 (adopt), CI running with Auto-fix on, waits for Nimish's read + approval
 
 ## State
-- Tests: 229 passed, 1 skipped (engine `core`, `.loop.json` test_command, local Postgres 17 on port 54329); typecheck 3 passed; lint clean.
-- Last thing done: put the repo on the loop (`/loop:init`), removed earlier agent setups, set the four commands.
+- loop-adopt done on plan/adopt: PROJECT.md §1–6 (ADR 0105), GLOSSARY.md, db/schema.sql (ADR 0104), `.loop.json` token_files + protected point at the repo's own design system.
+- `design/wireframes/`: 56 pages, one per built screen. 30 embed the repo's drawn wireframe (`docs/frontend/wireframes/`), 26 are placeholders. View with the `wireframes` launch config (http://localhost:8765/design/wireframes/).
+- Tests: `bin/check` 72 passed / 4 skipped (23 Nov). Engine core 229 passed / 1 skipped (earlier today). Nightly suite red six nights running.
+- A local-only `.env` (gitignored) now points the launch configs at the test DB on 54329 with no real keys.
+
+- Nimish started the approve-all for the 56 wireframes in terminal tab 0 (y/N prompt, not answered when this session ended). Check `loop status` next session.
 
 ## Next step
-Run `loop-adopt`: fill PROJECT.md from ARCHITECTURE.md, SPEC.md and docs/sources/assessment-workflow-v1.md, without changing product code.
+1. Nimish reads PROJECT.md (esp. §5 order and §6), corrects it, then runs `loop approve --all` in his own terminal. Merge the adopt PR.
+2. Then M1 nightly green: `to-spec` → `loop-ticket` from the failing list in PROJECT.md §5 Gaps (run 45093926102).
 
 ## Blocked / open questions
-- Web typecheck and lint (`apps/web`: `npx next typegen && npx tsc --noEmit`, `npx eslint --max-warnings 0`) are not in `.loop.json`:
-  the loop's frontend hook blocks any shell command naming `apps/web` until a wireframe is approved. `ci.yml`'s `web` job still runs them on every PR.
+- Live snapshots of screens: the site has no `node_modules` here, and the frontend hook blocks `npm ci` in apps/web until a wireframe is approved. After approval, install and replace the 26 placeholders with real snapshots. The test DB has no children, so child pages will be empty: browser fixtures (api/test-hooks) are needed for real data.
+- Milestone order vs money dates (Sports Day 1 Dec, 31 Dec): Nimish's call (PROJECT.md §6).
 
 ## Don't repeat
-- The Supabase container on port 54322 is an old assessment-engine database (stale schema; its `postgres` user is not a superuser). Tests fail there; use port 54329.
+- The Supabase container on 54322 is a stale DB; tests fail there. Use `cornerstone-loop-pg` on 54329.
+- Removing the `bin/check --claude` Stop hook breaks `tests/test_promises.py`.
+- Any Bash command containing the words "loop approve" is blocked by the hook, even in commit text or docs edits; use Edit/Write.
+- The browser pane shows local files as stripped snapshots; serve over http (`wireframes` launch config) to see them properly.
 
 ## Files touched this session
-- CLAUDE.md, .loop.json, .github/workflows/loop.yml, .claude/settings.json (loop plugin + graphify hooks; the repo's own Stop hook kept), .gitignore — loop setup
-- docs/adr/0103-the-loop-runs-this-repository.md — why
-- removed: .claude/skills/* (all but impeccable), .claude/references/, .canny.json, .ignore, AGENTS.md
+PROJECT.md, GLOSSARY.md, .loop.json, docs/adr/0105-*, design/wireframes/S*.html, .claude/launch.json, HANDOFF.md.
