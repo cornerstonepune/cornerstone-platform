@@ -9,7 +9,7 @@ _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 - #920 (plan/loop-init): pushed, waiting on CI. Merge it only when every check, not just loop-guard/loop-tests, is green.
 - Tests: engine core 229 passed / 1 skipped against local Postgres 17 (`cornerstone-loop-pg`, port 54329); `bin/check` 72 passed.
 - plan/adopt has: `db/schema.sql` (87 tables, ADR 0104). Only `access_reach` is referenced by a single code file; no unused tables found.
-- Last thing done: started `loop-adopt`. The state, gaps and risks survey is saved in `docs/loop/adopt-survey-state.md`; use it. The product and screens survey (§1–4, screens table, glossary terms, design-system paths) did not land, so redo it.
+- Last thing done: started `loop-adopt`. The state, gaps and risks survey is saved in `docs/loop/adopt-survey-state.md`; use it. The product, architecture, 56-screen and glossary survey is in `docs/loop/adopt-survey-product.md`. Write PROJECT.md and GLOSSARY.md from these two files; don't re-survey. For wireframes, try the existing `docs/frontend/wireframes/` (43 HTML files) before running the app.
 
 ## Next step
 Once #920 is green, merge it and rebase plan/adopt on main. Then finish loop-adopt: survey (README, ARCHITECTURE.md, SPEC.md,
