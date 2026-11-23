@@ -29,7 +29,8 @@
     "docs/frontend/page-charter.md",
     "docs/ux-rules.md",
     "apps/web/design-system/tokens.css",
-    "apps/web/components/educator/school-tokens.css"
+    "apps/web/components/educator/school-tokens.css",
+    "docs/frontend/wireframes/**"
   ],
   "tests": [
     "tests/**",

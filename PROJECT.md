@@ -55,7 +55,7 @@ Truth order: `docs/sources/assessment-workflow-v1.md` (agreed with the school) >
 
 ## 4. Frontend (screens and flows locked here; pixels locked by approved wireframes)
 - **Design system:** the repo's own, kept as the source of truth (not the global kit). Tokens: `docs/frontend/tokens.json` → `apps/web/design-system/tokens.css`, plus `apps/web/app/globals.css` and `apps/web/components/educator/school-tokens.css`. Rules: `docs/frontend/DESIGN.md`, `docs/ux-rules.md`, `docs/frontend/page-charter.md`. Guards: `u90-design-system.spec.ts`, `scripts/contrast.mjs --check`, `test_design_scale.py`.
-- **Screens:** all 56 are **built**. Wireframes in `design/wireframes/<ID>.html` are snapshots of what's built, approved once with `loop approve --all`; after that the gate applies to new screens and redesigns.
+- **Screens:** all 56 are **built**. `design/wireframes/<ID>.html` holds one page per screen: 30 show the repo's own drawn wireframe the page was built from (`docs/frontend/wireframes/`, now protected); 26 are placeholders (S7, S9, S11, S15–17, S23–27, S30, S31, S33, S34, S39–48, S56) because the site couldn't run here for live snapshots. Approved once with `loop approve --all`; after that the gate applies to new screens and redesigns, and a placeholder must become a real picture before its screen changes.
 
 | ID | Route | Who | Job |
 |---|---|---|---|
