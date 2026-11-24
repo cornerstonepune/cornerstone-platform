@@ -1,4 +1,4 @@
-"""`engine staff import` and `engine enrol k2` (goals/m0-05-people-enrolment.yaml). A dry run unless `--apply --by <email>`.
+"""`engine staff import` and `engine enrol class --grade` (goals/m0-05-people-enrolment.yaml). A dry run unless `--apply --by <email>`.
 
 A dry run changes no row but the access log, which records that the children's names were read to compare them. Both
 commands print counts, line numbers and roll numbers, never a name, an email or a birthday. `--by` is the signer's
@@ -55,10 +55,13 @@ def staff_import(
         finish(conn, people.import_staff(conn, who, apply), apply)
 
 
-@enrol_app.command("k2")
-def k2(
+@enrol_app.command("class")
+def enrol_class(
     csv_path: Path = typer.Argument(
         ..., help="The Children List as CSV: number, name, birthday. Keep it outside git."
+    ),
+    grade: str = typer.Option(
+        ..., "--grade", help="The class's grade, as the grade table names it: K1, K2, G1…"
     ),
     apply: bool = typer.Option(False, "--apply", help="Write it; without this nothing is written"),
     by: str = typer.Option(
@@ -69,18 +72,20 @@ def k2(
     match_existing: bool = typer.Option(
         False,
         "--match-existing",
-        help="A child already at that roll number in K2, with the same name, is the same child",
+        help="A child already at that roll number in the grade, with the same name, is the same child",
     ),
     since: str = typer.Option(None, "--from", help="The day they join the class, 2026-11-05; default today"),
     teacher: str = typer.Option(
-        None, "--teacher", help="The K2 class educator's email (must be on the staff tables)"
+        None, "--teacher", help="The class educator's email (must be on the staff tables)"
     ),
     override_reason: str = typer.Option(
         None, "--override-reason", help="Why a second class educator is right; kept"
     ),
-    section: str = typer.Option("A", "--section", help="The class's own section in the grade (K2-A)"),
+    section: str = typer.Option(
+        "A", "--section", help="The class's own section in the grade (the A of K2-A)"
+    ),
 ) -> None:
-    """Load the K2 class and its children from the Children List, with their roll numbers."""
+    """Load a grade's class and its children from the Children List, with their roll numbers (ADR 0108)."""
     who = need_by(apply, by)
     try:
         day = date.fromisoformat(since) if since else None
@@ -90,7 +95,7 @@ def k2(
         try:
             out = people.enrol_k2(
                 conn,
-                "k2",
+                grade,
                 csv_path,
                 who,
                 apply,

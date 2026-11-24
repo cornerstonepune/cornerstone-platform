@@ -171,7 +171,19 @@ _Every milestone is a vertical slice Nimish can click through. Goals are yes/no;
 ### M5 — Materials on live · Not started
   - [ ] G5.1 Catalogue has items on live; "collected" lowers stock; buy list matches real rows
 
+### M6 — K1 pilot: Radhika marks F.N 10 on live (ADR 0107, 0108) · In progress
+- **Delivers:** the K1 week sheet loads into K1 lessons; Radhika opens a lesson on S3 and marks it; the mark reaches `evidence_event`.
+- **Goals:**
+  - [ ] G6.1 `engine timetable load-k1` reads a K1 week block into K1 periods, plan lines and lessons, the school's words verbatim — `tests/test_k1_week.py`
+  - [ ] G6.2 An empty or name-only cell loads as a lesson that is not planned yet (`session.planned = false`) — `tests/test_k1_planned.py`
+  - [ ] G6.3 `engine enrol` takes `--grade`, so the K1 class and its children can be made — ticket 3, not yet written
+  - [ ] G6.4 A form mark on a K1 lesson yields `activity_observation` + `evidence_event` — ticket 4, not yet written
+  - [ ] G6.5 F.N 10 W1 and W2 are loaded on live for the K1 class — `session` row count for K1 on live
+- **Depends on:** Nimish: K1's campus (Gurukul vs Neev), the Children List CSV. No new wireframe (S3 covers marking).
+
 ## 6. Open questions (Plan resolves before the milestone they block)
 - Order: M1–M3 (proof) before M4 (money, dated 1 Dec Sports Day / 31 Dec)? The Sports Day date is 8 days away and slices G–L aren't started — blocks M4.
 - Is n8n hosted, and where? (SPEC §14 item 5) — blocks any notify step.
+- K1 campus: Gurukul (sheet title) or Neev (`school.campus_grades`)? — blocks M6 G6.5 (holidays are per campus).
+- Who writes the K1 activity level words? Until then K1 marks show "Not written" — blocks nothing.
 - Retire the frozen duplicates S15 and S27 now (#568)? — blocks nothing; reduces surface.

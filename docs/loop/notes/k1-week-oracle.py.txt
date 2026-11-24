@@ -1,0 +1,93 @@
+import csv, io, re
+from dataclasses import replace
+from datetime import datetime, timedelta
+from engine.w2_print import k2_timetable as tt
+from engine.w2_print import k2_timetable_load as ld
+
+TIME = re.compile(r"^\s*(\d{1,2}):(\d{2})\s*(?:-\s*(\d{1,2}):(\d{2}))?\s*$")
+
+def is_head(line, vocab):
+    return any(re.fullmatch(p, line.strip(), re.I) for p in vocab.k1["part_heads"])
+
+def parts_of(cell, vocab):
+    out = []
+    for line in cell.split("\n"):
+        if not line.strip():
+            continue
+        if is_head(line, vocab) or not out:
+            out.append([line.strip()])
+        else:
+            out[-1].append(line.strip())
+    return [" ".join(" ".join(p).split()) for p in out]
+
+def _lines(cell):
+    return [l.strip() for l in cell.split("\n") if l.strip()]
+
+def read_k1_week_csv(text, vocab, cal):
+    rows = [r + [""] * (6 - len(r)) for r in csv.reader(io.StringIO(text))]
+    title = next(r[0] for r in rows if re.search(vocab.k1["title"], r[0]))
+    n, w = map(int, re.search(vocab.k1["title"], title).groups())
+    dates = [datetime.strptime(c.strip(), vocab.k1["date_format"]).date() for c in next(r for r in rows if r[0].strip() == "Date")[1:6]]
+    load = ld.Load()
+    if n not in cal.fortnights or cal.fortnights[n][0] + timedelta(7 * (w - 1)) != dates[0]:
+        load.conflicts.append((n, "dates disagree"))
+        return load
+    s, e = cal.fortnights[n]
+    load.fortnights.append((n, s, e))
+    week = "AB"[w - 1]
+    for d in dates:
+        cd = cal.days.get(d, ld.TEACHING)
+        load.school_days.append((d, cd.kind, cd.note))
+    trows = [r for r in rows if TIME.match(r[0])]
+    counter = {}
+    base = 0 if w == 1 else vocab.k1["week_b_first_ord"] - 1
+    for i, r in enumerate(trows, 1):
+        raw = " ".join(r[0].split())
+        st, _, en = (raw + " - ").partition(" - ")
+        en = en.strip(" -")
+        cells = r[1:6]
+        if cells[0].strip() and not any(c.strip() for c in cells[1:]) and tt._subject_of(_lines(cells[0])[0], vocab) is None:
+            cells = [cells[0]] * 5
+        fixed = all(c.strip() and tt._subject_of(_lines(c)[0], vocab) is None for c in cells)
+        label = _lines(cells[0])[0] if fixed else f"{st} - {en}".strip(" -")
+        start = ld._h24(ld._hhmm(st), vocab)
+        load.periods.append(ld.Period(i, start, ld._h24(ld._hhmm(en), vocab) if en else "", label, fixed))
+    for d in dates:
+        if cal.days.get(d, ld.TEACHING).kind != "teaching":
+            continue
+        col = dates.index(d)
+        for p, r in zip(load.periods, trows):
+            cells = r[1:6]
+            if cells[0].strip() and not any(c.strip() for c in cells[1:]) and tt._subject_of(_lines(cells[0])[0], vocab) is None:
+                cells = [cells[0]] * 5
+            cell = cells[col]
+            text = " ".join(cell.split())
+            if not text:
+                load.sessions.append(ld.Session(d, p.start, None, "", None, None, n))
+                continue
+            if tt._subject_of(_lines(cell)[0], vocab) is None:
+                load.sessions.append(ld.Session(d, p.start, None, text, None, None, n))
+                continue
+            got = []
+            for raw in _split(cell, vocab):
+                ls = _lines(raw)
+                subj = tt._subject_of(" ".join(ls[:2]), vocab)
+                if len(ls) == 1 and is_head(ls[0], vocab):
+                    got.append((subj, None, None))
+                    continue
+                key = vocab.plan_key_of_subject.get(subj, subj)
+                counter[key] = counter.get(key, 0) + 1
+                load.plan_entries.append(ld.PlanEntry(n, key, base + counter[key], " ".join(" ".join(ls).split()), "", week))
+                got.append((subj, key, base + counter[key]))
+            k, o = (got[0][1], got[0][2]) if len(got) == 1 else (None, None)
+            load.sessions.append(ld.Session(d, p.start, got[0][0], text, k, o, n))
+    return load
+
+def _split(cell, vocab):
+    out = []
+    for line in cell.split("\n"):
+        if is_head(line, vocab) or not out:
+            out.append(line)
+        else:
+            out[-1] += "\n" + line
+    return out

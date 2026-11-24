@@ -35,6 +35,8 @@ class Vocabulary:
     planner_header_cell: str
     calendar_date_format: str
     afternoon_before_hour: int
+    # the K1 week block's words (ADR 0108): title, date_format, part_heads, week_b_first_ord
+    k1: dict = field(default_factory=dict)
 
     @classmethod
     def from_config(cls, v: dict) -> "Vocabulary":
@@ -55,6 +57,7 @@ class Vocabulary:
             v["planner_header_cell"],
             v["calendar_date_format"],
             int(v["afternoon_before_hour"]),
+            dict(v.get("k1", {})),
         )
 
 

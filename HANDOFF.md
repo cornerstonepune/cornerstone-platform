@@ -2,30 +2,32 @@
 
 _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 
-**Updated:** 2026-11-23 · **By:** Plan · **Model:** claude-opus-5-5
-**Milestone:** loop adoption → M1 (nightly green) next · **Branch:** plan/adopt · **PR:** #921 (adopt), CI running with Auto-fix on, waits for Nimish's read + approval
+**Updated:** 2026-11-24 · **By:** Planner (loop-guard fix) · **Model:** claude-opus-5-5
+**Milestone:** M6 K1 pilot · **Branch:** plan/handoff-guard-930 · #927, #928, #930 merged · seed `plan/t925` pushed; build PR #929 open
 
 ## State
-- loop-adopt done on plan/adopt: PROJECT.md §1–6 (ADR 0105), GLOSSARY.md, db/schema.sql (ADR 0104), `.loop.json` token_files + protected point at the repo's own design system.
-- `design/wireframes/`: 56 pages, one per built screen. 30 embed the repo's drawn wireframe (`docs/frontend/wireframes/`), 26 are placeholders. View with the `wireframes` launch config (http://localhost:8765/design/wireframes/).
-- Tests: `bin/check` 72 passed / 4 skipped (23 Nov). Engine core 229 passed / 1 skipped (earlier today). Nightly suite red six nights running.
-- A local-only `.env` (gitignored) now points the launch configs at the test DB on 54329 with no real keys.
+- loop-guard fix merged (PR #930): builder rules now read only the builder's own non-merge commits after Plan-base that are not on main, so main merged into a build branch no longer counts as builder work. Test `packages/engine/tests/test_loop_guard.py` (nightly only, not `core`; red on old guard, green on fix, locally). Same bug is in the loop plugin template `templates/.github/loop/check_pr.py` (fix upstream too).
+- PROJECT.md §5 has M6 (G6.1–G6.5); ADR 0107 + 0108 (survey, importer rules). Issues #925 (K1 reader + `load-k1`), #926 (`Session.planned`, blocked by #925).
+- Rubric marking is already on approved S3 (period page, child cards vs `activity.level_0..3`): no new wireframe. No K1 class on live yet.
+- Fixture `supabase/seed/k1_tabs_2026_11_24/fn10_w1.csv` (sheet rows 349–372, merges filled).
+- Seed `plan/t925` (from plan/k1-pilot): `k1_week.py` skeleton, `load-k1` stub, `Vocabulary.k1`, seed vocab `meal` + `k1`; `tests/test_k1_week.py` (7) + `tests/holdout/test_k1_week_hidden.py` (6) red against the stub, green against the oracle `docs/loop/notes/k1-week-oracle.py.txt`. `bin/check` passes.
+- `--grade` required on `load-k1` (`test_grades`). Visible K1 tests are nightly only (core budget 230 full); hidden tests run on every PR.
 
-- Nimish started the approve-all for the 56 wireframes in terminal tab 0 (y/N prompt, not answered when this session ended). Check `loop status` next session.
+## Nimish, 24 Nov (ADR 0109) — takes priority
+- Pilot is **Gurukul** K1 (K1 is at Neev and Gurukul). Focus: only F.N 10's activities; get their rubric words sorted first.
+- Rubric draft done: `docs/loop/notes/fn10-rubric-draft.md` — 15 activities with DRAFT level_0..3 words, marked for Radhika/coordinator sign-off. Nothing seeded.
+- Matches (ADR 0109 table updated): 0665 + 1146 confirmed; new K1-0782 (Block Room art & form), K2-M0018 (clay, K2 band), K2-0449 (Khari Kamai, K2 band, has words). 6 lessons have no activity: Sun & Moon rhyme, number tracing 5/6, trace R/D, Hindi farm animals, Hindi Swar ए, Memory Drawing.
+- Next: Nimish sends the sheet to Radhika; after sign-off, one plan job seeds the words (+ `also_bands` K1 on the two K2 rows if she agrees) and adds the 6 missing activities.
 
-## Next step
-1. Nimish reads PROJECT.md (esp. §5 order and §6), corrects it, then runs `loop approve --all` in his own terminal. Merge the adopt PR.
-2. Then M1 nightly green: `to-spec` → `loop-ticket` from the failing list in PROJECT.md §5 Gaps (run 45093926102).
+## Next step (after the rubric job)
+1. `gh pr update-branch 929` so its CI runs the new guard (a plain re-run reuses the old merge ref) → reviewer → merge.
+2. (#925 build is PR #929.)
+3. One narrow `loop plan` job: seed `plan/t926` only (`Session.planned: bool = True`; `tests/test_k1_planned.py` + holdout DB row check).
+4. Then one job each for tickets 3 (`engine enrol --grade`) and 4 (K1 form mark → activity_observation + evidence_event).
 
-## Blocked / open questions
-- Live snapshots of screens: the site has no `node_modules` here, and the frontend hook blocks `npm ci` in apps/web until a wireframe is approved. After approval, install and replace the 26 placeholders with real snapshots. The test DB has no children, so child pages will be empty: browser fixtures (api/test-hooks) are needed for real data.
-- Milestone order vs money dates (Sports Day 1 Dec, 31 Dec): Nimish's call (PROJECT.md §6).
+## Blocked / open questions (Nimish; block going live, not tickets 1–2)
+- K1 campus: Gurukul (sheet title) or Neev (`school.campus_grades`)? Radhika sign-off on the F.N 10 draft words? Two-part cells reading B (one session, coordinator picks activity) — confirm. Radhika's Children List CSV + email (Nimish runs enrol himself).
 
 ## Don't repeat
-- The Supabase container on 54322 is a stale DB; tests fail there. Use `cornerstone-loop-pg` on 54329.
-- Removing the `bin/check --claude` Stop hook breaks `tests/test_promises.py`.
-- Any Bash command containing the words "loop approve" is blocked by the hook, even in commit text or docs edits; use Edit/Write.
-- The browser pane shows local files as stripped snapshots; serve over http (`wireframes` launch config) to see them properly.
-
-## Files touched this session
-PROJECT.md, GLOSSARY.md, .loop.json, docs/adr/0105-*, design/wireframes/S*.html, .claude/launch.json, HANDOFF.md.
+- One deliverable per `loop plan` job, briefed with settled decisions: two whole-milestone jobs hit CONTEXT FULL (LESSONS.md).
+- Sheet merges only visible via get_spreadsheet `fields: sheets.merges`. ADR Goal lines: `Goal: none — why`. Run `uv run ruff format --check tests engine`. No grade code literal in Python (`test_grades`).
