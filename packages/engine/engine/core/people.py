@@ -197,7 +197,7 @@ def _class_ids(
     out: Report,
     campus: str | None = None,
 ) -> Any:
-    """The K2 class of that year, made when it is not there. → its id, or None on a dry run that has no class yet."""
+    """The class of `grade` at the named campus for that year, made when it is not there. → its id, or None on a dry run that has no class yet."""
     campus_id = _campus_id(conn, tenant, grade, campus)
     y = conn.execute(
         "select id from academic_year where tenant_id = %s and label = %s", (tenant, year)
@@ -216,14 +216,18 @@ def _class_ids(
             (tenant, year, date(start, 4, 1), date(start + 1, 3, 31)),
         )
     c = conn.execute(
-        "select sc.id, sc.campus_id, cp.name from school_class sc join campus cp on cp.id = sc.campus_id"
-        " where sc.tenant_id = %s and sc.academic_year_id = %s"
-        " and (sc.label = %s or (sc.grade_code = %s and sc.section = %s)) order by sc.label = %s desc",
-        (tenant, y["id"], grade, grade, letter, grade),
+        "select sc.id, sc.campus_id, sc.section, cp.name from school_class sc join campus cp on cp.id = sc.campus_id"
+        " where sc.tenant_id = %s and sc.academic_year_id = %s and sc.label = %s",
+        (tenant, y["id"], grade),
     ).fetchone()
     if c is not None and c["campus_id"] != campus_id:
         raise ValueError(
             f"{grade} for {year} is already a class at {c['name']}: a school year has one class of a name (ADR 0110)"
+        )
+    if c is not None and c["section"] != letter:
+        raise ValueError(
+            f"{grade} for {year} is already a class at {c['name']} in section {c['section']}: "
+            "a school year has one class of a name (ADR 0110)"
         )
     if c is None:
         out.lines.append(f"  would add the class {grade}-{letter} for {year}")
