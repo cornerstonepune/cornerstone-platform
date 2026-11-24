@@ -2,32 +2,29 @@
 
 _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 
-**Updated:** 2026-11-24 · **By:** Plan · **Model:** claude-opus-5-5
-**Milestone:** M1 nightly green (G1.1 engine) · **Branch:** plan/engine-green → plan PR (see `gh pr list --head plan/engine-green`)
+**Updated:** 2026-11-24 · **By:** Coordinator · **Model:** claude-opus-5-5
+**Milestone:** M6 K1 pilot · **Branch:** plan/k1-pilot (PR #927 open, CI running) · seed `plan/t925` pushed
 
 ## State
-- #921 (adopt + 56 wireframe approvals) merged to main 24 Nov; main merged into plan/engine-green. `loop status`: all approved.
-- plan/engine-green carries: migration `20270216090000_history_skips_empty_lists.sql`, seed text on 3 statement_match bars,
-  test updates for CP-70/CP-71/ceiling unit, `icons.tsx` exempt (ADR 0106). bin/check green after the main merge.
-- The 12 "unexplained" local failures (test_deploy x8, test_python_pin, test_sorting, test_spine_provenance x2) fail
-  identically on unchanged main on this Mac (e.g. SSL CERTIFICATE_VERIFY_FAILED downloading the NCERT PDF). Local-only; ignore.
-- Expected still red on this branch: test_gates, test_settings (people.py, ticket below), test_states_and_subject (fortnight-grid).
+- PROJECT.md §5 has M6 (G6.1–G6.5); ADR 0107 + 0108 (survey, importer rules). Issues #925 (K1 reader + `load-k1`), #926 (`Session.planned`, blocked by #925).
+- Rubric marking is already on approved S3 (period page, child cards vs `activity.level_0..3`): no new wireframe. No K1 class on live yet.
+- Fixture `supabase/seed/k1_tabs_2026_11_24/fn10_w1.csv` (sheet rows 349–372, merges filled).
+- Seed `plan/t925` (from plan/k1-pilot): `k1_week.py` skeleton, `load-k1` stub, `Vocabulary.k1`, seed vocab `meal` + `k1`; `tests/test_k1_week.py` (7) + `tests/holdout/test_k1_week_hidden.py` (6) red against the stub, green against the oracle `docs/loop/notes/k1-week-oracle.py.txt`. `bin/check` passes.
+- `--grade` required on `load-k1` (`test_grades`). Visible K1 tests are nightly only (core budget 230 full); hidden tests run on every PR.
 
-## Next step
-1. Plan PR #922 (Auto-fix on): `loop ci 922`, merge on green.
-2. Ticket #923 (size:small) is seeded on `plan/t923` (pushed, from main): people.py reads `school.campus_grades` through
-   `settings.config`. Visible test red; 5 holdout tests in `tests/holdout/test_campus_grades_setting.py` pass today on
-   purpose (refactor guard; the last one catches `config` called without `tenant`). Next: `loop prep 923` → build → finish.
-3. Now unblocked (wireframes approved): delete the self-skipping "pictures" test at `apps/web/.../u107-my-day.spec.ts:250`
-   (plan-side test edit), and ticket `components/fortnight-grid.tsx:18` — subject labels from subject rows, not words in code.
-4. Then the browser failures (~40 specs, worst u90, u49, s4) and the data-register proof (expense / stock_move owners, G1.3).
+## Nimish, 24 Nov (ADR 0109) — takes priority
+- Pilot is **Gurukul** K1 (K1 is at Neev and Gurukul). Focus: only F.N 10's activities; get their rubric words sorted first.
+- ADR 0109 lists the 8 matched activities (all with 0 level words) and 8 sheet lessons with no activity row. Next: draft level_0..3 words for those, Radhika/coordinator signs off, seed them. Then class + children at Gurukul, then the importer.
 
-## Blocked / open questions
-- None.
+## Next step (after the rubric job)
+1. `loop ci 927` → merge #927 when green (`gh pr merge 927 --merge`).
+2. Build #925: `loop prep 925` → `loop build 925` → `loop finish 925` → reviewer → merge.
+3. One narrow `loop plan` job: seed `plan/t926` only (`Session.planned: bool = True`; `tests/test_k1_planned.py` + holdout DB row check).
+4. Then one job each for tickets 3 (`engine enrol --grade`) and 4 (K1 form mark → activity_observation + evidence_event).
+
+## Blocked / open questions (Nimish; block going live, not tickets 1–2)
+- K1 campus: Gurukul (sheet title) or Neev (`school.campus_grades`)? Who writes K1 level words (0 of 634 have level_0)? Two-part cells reading B (one session, coordinator picks activity) — confirm. Radhika's Children List CSV + email (Nimish runs enrol himself).
 
 ## Don't repeat
-- The hook blocks the orchestrator from committing the approvals file, and from any command that names it.
-- `bin/testdb fresh` needs an empty database; make a new one rather than reusing `postgres`.
-- A second engine checkout needs `uv sync --all-extras` (plain `uv sync` leaves out pytest; a global pytest then fails on `import engine`).
-- `pytest -n` is not available here. Local fresh DB with the new migration: `…:54329/eg`.
-- Run `uv run ruff format --check tests` before stopping: the stop hook checks formatting.
+- One deliverable per `loop plan` job, briefed with settled decisions: two whole-milestone jobs hit CONTEXT FULL (LESSONS.md).
+- Sheet merges only visible via get_spreadsheet `fields: sheets.merges`. ADR Goal lines: `Goal: none — why`. Run `uv run ruff format --check tests engine`. No grade code literal in Python (`test_grades`).
