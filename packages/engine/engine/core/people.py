@@ -166,7 +166,25 @@ def _grade(conn: db.Conn, tenant: Any, name: str) -> str:
 def _campus_id(conn: db.Conn, tenant: Any, grade: str, named: str | None) -> Any:
     """The id of the campus a class of `grade` goes to: the one named (`--campus`), else the one campus the setting
     `school.campus_grades` gives the grade, else the only campus. Two campuses holding the grade and none named refuses."""
-    raise NotImplementedError
+    campuses = conn.execute("select id, name from campus where tenant_id = %s", (tenant,)).fetchall()
+    names = settings.config(conn, "school.campus_grades", {}, tenant)  # {campus name: [grade, ...]}
+    if named is not None:
+        here = [c for c in campuses if c["name"].strip().lower() == named.strip().lower()]
+        if not here:
+            raise ValueError(f"no campus called {named}")
+        if names.get(here[0]["name"]) is not None and grade not in names[here[0]["name"]]:
+            raise ValueError(
+                f"{here[0]['name']} does not hold grade {grade} in the setting school.campus_grades"
+            )
+        return here[0]["id"]
+    held = [c for c in campuses if grade in names.get(c["name"], [])]
+    if len(held) > 1:
+        both = " and ".join(sorted(c["name"] for c in held))
+        raise ValueError(f"grade {grade} is at {both}: name the campus with --campus")
+    held = held or (campuses if len(campuses) == 1 else [])
+    if len(held) != 1:
+        raise ValueError(f"no campus holds grade {grade}: name it in the setting school.campus_grades")
+    return held[0]["id"]
 
 
 def _class_ids(
@@ -180,12 +198,7 @@ def _class_ids(
     campus: str | None = None,
 ) -> Any:
     """The K2 class of that year, made when it is not there. → its id, or None on a dry run that has no class yet."""
-    campuses = conn.execute("select id, name from campus where tenant_id = %s", (tenant,)).fetchall()
-    names = settings.config(conn, "school.campus_grades", {}, tenant)  # {campus name: [grade, ...]}
-    held = [c for c in campuses if grade in names.get(c["name"], [])]
-    campus = held or (campuses if len(campuses) == 1 else [])
-    if len(campus) != 1:
-        raise ValueError(f"no campus holds grade {grade}: name it in the setting school.campus_grades")
+    campus_id = _campus_id(conn, tenant, grade, campus)
     y = conn.execute(
         "select id from academic_year where tenant_id = %s and label = %s", (tenant, year)
     ).fetchone()
@@ -193,6 +206,8 @@ def _class_ids(
         out.lines.append(f"  would add the school year {year}")
         out.count("years added")
         if not apply:
+            out.lines.append(f"  would add the class {grade}-{letter} for {year}")
+            out.count("classes added")
             return None
         start = int(year[:4])
         y = db.one(
@@ -201,10 +216,15 @@ def _class_ids(
             (tenant, year, date(start, 4, 1), date(start + 1, 3, 31)),
         )
     c = conn.execute(
-        "select id from school_class where tenant_id = %s and academic_year_id = %s and grade_code = %s"
-        " and section = %s",
-        (tenant, y["id"], grade, letter),
+        "select sc.id, sc.campus_id, cp.name from school_class sc join campus cp on cp.id = sc.campus_id"
+        " where sc.tenant_id = %s and sc.academic_year_id = %s"
+        " and (sc.label = %s or (sc.grade_code = %s and sc.section = %s)) order by sc.label = %s desc",
+        (tenant, y["id"], grade, grade, letter, grade),
     ).fetchone()
+    if c is not None and c["campus_id"] != campus_id:
+        raise ValueError(
+            f"{grade} for {year} is already a class at {c['name']}: a school year has one class of a name (ADR 0110)"
+        )
     if c is None:
         out.lines.append(f"  would add the class {grade}-{letter} for {year}")
         out.count("classes added")
@@ -214,7 +234,7 @@ def _class_ids(
             conn,
             "insert into school_class (tenant_id, campus_id, academic_year_id, grade_code, section, label)"
             " values (%s,%s,%s,%s,%s,%s) returning id",
-            (tenant, campus[0]["id"], y["id"], grade, letter, grade),
+            (tenant, campus_id, y["id"], grade, letter, grade),
         )
     return c["id"]
 
@@ -251,7 +271,9 @@ def enrol_k2(
     rows = read_list(path, today, out)
     tenant = _tenant(conn)
     grade = _grade(conn, tenant, grade_name)
-    class_id = _class_ids(conn, tenant, grade, year_label(since), letter, apply and not out.refused, out)
+    class_id = _class_ids(
+        conn, tenant, grade, year_label(since), letter, apply and not out.refused, out, campus
+    )
     actor = who or "engine enrol k2 (dry run)"
     plan: list[tuple[Row, Any, str]] = []  # the row, its existing child (or None), what to do
     for r in rows:
