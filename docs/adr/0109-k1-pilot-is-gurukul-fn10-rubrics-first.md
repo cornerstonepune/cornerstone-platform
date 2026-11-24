@@ -13,16 +13,19 @@ Goal: none — this records Nimish's scope decision and the activity match; the 
 | Story: Fati & the Green Snake P1–P3 | ACT-K1-0973, 0974, 0975 |
 | Math: Introduction of Top, Middle, Bottom | ACT-K1-0716 (P1) |
 | GA: Wild / Domestic animals (W2 Pg 19) | ACT-K1-0630, 0631 / 0632, 0633 |
-| Rhyme: French rhyme (colours) | ACT-K1-0665 Introduction Of French Folk (check) |
+| Rhyme: French rhyme (colours) | ACT-K1-0665 Introduction Of French Folk (confirmed) |
 | Block Room: Smelling Bottles | ACT-K1-0783 |
 | Art: Painting Branch | ACT-K1-1202 |
 | PLS: Proper Use Of Dustbin | ACT-K1-1134 |
-| FMS: Pattern Making Using Beads | ACT-K1-1146 Beading with medium beads (check) |
+| FMS: Pattern Making Using Beads | ACT-K1-1146 Beading with medium beads (confirmed) |
+| Block Room: A true experience of art & forms | ACT-K1-0782 |
+| Clay: carrot, chillies, apple | ACT-K2-M0018 (K2 band) |
+| Rhyme slot: Khari Kamai Recognition | ACT-K2-0449 (K2 band, already has words) |
 
-**Not matched by a name search yet** (these ARE activities; the search was by name, K1 band only, so it missed rows named differently or
-filed under another band, e.g. Block Room "A true Experience of Art & Form" = ACT-K1-0782, clay carrot = ACT-K2-M0018 (K2 band), Khari Kamai =
-ACT-K2-0449). Next session matches each by reading the K1 activity list, not by regex: Rhyme "The Sun And The Moon" (Khari Kamai); Math number tracing 5 and 6;
-English trace-and-write R and D (combination lines); Hindi farm animal names; Hindi Swar ए; Clay carrot/chillies/apple; Block Room "art & forms"; Memory Drawing (unspecified).
+**No activity (read from the full K1 list by name, 24 Nov):** Rhyme "The Sun And The Moon"; Math number tracing 5 and 6;
+English trace-and-write R and D; Hindi farm animal names; Hindi Swar ए; Memory Drawing (K1-1222 is Diwali only). Each needs a new K1 activity.
+Draft words and details: `docs/loop/notes/fn10-rubric-draft.md`.
+
 Most Academic 1/2 slots in both weeks say only "Sports Day Practice": nothing to mark there.
 
 ## Consequence
