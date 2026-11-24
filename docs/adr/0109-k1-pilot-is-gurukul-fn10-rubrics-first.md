@@ -1,7 +1,7 @@
 # 0109 — K1 pilot is Gurukul; first job is rubric words for F.N 10's activities
 
 Date: 2026-11-24. Status: accepted (Nimish, in chat).
-Goal: G6 (M6 K1 pilot) — F.N 10's activities each have level_0..3 words before Radhika marks them.
+Goal: none — this records Nimish's scope decision and the activity match; the rubric-words goal is added to M6 next session.
 
 ## Decision
 - K1 runs at both Neev and Gurukul. This pilot is **Gurukul** K1 (the sheet's block title). `school.campus_grades` must list K1 at Gurukul too.
