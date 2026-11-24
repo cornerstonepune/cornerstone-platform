@@ -19,7 +19,10 @@ _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 3. ADR 0108 ticket 4 (form mark → activity_observation + evidence_event, G6.4) via loop plan, then build.
 4. Small ticket: people.py:243 dry-run label "engine enrol k2"; stale "enrol k2" docstrings (people.py:1, signer.py:3, roster.py:130, tests/rows.py:427/449).
 5. G6.5: load F.N 10 W1+W2 on live for Gurukul K1 after the CSV enrol. Close #931 in favour of this branch.
+- Open question for Nimish: holiday cells (e.g. Tue 24 Nov "Academic 1 / General Awareness", "Block Room") make NO plan lines today; ADR 0108 says "nothing lost". Keep or drop them? Then pin it with a test.
 
 ## Don't repeat
 - A ticket that changes a seed needs a test DB built from its seed branch: build a separate DB (bin/testdb fresh …/t<N> from a scratch worktree of plan/t<N>) and pass TEST_DATABASE_URL to loop build/finish, before attempt 1. Tell the builder to delete its Blocked section once tests pass.
 - Don't put export/VAR= in .loop.json commands or 2>&1 beside test paths in briefs. Don't re-ask K1's campus.
+- Builders run `dontAsk` with a `Bash(<word> *)` allowlist: compound commands, pipes, `export`, heredoc commits get refused. After `loop prep`, append a shell note to the brief (one simple command per call, single-line `git commit -m`, no Blocked section).
+- Seed cut from another seed branch conflicts once that ticket squash-merges: cherry-pick the seed's own commit onto main. After any merge to main: `gh pr update-branch` + `loop ci` before `gh pr merge`.
