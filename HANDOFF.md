@@ -12,7 +12,7 @@ _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 - A `loop plan` job was running at session end: campus_grades lists K1 at Gurukul (ADR 0109), drop the stale "Gurukul or Neev?" open question, tick G6.1–G6.3. Check `gh pr list` for its PR.
 - Nimish (24 Nov): Gurukul is decided (ADR 0109; stop asking). He will sign off the rubric words: `docs/loop/notes/fn10-rubric-draft.md` sent to him. He will send the Children List CSV himself. He wants the K1 pilot live.
 
-- **Nimish, 24 Nov, in chat: F.N 10 rubric words SIGNED OFF as drafted** (`docs/loop/notes/fn10-rubric-draft.md`), and **yes: share ACT-K2-M0018 (clay) and ACT-K2-0449 (Khari Kamai) with K1** (`also_bands` += K1). Next: `loop plan` to record this as an ADR and seed the level words + also_bands. Six F.N 10 lessons still have no activity (list at the end of the draft).
+- **Nimish, 24 Nov, in chat: F.N 10 rubric words SIGNED OFF as drafted** (`docs/loop/notes/fn10-rubric-draft.md`), and **yes: share ACT-K2-M0018 (clay) and ACT-K2-0449 (Khari Kamai) with K1** (`also_bands` += K1). Next: `loop plan` to record this as an ADR and seed the level words + also_bands. Six F.N 10 lessons have no activity row (list at the end of the draft): Nimish says each IS an activity, so create them as new K1 activities (name = the lesson, e.g. "The Sun And The Moon"), with drafted level words for his OK. Don't treat them as learning objectives.
 
 ## Next step
 1. Merge #938 after reviewer PASS; merge the campus plan PR.
