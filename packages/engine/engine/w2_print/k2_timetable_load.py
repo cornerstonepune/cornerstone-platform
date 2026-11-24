@@ -67,6 +67,7 @@ class Session:
     key: str | None
     ord: int | None
     fortnight: int
+    planned: bool = True  # False: a lesson the school has not planned yet (blank, or only its period name)
 
 
 @dataclass(frozen=True)
