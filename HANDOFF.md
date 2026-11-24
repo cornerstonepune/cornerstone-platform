@@ -8,6 +8,7 @@ _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 ## State
 - Nimish asked for a K1 pilot ("fortnight 10 and 11"): educator Radhika ma'am clicks a timetable period, fills rubrics, uploads a voice note -> knowledge graph.
 - Read the K1 Google Sheet (ADR 0107): it holds K1 F1, F2, F4-F7 only. No F10/F11 found. Existing K2 tables cover most of the shape (fortnight, period, timetable_slot, plan_entry, session).
+- ADR 0107 now has its Goal line; `bin/check` passes (72 passed, 4 DB checks skipped, no TEST_DATABASE_URL). Nimish replied he will point to the F10/F11 tab himself; no PR opened for plan/k1-pilot yet.
 - Nothing built. Previous work (plan/engine-green, PR #922, ticket #923 seeded on plan/t923) is unchanged and still stands.
 
 ## Next step
