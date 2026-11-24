@@ -2,11 +2,11 @@
 
 _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 
-**Updated:** 2026-11-24 · **By:** Coordinator · **Model:** claude-opus-5-5
-**Milestone:** M6 K1 pilot · **Branch:** plan/handoff · #927, #928, #930 merged · seed `plan/t925` pushed; build PR #929 open
+**Updated:** 2026-11-24 · **By:** Planner (loop-guard fix) · **Model:** claude-opus-5-5
+**Milestone:** M6 K1 pilot · **Branch:** plan/handoff-guard-930 · #927, #928, #930 merged · seed `plan/t925` pushed; build PR #929 open
 
 ## State
-- loop-guard fix (#930, merged): builder rules now read only the builder's own non-merge commits after Plan-base that are not on main, so main merged into a build branch no longer counts as builder work. Test `packages/engine/tests/test_loop_guard.py`. Same bug is in the loop plugin template `templates/.github/loop/check_pr.py` (fix upstream too).
+- loop-guard fix merged (PR #930): builder rules now read only the builder's own non-merge commits after Plan-base that are not on main, so main merged into a build branch no longer counts as builder work. Test `packages/engine/tests/test_loop_guard.py` (nightly only, not `core`; red on old guard, green on fix, locally). Same bug is in the loop plugin template `templates/.github/loop/check_pr.py` (fix upstream too).
 - PROJECT.md §5 has M6 (G6.1–G6.5); ADR 0107 + 0108 (survey, importer rules). Issues #925 (K1 reader + `load-k1`), #926 (`Session.planned`, blocked by #925).
 - Rubric marking is already on approved S3 (period page, child cards vs `activity.level_0..3`): no new wireframe. No K1 class on live yet.
 - Fixture `supabase/seed/k1_tabs_2026_11_24/fn10_w1.csv` (sheet rows 349–372, merges filled).
@@ -29,7 +29,7 @@ _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 - K1 campus: Gurukul (sheet title) or Neev (`school.campus_grades`)? Radhika sign-off on the F.N 10 draft words? Two-part cells reading B (one session, coordinator picks activity) — confirm. Radhika's Children List CSV + email (Nimish runs enrol himself).
 
 ## Don't repeat
-- Local test DB dirty (`bin/testdb fresh` says "relation tenant already exists") → `drop database postgres with (force)` + create via template1, then `bin/testdb fresh`. Unrelated core failures in `loop finish` came from this.
-- A builder handoff with any "Blocked" section, even "Blocked: Nothing", fails `loop finish` (#925 lost an attempt; now in its Don't list). #925 has used 3 attempts.
 - One deliverable per `loop plan` job, briefed with settled decisions: two whole-milestone jobs hit CONTEXT FULL (LESSONS.md).
 - Sheet merges only visible via get_spreadsheet `fields: sheets.merges`. ADR Goal lines: `Goal: none — why`. Run `uv run ruff format --check tests engine`. No grade code literal in Python (`test_grades`).
+- Local test DB dirty (`bin/testdb fresh` says "relation tenant already exists") → `drop database postgres with (force)` + create via template1, then `bin/testdb fresh`. Unrelated core failures in `loop finish` came from this.
+- A builder handoff with any "Blocked" section, even "Blocked: Nothing", fails `loop finish` (#925 lost an attempt; now in its Don't list). #925 has used 3 attempts.
