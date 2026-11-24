@@ -19,7 +19,9 @@ Goal: none — this records Nimish's scope decision and the activity match; the 
 | PLS: Proper Use Of Dustbin | ACT-K1-1134 |
 | FMS: Pattern Making Using Beads | ACT-K1-1146 Beading with medium beads (check) |
 
-**No activity found** (need a new row or the right name from Radhika): Rhyme "The Sun And The Moon" (Khari Kamai); Math number tracing 5 and 6;
+**Not matched by a name search yet** (these ARE activities; the search was by name, K1 band only, so it missed rows named differently or
+filed under another band, e.g. Block Room "A true Experience of Art & Form" = ACT-K1-0782, clay carrot = ACT-K2-M0018 (K2 band), Khari Kamai =
+ACT-K2-0449). Next session matches each by reading the K1 activity list, not by regex: Rhyme "The Sun And The Moon" (Khari Kamai); Math number tracing 5 and 6;
 English trace-and-write R and D (combination lines); Hindi farm animal names; Hindi Swar ए; Clay carrot/chillies/apple; Block Room "art & forms"; Memory Drawing (unspecified).
 Most Academic 1/2 slots in both weeks say only "Sports Day Practice": nothing to mark there.
 
