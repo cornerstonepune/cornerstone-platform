@@ -2,30 +2,32 @@
 
 _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 
-**Updated:** 2026-11-23 · **By:** Plan · **Model:** claude-opus-5-5
-**Milestone:** loop adoption → M1 (nightly green) next · **Branch:** plan/adopt · **PR:** #921 (adopt), CI running with Auto-fix on, waits for Nimish's read + approval
+**Updated:** 2026-11-24 · **By:** Plan · **Model:** claude-opus-5-5
+**Milestone:** M1 nightly green (G1.1 engine) · **Branch:** plan/engine-green → plan PR (see `gh pr list --head plan/engine-green`)
 
 ## State
-- loop-adopt done on plan/adopt: PROJECT.md §1–6 (ADR 0105), GLOSSARY.md, db/schema.sql (ADR 0104), `.loop.json` token_files + protected point at the repo's own design system.
-- `design/wireframes/`: 56 pages, one per built screen. 30 embed the repo's drawn wireframe (`docs/frontend/wireframes/`), 26 are placeholders. View with the `wireframes` launch config (http://localhost:8765/design/wireframes/).
-- Tests: `bin/check` 72 passed / 4 skipped (23 Nov). Engine core 229 passed / 1 skipped (earlier today). Nightly suite red six nights running.
-- A local-only `.env` (gitignored) now points the launch configs at the test DB on 54329 with no real keys.
-
-- Nimish started the approve-all for the 56 wireframes in terminal tab 0 (y/N prompt, not answered when this session ended). Check `loop status` next session.
+- #921 (adopt + 56 wireframe approvals) merged to main 24 Nov; main merged into plan/engine-green. `loop status`: all approved.
+- plan/engine-green carries: migration `20270216090000_history_skips_empty_lists.sql`, seed text on 3 statement_match bars,
+  test updates for CP-70/CP-71/ceiling unit, `icons.tsx` exempt (ADR 0106). bin/check green after the main merge.
+- The 12 "unexplained" local failures (test_deploy x8, test_python_pin, test_sorting, test_spine_provenance x2) fail
+  identically on unchanged main on this Mac (e.g. SSL CERTIFICATE_VERIFY_FAILED downloading the NCERT PDF). Local-only; ignore.
+- Expected still red on this branch: test_gates, test_settings (people.py, ticket below), test_states_and_subject (fortnight-grid).
 
 ## Next step
-1. Nimish reads PROJECT.md (esp. §5 order and §6), corrects it, then runs `loop approve --all` in his own terminal. Merge the adopt PR.
-2. Then M1 nightly green: `to-spec` → `loop-ticket` from the failing list in PROJECT.md §5 Gaps (run 45093926102).
+1. Plan PR #922 (Auto-fix on): `loop ci 922`, merge on green.
+2. Ticket #923 (size:small) is seeded on `plan/t923` (pushed, from main): people.py reads `school.campus_grades` through
+   `settings.config`. Visible test red; 5 holdout tests in `tests/holdout/test_campus_grades_setting.py` pass today on
+   purpose (refactor guard; the last one catches `config` called without `tenant`). Next: `loop prep 923` → build → finish.
+3. Now unblocked (wireframes approved): delete the self-skipping "pictures" test at `apps/web/.../u107-my-day.spec.ts:250`
+   (plan-side test edit), and ticket `components/fortnight-grid.tsx:18` — subject labels from subject rows, not words in code.
+4. Then the browser failures (~40 specs, worst u90, u49, s4) and the data-register proof (expense / stock_move owners, G1.3).
 
 ## Blocked / open questions
-- Live snapshots of screens: the site has no `node_modules` here, and the frontend hook blocks `npm ci` in apps/web until a wireframe is approved. After approval, install and replace the 26 placeholders with real snapshots. The test DB has no children, so child pages will be empty: browser fixtures (api/test-hooks) are needed for real data.
-- Milestone order vs money dates (Sports Day 1 Dec, 31 Dec): Nimish's call (PROJECT.md §6).
+- None.
 
 ## Don't repeat
-- The Supabase container on 54322 is a stale DB; tests fail there. Use `cornerstone-loop-pg` on 54329.
-- Removing the `bin/check --claude` Stop hook breaks `tests/test_promises.py`.
-- Any Bash command containing the words "loop approve" is blocked by the hook, even in commit text or docs edits; use Edit/Write.
-- The browser pane shows local files as stripped snapshots; serve over http (`wireframes` launch config) to see them properly.
-
-## Files touched this session
-PROJECT.md, GLOSSARY.md, .loop.json, docs/adr/0105-*, design/wireframes/S*.html, .claude/launch.json, HANDOFF.md.
+- The hook blocks the orchestrator from committing the approvals file, and from any command that names it.
+- `bin/testdb fresh` needs an empty database; make a new one rather than reusing `postgres`.
+- A second engine checkout needs `uv sync --all-extras` (plain `uv sync` leaves out pytest; a global pytest then fails on `import engine`).
+- `pytest -n` is not available here. Local fresh DB with the new migration: `…:54329/eg`.
+- Run `uv run ruff format --check tests` before stopping: the stop hook checks formatting.

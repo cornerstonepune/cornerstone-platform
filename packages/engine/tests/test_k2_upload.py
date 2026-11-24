@@ -342,7 +342,12 @@ def _activity_with_a_link(conn):
 def test_a_new_activity_is_kept_field_by_field_with_who_and_empty_fields_are_not(conn):
     _activity_with_a_link(conn)
     got = {(r["field"], r["before"], r["after"], r["changed_by"]) for r in _kept(conn, "activity", "ACT-CP1")}
-    assert got == {("strand", "", "Maths", "cp1-test"), ("name", "", "n", "cp1-test")}
+    # band since CP-70 (ADR 0106)
+    assert got == {
+        ("strand", "", "Maths", "cp1-test"),
+        ("name", "", "n", "cp1-test"),
+        ("band", "", "K2", "cp1-test"),
+    }
 
 
 def test_a_link_changed_in_place_is_one_change_from_the_old_to_the_new_and_a_change_of_nothing_it_says_is_not_kept(
@@ -390,7 +395,12 @@ def test_an_activity_a_person_adds_is_kept_and_does_read_as_edited_on_the_site(c
     t = _new_activity(conn, "ACT-PERSON-FIX", "An Educator")
     assert {r["changed_by"] for r in _kept(conn, "activity", "ACT-PERSON-FIX")} == {"An Educator"}
     _, edited = up.snapshot(conn, t)
-    assert {f for c, f in edited if c == "ACT-PERSON-FIX"} == {"strand", "name", "objective"}
+    assert {f for c, f in edited if c == "ACT-PERSON-FIX"} == {
+        "strand",
+        "name",
+        "objective",
+        "band",
+    }  # band since CP-70 (ADR 0106)
 
 
 def test_the_seed_load_leaves_no_activity_history_under_the_bare_database_login(conn):
