@@ -1,7 +1,7 @@
 # 0108 — K1 pilot: what already exists, what is missing, and the importer's shape
 
-Date: 2026-11-24. Status: proposed (Plan). Survey only: no tickets, no PROJECT.md change yet.
-Goal: none — this records the survey and the importer's shape; the K1 milestone and its goals are added to PROJECT.md next session.
+Date: 2026-11-24. Status: accepted (Plan). Tickets 1 and 2 written; 3 and 4 not yet.
+Goal: none — proved by the goals of PROJECT.md M6 (K1 pilot), G6.1 to G6.5, each naming its test.
 
 ## What already exists (checked in code and, read-only, on live)
 - **Rubric entry is already on the approved period page.** `docs/frontend/wireframes/period.html` (S3, approved) draws "Mark the class":
@@ -46,3 +46,22 @@ Goal: none — this records the survey and the importer's shape; the K1 mileston
 - Ticket order: (1) K1 reader + `load-k1` command (dry run, `--sql`), F.N 10 W1 first; (2) `Session.planned` in the writer; (3) enrol `--grade`;
   (4) a K1 end-to-end check: a form mark on a K1 session yields `activity_observation` + `evidence_event` (proves the W3 path is grade-free).
   No frontend ticket: S3 already covers it.
+
+## Refined when the tickets were written (24 Nov, reading the sheet's merges)
+- **Holidays come from the school's Pre-Primary calendar CSV** (`read_calendar_csv`, as K2), not from the week's Events cell. Reason: on
+  Tue 24 Nov (Guru Nanak Jayanti) the period cells are *not* empty ("Academic 1 / General Awareness", "Block Room …"), and Events also holds
+  non-holidays ("Memory Drawing", "No Screen Day"). The earlier rule "Events names a holiday and the cells are empty" would have made
+  lessons on a holiday. The Events and Note rows are not loaded (nothing reads them yet).
+- **Merged cells**: the sheet merges Wed 25 Nov 10:15–11:00 (PE over two rows) and the Meal row across the week. A CSV export loses that,
+  so the capture fills every merged cell across what it covers (as `supabase/seed/k2_tabs_2026_11_04/` does). The reader still treats a
+  fixed row with only Monday filled as the whole week's (a capture that forgot). A vertically merged lesson becomes two lessons with the same text.
+- **Fortnight dates** come from the calendar; the week's own dates must agree (W1 Monday = fortnight start, W2 Monday = start + 7), else a
+  conflict and nothing loads.
+- **Parts**: a cell is cut at lines that are period names (`timetable.vocabulary` → `k1.part_heads`: Academic n, Extracurricular,
+  Rhymes./Story. Pn, Music (Guest)). A part's subject is read from its head and the line after it only (the sheet's shape: name, subject,
+  text), so "Block Room … art & forms" is not Art. `plan_key` = the subject's plan key (`plan_key_of_subject`, else the subject code), not
+  the period name: the same keys K2 lines use. A part with nothing after its head makes no plan line.
+- **Week B lines** take `week_code` B and number from 501, so loading W2 never collides with W1's lines under the unique
+  (class, fortnight, plan_key, ord). shortcut: a week with over 500 lines under one key would collide; none is near 30.
+- **Not planned yet** (ticket 2): a blank cell, or one whose every line is a period name, is a lesson with `planned = false`.
+- Known gap, accepted: with no K1 frame rows, a K1 lesson's `session.kind` is `subject` or `fixed`, never `specialist` (PE, Music (Guest)).
