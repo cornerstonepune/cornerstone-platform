@@ -72,3 +72,20 @@ def test_a_campus_that_is_not_there_refuses(tmp_path, school):  # noqa: F811
     out = _enrol(tmp_path, "--campus", "Nowhere")
     assert out.exit_code != 0
     assert "no campus called Nowhere" in out.output_plain
+
+
+@needs_db
+def test_a_second_section_at_the_same_campus_refuses_and_writes_nothing(tmp_path, school):  # noqa: F811
+    """K1-A at Gurukul this year: `--section B` at Gurukul is the same class name, so it refuses in words on a dry
+    run and on --apply, and never enrols the list into K1-A (the #944 review failure)."""
+    assert run("staff", "import", "--apply", "--by", SIGNER).exit_code == 0
+    assert _enrol(tmp_path, "--campus", "Gurukul", "--apply", "--by", SIGNER).exit_code == 0
+    counts = "select (select count(*) from child) as children, (select count(*) from enrolment) as enrolments"
+    before = rows(counts)
+    b = ["number,name,birthday", *(f"{i},Placeholder Bee {i:02d},{born(i)}" for i in range(101, 106))]
+    for apply in ([], ["--apply", "--by", SIGNER]):
+        out = _enrol(tmp_path, "--campus", "Gurukul", "--section", "B", *apply, name="b.csv", lines=b)
+        assert out.exit_code != 0, out.output_plain
+        assert "already a class at Gurukul in section A" in out.output_plain
+        assert _classes() == [("K1", "A", "Gurukul")]
+        assert rows(counts) == before
