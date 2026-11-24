@@ -3,31 +3,23 @@
 _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 
 **Updated:** 2026-11-24 · **By:** Plan · **Model:** claude-opus-5-5
-**Milestone:** M1 nightly green (G1.1 engine) · **Branch:** plan/engine-green → plan PR (see `gh pr list --head plan/engine-green`)
+**Milestone:** M1 nightly green (G1.1 engine) + new: K1 pilot (not yet planned) · **Branch:** plan/k1-pilot (ADR 0107 only)
 
 ## State
-- #921 (adopt + 56 wireframe approvals) merged to main 24 Nov; main merged into plan/engine-green. `loop status`: all approved.
-- plan/engine-green carries: migration `20270216090000_history_skips_empty_lists.sql`, seed text on 3 statement_match bars,
-  test updates for CP-70/CP-71/ceiling unit, `icons.tsx` exempt (ADR 0106). bin/check green after the main merge.
-- The 12 "unexplained" local failures (test_deploy x8, test_python_pin, test_sorting, test_spine_provenance x2) fail
-  identically on unchanged main on this Mac (e.g. SSL CERTIFICATE_VERIFY_FAILED downloading the NCERT PDF). Local-only; ignore.
-- Expected still red on this branch: test_gates, test_settings (people.py, ticket below), test_states_and_subject (fortnight-grid).
+- Nimish asked for a K1 pilot ("fortnight 10 and 11"): educator Radhika ma'am clicks a timetable period, fills rubrics, uploads a voice note -> knowledge graph.
+- Read the K1 Google Sheet (ADR 0107): it holds K1 F1, F2, F4-F7 only. No F10/F11 found. Existing K2 tables cover most of the shape (fortnight, period, timetable_slot, plan_entry, session).
+- Nothing built. Previous work (plan/engine-green, PR #922, ticket #923 seeded on plan/t923) is unchanged and still stands.
 
 ## Next step
-1. Plan PR #922 (Auto-fix on): `loop ci 922`, merge on green.
-2. Ticket #923 (size:small) is seeded on `plan/t923` (pushed, from main): people.py reads `school.campus_grades` through
-   `settings.config`. Visible test red; 5 holdout tests in `tests/holdout/test_campus_grades_setting.py` pass today on
-   purpose (refactor guard; the last one catches `config` called without `tenant`). Next: `loop prep 923` → build → finish.
-3. Now unblocked (wireframes approved): delete the self-skipping "pictures" test at `apps/web/.../u107-my-day.spec.ts:250`
-   (plan-side test edit), and ticket `components/fortnight-grid.tsx:18` — subject labels from subject rows, not words in code.
-4. Then the browser failures (~40 specs, worst u90, u49, s4) and the data-register proof (expense / stock_move owners, G1.3).
+1. Ask Nimish the 3 open questions in docs/adr/0107-k1-pilot-sheet-findings.md (which fortnights / where is that tab; K1 confirmed; K1 period rows).
+2. Then `to-spec` -> `loop-ticket` for the K1 pilot (importer, activity mapping, period page rubrics + voice note, voice -> graph); check S3/S4/S5 wireframes cover K1.
+3. Previous queue: #922 merge on green; `loop prep 923`; fortnight-grid.tsx:18 subject labels; browser failures; data-register proof (G1.3).
 
 ## Blocked / open questions
-- None.
+- Which fortnights are "10 and 11" for K1 and where they live in the sheet (Nimish).
 
 ## Don't repeat
+- Sheet tab gid 1395547310 is `Sample_Time Table - 26-27` (F.N 4-7), not a 10/11 tab. Read via the Google Sheets connector `get_values` by range (~6k tokens per 100 rows).
 - The hook blocks the orchestrator from committing the approvals file, and from any command that names it.
-- `bin/testdb fresh` needs an empty database; make a new one rather than reusing `postgres`.
-- A second engine checkout needs `uv sync --all-extras` (plain `uv sync` leaves out pytest; a global pytest then fails on `import engine`).
-- `pytest -n` is not available here. Local fresh DB with the new migration: `…:54329/eg`.
-- Run `uv run ruff format --check tests` before stopping: the stop hook checks formatting.
+- `bin/testdb fresh` needs an empty database; make a new one. `uv sync --all-extras` for a second checkout. Run `uv run ruff format --check tests` before stopping.
+- 12 local-only failures on unchanged main (SSL download, test_deploy etc.) are not ours.
