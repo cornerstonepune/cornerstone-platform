@@ -20,6 +20,12 @@ Google Sheet `1O2qf5l7dRdVZMGfiaUWhw4KcTe8GpRErmnOrFF0uS2Q` ("K1 (Jr KG) Plannin
   A cell is the period name plus free text: what to do, workbook page numbers, YouTube links, "SHOW AND TELL", holiday and swap notes.
 - Cells are free text; a slot can hold two things (e.g. "Music \n\nAcademic 1 General Awareness ..."), and some cells are blank on holidays.
 
+## Correction (24 Nov, Nimish pointed to row 349 onwards)
+Fortnights 10 and 11 ARE in tab gid 1395547310, below the F.N 7 block: F.N 10 W1 at row 349 (23–27 Nov 2026, filled: word "Honest",
+theme "Plants (Germination - Seed to plant)", prayer Ek Onkar Gurbani; Tue 24 Nov is Guru Nanak Jayanti, a holiday; Sports Day practice
+runs through most Academic periods), F.N 10 W2 at row ~373, F.N 11 W1 at ~397, F.N 11 W2 at ~421. Only F.N 10 W1 was read cell by cell;
+whether F.N 10 W2 and F.N 11 are filled is unchecked. The pilot starts this week, so F.N 10 W1 is live now. Question 1 below is answered.
+
 ## What our system already has
 Migration `20261231090000_k2_plan_and_timetable.sql`: `fortnight`, `school_day`, `period` (per grade), `timetable_slot` (class x period x
 week A/B x weekday), `plan_entry` (a class's fortnight plan lines, `activity_id` when mapped), `session` (class, day, period, delivery
