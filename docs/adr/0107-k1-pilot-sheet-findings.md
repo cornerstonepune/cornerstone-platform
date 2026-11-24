@@ -23,8 +23,11 @@ Google Sheet `1O2qf5l7dRdVZMGfiaUWhw4KcTe8GpRErmnOrFF0uS2Q` ("K1 (Jr KG) Plannin
 ## Correction (24 Nov, Nimish pointed to row 349 onwards)
 Fortnights 10 and 11 ARE in tab gid 1395547310, below the F.N 7 block: F.N 10 W1 at row 349 (23–27 Nov 2026, filled: word "Honest",
 theme "Plants (Germination - Seed to plant)", prayer Ek Onkar Gurbani; Tue 24 Nov is Guru Nanak Jayanti, a holiday; Sports Day practice
-runs through most Academic periods), F.N 10 W2 at row ~373, F.N 11 W1 at ~397, F.N 11 W2 at ~421. Only F.N 10 W1 was read cell by cell;
-whether F.N 10 W2 and F.N 11 are filled is unchecked. The pilot starts this week, so F.N 10 W1 is live now. Question 1 below is answered.
+runs through most Academic periods), F.N 10 W2 at row ~373, F.N 11 W1 at ~397, F.N 11 W2 at ~421. All four weeks have now been read.
+F.N 10 W1 and W2 are fully planned. F.N 11 W1 (7-11 Dec) and W2 (14-18 Dec, Evaluation Week + Sports Day rehearsal) have dates, word, good deed,
+prayer, events and rhyme names but most Academic cells are only the period name: the educator must fill them before 7 Dec, and the importer
+must keep an empty cell as 'not planned yet', never invent text. Some cells hold two periods (e.g. 'Clay ... Academic 2 English ...'); the importer
+must split them by the period names inside the cell. Nimish confirmed K1 is a section (Neev) and Radhika is its educator. The pilot starts this week, so F.N 10 W1 is live now. Questions 1 and 2 below are answered.
 
 ## What our system already has
 Migration `20261231090000_k2_plan_and_timetable.sql`: `fortnight`, `school_day`, `period` (per grade), `timetable_slot` (class x period x
