@@ -119,6 +119,25 @@ def load(
         )
 
 
+@timetable_app.command("load-k1")
+def load_k1(
+    week: Path = typer.Option(..., help="one K1 week block (F.N n Week w) as CSV"),
+    calendar: Path = typer.Option(..., help="the Pre-Primary calendar tab as CSV"),
+    section: str = typer.Option(..., help="the section of the class on this database"),
+    grade: str = typer.Option(..., help="the grade code of the class, as in the grade table"),
+    year: str = typer.Option("2026-27"),
+    sql: Path | None = typer.Option(
+        None, "--sql", help="write the rows as one SQL file here, to run elsewhere in one transaction"
+    ),
+    apply: bool = typer.Option(False, "--apply", help="write to this database (otherwise a dry run)"),
+    reason: str | None = typer.Option(
+        None, "--reason", help="why, when rows reach a fortnight that is frozen (without it they are refused)"
+    ),
+) -> None:
+    """Dry run unless --apply: prints counts, never the school's text. Safe to run twice. As `load`, one week file."""
+    raise NotImplementedError
+
+
 DRAFT_WORDS = {
     "rolled_forward": "rolled forward", "draft": "waiting for approval", "approved": "approved",
     "empty": "no lessons: the fortnight has no school day on record for its frame",
