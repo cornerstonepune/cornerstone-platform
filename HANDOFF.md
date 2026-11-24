@@ -13,6 +13,8 @@ _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 - The rescuer left two untracked probe tests (test_zz_probe_939*.py) in the 939 build folder: not committed (outside ticket files); `loop clean 939` removes them.
 - Local test DBs: postgres rebuilt fresh 24 Nov from plan/fn10-rubric-words; t939 built from plan/t939 (drop it after #939 merges). Run `git worktree prune` for this session's scratch worktrees.
 
+- Gurukul K1 Children List received from Nimish 24 Nov: 21 children, saved OUTSIDE git at `/Users/nimishshah/cornerstone/private/k1-gurukul-children-2026.csv` (no birthdays; rows 18–19 first name only). Enrol only after #939 merges (else the class lands at Neev); dry-run first; Nimish runs `--apply` himself. Never copy names into git/logs/issues.
+
 ## Next step
 1. Nimish's go → merge #942 → after migrate-live runs, read back on live: 15 rows with 4 words, 2 rows with K1 in also_bands, 6 new K1 activities; tick G6.6.
 2. PR #943 (#939): `loop ci 943`, reviewer, merge.
