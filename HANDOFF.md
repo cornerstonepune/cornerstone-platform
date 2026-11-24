@@ -3,24 +3,26 @@
 _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 
 **Updated:** 2026-11-24 · **By:** Plan · **Model:** claude-opus-5-5
-**Milestone:** M1 nightly green (G1.1 engine) + new: K1 pilot (not yet planned) · **Branch:** plan/k1-pilot (ADR 0107 + this file; no PR yet)
+**Milestone:** M1 nightly green + K1 pilot (surveyed, not yet ticketed) · **Branch:** plan/k1-pilot (ADR 0107, ADR 0108; no PR yet)
 
 ## State
-- Nimish asked for a K1 pilot: K1 is a section at Neev, Radhika ma'am is its educator. She opens the timetable, clicks a period, fills rubrics, uploads a voice note -> knowledge graph.
-- K1 sheet `1O2qf5l7dRdVZMGfiaUWhw4KcTe8GpRErmnOrFF0uS2Q`, tab gid 1395547310 `Sample_Time Table - 26-27`: F.N 10 W1 (23-27 Nov, from row 349) and W2 (30 Nov-4 Dec) are fully planned; F.N 11 W1 (7-11 Dec) and W2 (14-18 Dec) are mostly empty frames (dates, word, events only). Details: docs/adr/0107-k1-pilot-sheet-findings.md.
-- Existing K2 tables cover the shape: fortnight, school_day, period, timetable_slot, plan_entry, session (migration 20261231090000).
-- Tests: `bin/check` = 72 passed, 4 skipped (DB checks need TEST_DATABASE_URL). Nothing built. Earlier work (PR #922 engine-green, ticket #923 on plan/t923) unchanged.
+- K1 pilot survey done, written in docs/adr/0108-k1-pilot-plan-reuses-the-k2-path.md. Rubric entry + voice note already exist on the approved S3 page: no new wireframe.
+- Live gaps: no K1 class/children (only K2 A); K1 activities have no level words (0/634 level_0); sheet says "Gurukul - K1" but config puts K1 at Neev.
+- Real F.N 10 W1 cells read (sheet rows 349-372, cols A:H): first line of a cell is the period name, then subject, then text.
+- Nothing built; no issues opened; PROJECT.md not yet changed.
 
 ## Next step
-1. Plan the K1 pilot: `to-spec` -> `loop-ticket`. Default: K1 gets its own `period` rows. Importer splits two-period cells (e.g. "Clay ... Academic 2 English ...") and keeps empty cells as "not planned yet".
-2. Check wireframes S3/S4/S5 (period, notes, confirm) cover K1 periods; if not, new wireframes need Nimish's own sign-off before any frontend code.
-3. Then: period page rubrics + voice note upload -> engine -> evidence_event -> child graph (W3 path exists).
-4. Old queue: merge #922 on green; `loop prep 923`; fortnight-grid.tsx:18 subject labels; browser failures; data-register proof (G1.3).
+1. Add the K1 milestone to PROJECT.md §5 with yes/no goals + its ADR (0108 already covers the why; give it the GK1 goals).
+2. Tickets in ADR 0108 order: K1 reader + `engine timetable load-k1` (fixture CSV from rows 349-372, no names in it); `Session.planned` in writer; `engine enrol` `--grade`; K1 form mark -> evidence_event check.
+3. Seed `plan/t<N>` per ticket; add each visible test file to packages/engine/tests/core.txt (PR CI runs only `-m core` + holdout); prove red; push; open plan PR; `loop ci`.
 
-## Blocked / open questions
-- None. F.N 11 academic cells are empty in the sheet: Radhika must fill them before 7 Dec.
+## Blocked / open questions (for Nimish, not blocking backend tickets)
+- Which campus is K1 on: Gurukul (sheet title) or Neev (school.campus_grades, #891)?
+- Who writes the K1 activity level words (rubric)? Until then marks show "Not written".
+- Two-part cells: ADR 0108 chose one lesson per time slot with parts as plan lines; confirm.
+- Radhika's Children List CSV (outside git) and her email, to run `engine enrol --grade K1`.
 
 ## Don't repeat
-- Read the sheet by range with the Sheets connector `get_values` (~6k tokens per 100 rows); read ALL columns, not only column A, before saying a week is unchecked.
-- ADRs need a `Goal:` line (test_promises). Writing the word for sign-off commands inside a shell command trips the lane hook; keep such words out of commands. `bin/testdb fresh` needs an empty database. Run `uv run ruff format --check tests` before stopping.
-- 12 local-only failures on unchanged main (SSL download, test_deploy etc.) are not ours.
+- Read the sheet by range with the Sheets connector `get_values`; read ALL columns.
+- ADRs need a `Goal:` line. Keep sign-off command words out of shell commands (lane hook). Run `uv run ruff format --check tests` before stopping.
+- `enrolment` uses `class_id`, `activity_skill` uses `activity_code` (not `_id`).
