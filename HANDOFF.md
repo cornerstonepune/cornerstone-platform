@@ -3,24 +3,23 @@
 _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 
 **Updated:** 2026-11-24 · **By:** Coordinator (loop:run) · **Model:** claude-opus-5-5
-**Milestone:** M6 K1 pilot · **Branch:** plan/coord-handoff · #925 (PR #929), #926 (PR #933), #934 (PR #935) merged
+**Milestone:** M6 K1 pilot · **Branch:** plan/coord-handoff · #937 merged (builders can run tests)
 
 ## State
-- ADR 0108 tickets 1–3 done: K1 week reader + `load-k1`, `Session.planned`, `engine enrol class --grade` (reviewer PASS, CI green).
-- #923 (people.py `_class_ids` reads `school.campus_grades` via `settings.config`): code committed in `.loop/wt/923` (51bf0d530), **2 of 3 attempts used, 1 left, no PR yet**. Attempt 1 failed only on the flaky test (#936); attempt 2 failed only because the builder wrote "Blocked: Bash was denied" in `docs/loop/handoff/923.md`, not on any test.
-- Builders under `loop build` (dontAsk + prefix allow-list) could not run tests on #934 or #923. Likely cause, unconfirmed: DB tests need `TEST_DATABASE_URL` (conftest), and `TEST_DATABASE_URL=… uv run` / `export …` match no allowed prefix. Builder logs: `~/.claude/projects/-Users-nimishshah-cornerstone-cornerstone-platform--loop-wt-923/` (look for refused Bash calls).
-- Flaky core test filed as #936 (`test_a_scan_read_whole`, KeyError 'missing'): passes on main, fails ~1 in 2 in build folders.
+- Builder Bash refusals on #934/#923 confirmed from the wt-923 log, two causes (both in LESSONS.md via #937): (1) test_command began `export …`, not on `loop build`'s allow-list → fixed by #937 (conftest defaults to the local test DB; .loop.json no export). (2) loop plugin `guard.py` reads any `>` (incl. `2>&1`) as a write and blocks commands naming an existing test file. Not fixed (plugin, not this repo).
+- #923: attempt 3 passed locally (229 core); PR #938 CI GREEN. Reviewer subagent was started on #938 when the session ended: result unknown. Next: rerun reviewer if needed → `gh pr merge 938 --squash --delete-branch` → `loop clean 923`.
+- `.loop/wt/923` predates #937 (old conftest): `loop build/finish 923` there needed `TEST_DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:54329/postgres` in the coordinator's env. Builders don't commit (denied); `loop finish` commits the ticket's files.
+- A `loop plan` job was running at session end: campus_grades lists K1 at Gurukul (ADR 0109), drop the stale "Gurukul or Neev?" open question, tick G6.1–G6.3. Check `gh pr list` for its PR.
+- Nimish (24 Nov): Gurukul is decided (ADR 0109; stop asking). He will sign off the rubric words: `docs/loop/notes/fn10-rubric-draft.md` sent to him. He will send the Children List CSV himself. He wants the K1 pilot live.
 
 ## Next step
-1. Read the wt-923 builder log to confirm which Bash calls were refused. If it's the env var: one `loop plan` job so tests find the local DB without an env prefix (e.g. conftest falls back to `postgresql://postgres:postgres@127.0.0.1:54329/postgres` when neither URL is set), merge, then `gh pr update-branch`/re-prep #923.
-2. #923 last attempt: add to its Don't: "work is committed; run Done-when as written from the build folder; if green, delete the Blocked section". `loop prep 923` → `loop build 923` → `loop finish 923` → reviewer → merge.
-3. Small follow-up ticket (reviewer on #935): `people.py:243` logs a dry run as "engine enrol k2 (dry run)" for any grade; stale "enrol k2" docstrings in people.py:1, signer.py:3, roster.py:130, tests/rows.py:427/449.
-4. Then ADR 0108 ticket 4 (K1 form mark → activity_observation + evidence_event): `loop plan` seed.
-5. Merge open handoff PR #931 (`plan/handoff`, checked out in another session's worktree) or close it in favour of this branch.
-
-## Blocked / open questions (Nimish; block going live, not tickets)
-- K1 campus: Gurukul (sheet title) or Neev (`school.campus_grades`)? Radhika sign-off on the F.N 10 rubric words (`docs/loop/notes/fn10-rubric-draft.md`)? Two-part cells reading B — confirm. Radhika's Children List CSV + email (Nimish runs enrol himself).
+1. Merge #938 after reviewer PASS; merge the campus plan PR.
+2. When Nimish signs off the rubric: `loop plan` to seed the level words (and his yes/no on sharing ACT-K2-M0018 / ACT-K2-0449 with K1).
+3. ADR 0108 ticket 4 (form mark → activity_observation + evidence_event, G6.4) via `loop plan`, then build.
+4. Small ticket: `people.py:243` dry-run label "engine enrol k2"; stale "enrol k2" docstrings (people.py:1, signer.py:3, roster.py:130, tests/rows.py:427/449).
+5. G6.5: load F.N 10 W1+W2 on live for Gurukul K1 (after the CSV enrol). Not done; F.N 10 runs 23 Nov – 4 Dec.
+6. Close #931 (plan/handoff) in favour of this branch, or merge it.
 
 ## Don't repeat
-- Don't spend a ticket attempt re-running `loop finish` on a flaky test without reading why it failed: my grep filter hid attempt 2's real reason.
-- One deliverable per `loop plan` job. Sheet merges only via get_spreadsheet `fields: sheets.merges`. No grade code literal in Python (`test_grades`).
+- Don't put `export`/`VAR=` prefixes in .loop.json commands, or `2>&1` beside test paths in builder briefs.
+- Don't re-ask Nimish K1's campus. Read a failing `loop finish` fully before retrying; flaky #936 exists.
