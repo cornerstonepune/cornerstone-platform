@@ -84,6 +84,11 @@ def enrol_class(
     section: str = typer.Option(
         "A", "--section", help="The class's own section in the grade (the A of K2-A)"
     ),
+    campus: str = typer.Option(
+        None,
+        "--campus",
+        help="The campus of the class, when the grade is at more than one (K1: Gurukul or Neev)",
+    ),
 ) -> None:
     """Load a grade's class and its children from the Children List, with their roll numbers (ADR 0108)."""
     who = need_by(apply, by)
@@ -104,6 +109,7 @@ def enrol_class(
                 teacher,
                 override_reason,
                 section.strip(),
+                campus,
             )
         except ValueError as e:
             raise typer.BadParameter(str(e)) from e

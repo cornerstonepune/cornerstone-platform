@@ -43,13 +43,24 @@ def test_enrol_without_a_grade_refuses(tmp_path):
 def test_a_k1_class_and_its_children_are_enrolled(tmp_path, school):  # noqa: F811
     assert run("staff", "import", "--apply", "--by", SIGNER).exit_code == 0
     done = run(
-        "enrol", "class", listing(tmp_path), "--grade", "K1", "--apply", "--by", SIGNER, "--from", FROM
-    )
+        "enrol",
+        "class",
+        listing(tmp_path),
+        "--grade",
+        "K1",
+        "--campus",
+        "Gurukul",
+        "--apply",
+        "--by",
+        SIGNER,
+        "--from",
+        FROM,
+    )  # K1 is at both campuses (ADR 0109): the pilot class is Gurukul's
     assert done.exit_code == 0, done.output_plain
     classes = rows(
         "select c.grade_code, c.section, p.name as campus from school_class c join campus p on p.id = c.campus_id"
     )
-    assert [(c["grade_code"], c["section"], c["campus"]) for c in classes] == [("K1", "A", "Neev")]
+    assert [(c["grade_code"], c["section"], c["campus"]) for c in classes] == [("K1", "A", "Gurukul")]
     kids = rows(
         "select e.roll_no from enrolment e join school_class c on c.id = e.class_id"
         " where c.grade_code = 'K1' and e.to_date is null"
