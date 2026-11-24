@@ -19,7 +19,7 @@ WEB_TESTS = ENGINE.parent.parent / "apps" / "web" / "tests"
 
 # The budget: about 350 tests across the engine and the browser, and under 10 minutes of wall time on CI. The browser's
 # share is counted by tag: one `@core` per test title.
-ENGINE_CORE_MAX = 230
+ENGINE_CORE_MAX = 231  # +1 ADR 0111: the F.N 10 words migration runs on live
 BROWSER_CORE_MAX = 120
 CORE_MAX = 350
 

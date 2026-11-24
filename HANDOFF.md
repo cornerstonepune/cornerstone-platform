@@ -2,32 +2,24 @@
 
 _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 
-**Updated:** 2026-11-24 · **By:** Planner (loop-guard fix) · **Model:** claude-opus-5-5
-**Milestone:** M6 K1 pilot · **Branch:** plan/handoff-guard-930 · #927, #928, #930 merged · seed `plan/t925` pushed; build PR #929 open
+**Updated:** 2026-11-24 · **By:** Coordinator (loop:run, side session) · **Model:** claude-opus-5-5
+**Milestone:** M6 K1 pilot · **Branch:** plan/coord-handoff · stopped at 150k context
 
 ## State
-- loop-guard fix merged (PR #930): builder rules now read only the builder's own non-merge commits after Plan-base that are not on main, so main merged into a build branch no longer counts as builder work. Test `packages/engine/tests/test_loop_guard.py` (nightly only, not `core`; red on old guard, green on fix, locally). Same bug is in the loop plugin template `templates/.github/loop/check_pr.py` (fix upstream too).
-- PROJECT.md §5 has M6 (G6.1–G6.5); ADR 0107 + 0108 (survey, importer rules). Issues #925 (K1 reader + `load-k1`), #926 (`Session.planned`, blocked by #925).
-- Rubric marking is already on approved S3 (period page, child cards vs `activity.level_0..3`): no new wireframe. No K1 class on live yet.
-- Fixture `supabase/seed/k1_tabs_2026_11_24/fn10_w1.csv` (sheet rows 349–372, merges filled).
-- Seed `plan/t925` (from plan/k1-pilot): `k1_week.py` skeleton, `load-k1` stub, `Vocabulary.k1`, seed vocab `meal` + `k1`; `tests/test_k1_week.py` (7) + `tests/holdout/test_k1_week_hidden.py` (6) red against the stub, green against the oracle `docs/loop/notes/k1-week-oracle.py.txt`. `bin/check` passes.
-- `--grade` required on `load-k1` (`test_grades`). Visible K1 tests are nightly only (core budget 230 full); hidden tests run on every PR.
+- **PR #942** (plan/fn10-rubric-words, ADR 0111): signed-off F.N 10 words on 15 rows, K1 added to also_bands of ACT-K2-M0018 + ACT-K2-0449, six new K1 activities (their words await Nimish's OK, docs/loop/notes/fn10-new-activity-words.md). CI GREEN. Reviewer PASS (non-blocking: test doesn't prove pre-filled words survive; notice counts rows not fields; a repo-only rebuild lacks the 15 rows' words). Unverified on live: ACT-K2-M0018 exists, ACT-K2-0449 has level_0; the G6.6 read-back covers both.
+- Gurukul K1 Children List CSV received (21 children, outside git under ~/cornerstone/private/). Enrol only after #939 merges; dry-run first, Nimish runs --apply. Never copy names anywhere.
+- **Merging to main = going live**: .github/workflows/migrate.yml applies live's missing migrations after main's CI, then releases engine/site. So merging #942 puts the words on live. .loop.json release has require_go: true, so get Nimish's one-line go before merging #942.
+- **#939** (enrol class --campus): attempts 1-3 FAILED only because the shared test DB lacked plan/t939's seed (K1 at both campuses) and the builder's handoff kept a Blocked section (loop finish refuses any Blocked section). Fable rescue passed locally (core 229 passed). `loop finish 939 --rescue` was running at session end with TEST_DATABASE_URL pointing at db t939: check `gh pr list` for its PR, then loop ci, reviewer, merge, `loop clean 939`.
+- The rescuer left two untracked probe tests (test_zz_probe_939*.py) in the 939 build folder: not committed (outside ticket files); `loop clean 939` removes them.
+- Local test DBs: postgres rebuilt fresh 24 Nov from plan/fn10-rubric-words; t939 built from plan/t939 (drop it after #939 merges). Run `git worktree prune` for this session's scratch worktrees.
 
-## Nimish, 24 Nov (ADR 0109) — takes priority
-- Pilot is **Gurukul** K1 (K1 is at Neev and Gurukul). Focus: only F.N 10's activities; get their rubric words sorted first.
-- Rubric draft done: `docs/loop/notes/fn10-rubric-draft.md` — 15 activities with DRAFT level_0..3 words, marked for Radhika/coordinator sign-off. Nothing seeded.
-- Matches (ADR 0109 table updated): 0665 + 1146 confirmed; new K1-0782 (Block Room art & form), K2-M0018 (clay, K2 band), K2-0449 (Khari Kamai, K2 band, has words). 6 lessons have no activity: Sun & Moon rhyme, number tracing 5/6, trace R/D, Hindi farm animals, Hindi Swar ए, Memory Drawing.
-- Next: Nimish sends the sheet to Radhika; after sign-off, one plan job seeds the words (+ `also_bands` K1 on the two K2 rows if she agrees) and adds the 6 missing activities.
-
-## Next step (after the rubric job)
-1. `gh pr update-branch 929` so its CI runs the new guard (a plain re-run reuses the old merge ref) → reviewer → merge.
-2. (#925 build is PR #929.)
-3. One narrow `loop plan` job: seed `plan/t926` only (`Session.planned: bool = True`; `tests/test_k1_planned.py` + holdout DB row check).
-4. Then one job each for tickets 3 (`engine enrol --grade`) and 4 (K1 form mark → activity_observation + evidence_event).
-
-## Blocked / open questions (Nimish; block going live, not tickets 1–2)
-- K1 campus: Gurukul (sheet title) or Neev (`school.campus_grades`)? Radhika sign-off on the F.N 10 draft words? Two-part cells reading B (one session, coordinator picks activity) — confirm. Radhika's Children List CSV + email (Nimish runs enrol himself).
+## Next step
+1. Nimish's go → merge #942 → after migrate-live runs, read back on live: 15 rows with 4 words, 2 rows with K1 in also_bands, 6 new K1 activities; tick G6.6.
+2. #939 PR: CI, reviewer, merge.
+3. ADR 0108 ticket 4 (form mark → activity_observation + evidence_event, G6.4) via loop plan, then build.
+4. Small ticket: people.py:243 dry-run label "engine enrol k2"; stale "enrol k2" docstrings (people.py:1, signer.py:3, roster.py:130, tests/rows.py:427/449).
+5. G6.5: load F.N 10 W1+W2 on live for Gurukul K1 after the CSV enrol. Close #931 in favour of this branch.
 
 ## Don't repeat
-- One deliverable per `loop plan` job, briefed with settled decisions: two whole-milestone jobs hit CONTEXT FULL (LESSONS.md).
-- Sheet merges only visible via get_spreadsheet `fields: sheets.merges`. ADR Goal lines: `Goal: none — why`. Run `uv run ruff format --check tests engine`. No grade code literal in Python (`test_grades`).
+- A ticket that changes a seed needs a test DB built from its seed branch: build a separate DB (bin/testdb fresh …/t<N> from a scratch worktree of plan/t<N>) and pass TEST_DATABASE_URL to loop build/finish, before attempt 1. Tell the builder to delete its Blocked section once tests pass.
+- Don't put export/VAR= in .loop.json commands or 2>&1 beside test paths in briefs. Don't re-ask K1's campus.

@@ -21,6 +21,11 @@ from engine.core import db
 sys.modules["tests"] = types.ModuleType("tests")
 sys.modules["tests"].__path__ = [str(Path(__file__).parent)]
 
+# On a Mac that names no database at all, the copy `bin/testdb` builds, so a loop builder needs no env prefix to run the
+# tests. A blank one (bin/check) means "no database", and CI names its own or none (engine-checks), so neither gets it.
+if not os.environ.get("CI") and "TEST_DATABASE_URL" not in os.environ and "DATABASE_URL" not in os.environ:
+    os.environ["TEST_DATABASE_URL"] = "postgresql://postgres:postgres@127.0.0.1:54329/postgres"
+
 if os.environ.get("TEST_DATABASE_URL"):
     try:
         os.environ["DATABASE_URL"] = db.local_copy()
