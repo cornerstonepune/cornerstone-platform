@@ -225,8 +225,8 @@ def _class_ids(
         )
     c = conn.execute(
         "select id from school_class where tenant_id = %s and academic_year_id = %s and grade_code = %s"
-        " and section = %s",
-        (tenant, y["id"], grade, letter),
+        " and section = %s and campus_id = %s",
+        (tenant, y["id"], grade, letter, campus_id),
     ).fetchone()
     if c is None:
         out.lines.append(f"  would add the class {grade}-{letter} for {year}")
