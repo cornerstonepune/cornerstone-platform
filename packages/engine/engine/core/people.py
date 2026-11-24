@@ -166,7 +166,26 @@ def _grade(conn: db.Conn, tenant: Any, name: str) -> str:
 def _campus_id(conn: db.Conn, tenant: Any, grade: str, named: str | None) -> Any:
     """The id of the campus a class of `grade` goes to: the one named (`--campus`), else the one campus the setting
     `school.campus_grades` gives the grade, else the only campus. Two campuses holding the grade and none named refuses."""
-    raise NotImplementedError
+    campuses = conn.execute(
+        "select id, name from campus where tenant_id = %s order by name", (tenant,)
+    ).fetchall()
+    names = settings.config(conn, "school.campus_grades", {}, tenant)  # {campus name: [grade, ...]}
+    if named is not None:
+        found = [c for c in campuses if c["name"].lower() == named.strip().lower()]
+        if not found:
+            raise ValueError(f"no campus called {named}")
+        if names.get(found[0]["name"]) is not None and grade not in names[found[0]["name"]]:
+            raise ValueError(f"{named} does not hold grade {grade} in the setting school.campus_grades")
+        return found[0]["id"]
+    held = [c for c in campuses if grade in names.get(c["name"], [])]
+    if len(held) > 1:
+        raise ValueError(
+            f"grade {grade} is at {' and '.join(sorted(c['name'] for c in held))}: name the campus with --campus"
+        )
+    held = held or (campuses if len(campuses) == 1 else [])
+    if not held:
+        raise ValueError(f"no campus holds grade {grade}: name it in the setting school.campus_grades")
+    return held[0]["id"]
 
 
 def _class_ids(
@@ -180,12 +199,7 @@ def _class_ids(
     campus: str | None = None,
 ) -> Any:
     """The K2 class of that year, made when it is not there. → its id, or None on a dry run that has no class yet."""
-    campuses = conn.execute("select id, name from campus where tenant_id = %s", (tenant,)).fetchall()
-    names = settings.config(conn, "school.campus_grades", {}, tenant)  # {campus name: [grade, ...]}
-    held = [c for c in campuses if grade in names.get(c["name"], [])]
-    campus = held or (campuses if len(campuses) == 1 else [])
-    if len(campus) != 1:
-        raise ValueError(f"no campus holds grade {grade}: name it in the setting school.campus_grades")
+    campus_id = _campus_id(conn, tenant, grade, campus)
     y = conn.execute(
         "select id from academic_year where tenant_id = %s and label = %s", (tenant, year)
     ).fetchone()
@@ -199,6 +213,15 @@ def _class_ids(
             conn,
             "insert into academic_year (tenant_id, label, starts_on, ends_on) values (%s,%s,%s,%s) returning id",
             (tenant, year, date(start, 4, 1), date(start + 1, 3, 31)),
+        )
+    other = conn.execute(
+        "select k.name from school_class c join campus k on k.id = c.campus_id"
+        " where c.tenant_id = %s and c.academic_year_id = %s and c.label = %s and c.campus_id <> %s",
+        (tenant, y["id"], grade, campus_id),
+    ).fetchone()
+    if other:
+        raise ValueError(
+            f"{grade} for {year} is already a class at {other['name']}: a school year has one class of a name (ADR 0110)"
         )
     c = conn.execute(
         "select id from school_class where tenant_id = %s and academic_year_id = %s and grade_code = %s"
@@ -214,7 +237,7 @@ def _class_ids(
             conn,
             "insert into school_class (tenant_id, campus_id, academic_year_id, grade_code, section, label)"
             " values (%s,%s,%s,%s,%s,%s) returning id",
-            (tenant, campus[0]["id"], y["id"], grade, letter, grade),
+            (tenant, campus_id, y["id"], grade, letter, grade),
         )
     return c["id"]
 
@@ -251,7 +274,9 @@ def enrol_k2(
     rows = read_list(path, today, out)
     tenant = _tenant(conn)
     grade = _grade(conn, tenant, grade_name)
-    class_id = _class_ids(conn, tenant, grade, year_label(since), letter, apply and not out.refused, out)
+    class_id = _class_ids(
+        conn, tenant, grade, year_label(since), letter, apply and not out.refused, out, campus
+    )
     actor = who or "engine enrol k2 (dry run)"
     plan: list[tuple[Row, Any, str]] = []  # the row, its existing child (or None), what to do
     for r in rows:
