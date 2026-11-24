@@ -18,6 +18,7 @@ from engine.core import db, settings
 from engine.w1_bank.cli_map import staff_of
 from engine.w2_print import cli_plan_author, cli_plan_link, cli_tt_hand, tt_need
 from engine.w2_print import fortnight_cycle as fc
+from engine.w2_print import k1_week as k1
 from engine.w2_print import k2_timetable as tt
 from engine.w2_print import k2_timetable_load as ld
 from engine.w2_print import k2_timetable_sql as sq
@@ -117,6 +118,41 @@ def load(
         typer.echo(
             f"  wrote {sql} ({len(plan.sessions)} sessions); run it in one transaction, it prints counts before and after"
         )
+
+
+@timetable_app.command("load-k1")
+def load_k1(
+    week: Path = typer.Option(..., help="one K1 week block (F.N n Week w) as CSV"),
+    calendar: Path = typer.Option(..., help="the Pre-Primary calendar tab as CSV"),
+    section: str = typer.Option(..., help="the section of the class on this database"),
+    grade: str = typer.Option(..., help="the grade code of the class, as in the grade table"),
+    year: str = typer.Option("2026-27"),
+    sql: Path | None = typer.Option(
+        None, "--sql", help="write the rows as one SQL file here, to run elsewhere in one transaction"
+    ),
+    apply: bool = typer.Option(False, "--apply", help="write to this database (otherwise a dry run)"),
+    reason: str | None = typer.Option(
+        None, "--reason", help="why, when rows reach a fortnight that is frozen (without it they are refused)"
+    ),
+) -> None:
+    """Dry run unless --apply: prints counts, never the school's text. Safe to run twice. As `load`, one week file."""
+    with ExitStack() as stack:
+        conn = _connect(stack)
+        if apply and conn is None:
+            typer.echo(
+                "There is no database to write to here: nothing was applied. Use --sql for a file to run elsewhere."
+            )
+            raise typer.Exit(1)
+        digests = {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in (week, calendar)}
+        vocab = _vocabulary(conn)
+        plan = k1.read_k1_week_csv(week.read_text(), vocab, ld.read_calendar_csv(calendar.read_text(), vocab))
+        source = f"{week.name} sha256:{digests[week.name][:12]}"
+        target = ld.Target(grade, section, year, db.tenant_slug() if conn else "", source)
+        counted, linked = _run(conn, plan, target, apply, reason) if conn else (None, None)
+    _report(plan, counted, linked, apply, f"K1 week {week.name}, {grade} {section} {year}")
+    if sql:
+        sql.write_text(sq.sql_file(plan, target, digests))
+        typer.echo(f"  wrote {sql} ({len(plan.sessions)} sessions); run it in one transaction")
 
 
 DRAFT_WORDS = {
