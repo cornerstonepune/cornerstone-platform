@@ -90,12 +90,14 @@ def tables(load: ld.Load, t: ld.Target) -> list[tuple[str, sql.Composed]]:
             " = regexp_replace(lower(v.t), '[^a-z0-9]+', '', 'g')) act on true\non conflict do nothing"
         ).format(g=g, rows=_values(rows))))  # fmt: skip
     if load.sessions:
-        rows = [(s.day, s.start, s.subject, s.key, s.ord, s.fortnight, s.text) for s in load.sessions]
+        rows = [
+            (s.day, s.start, s.subject, s.key, s.ord, s.fortnight, s.text, s.planned) for s in load.sessions
+        ]
         out.append(("session", S(
             "insert into session (tenant_id, school_class_id, school_day_id, period_id, subject_code, kind, state, planned,"
             " plan_entry_id, text)\nselect x.tenant, x.klass, d.id, p.id, v.sub, coalesce(r.cell, case when v.sub is null"
-            " then 'fixed' else 'subject' end), 'planned', true, pe.id, v.t"
-            " from k2_ctx x cross join (values\n  {rows}\n) as v(d, st, sub, k, o, n, t)\n"
+            " then 'fixed' else 'subject' end), 'planned', v.pl::boolean, pe.id, v.t"
+            " from k2_ctx x cross join (values\n  {rows}\n) as v(d, st, sub, k, o, n, t, pl)\n"
             "join school_day d on d.campus_id = x.campus and d.on_date = v.d::date\n"
             "join period p on p.tenant_id = x.tenant and p.grade_code = {g} and p.starts_at = v.st::time\n"
             "left join fortnight f on f.academic_year_id = x.year and f.number = v.n::int\n"
