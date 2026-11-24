@@ -1,0 +1,151 @@
+{
+  "grade": "K1",
+  "about": "F.N 10 lessons with no activity row (ADR 0111). Level words drafted by a model, awaiting Nimish's OK (docs/loop/notes/fn10-new-activity-words.md). Sheet 1O2qf5l7dRdVZMGfiaUWhw4KcTe8GpRErmnOrFF0uS2Q, tab Sample_Time Table - 26-27: F.N 10 W1 starts at row 349 (repo copy supabase/seed/k1_tabs_2026_11_24/fn10_w1.csv, line 1 = row 349), W2 at about row 373.",
+  "new_los": [],
+  "rows": [
+    {
+      "ref": "K1-F001",
+      "name": "The Sun And The Moon",
+      "subject_code": "ENG",
+      "unit": "Rhymes",
+      "format": "performance",
+      "steps": [
+        "Suggested: Show the sun and moon props and say the rhyme once with actions.",
+        "Suggested: Say it line by line and let the children repeat each line with the actions.",
+        "Suggested: Sing it together with the props, then ask which one we see in the day and which at night."
+      ],
+      "materials": "Sun and moon props (available in school)",
+      "lo_codes": [],
+      "needs_link": true,
+      "levels": {
+        "0": "does not join the group for the rhyme",
+        "1": "listens to the rhyme and watches the props",
+        "2": "sings a few lines and does some of the actions with the props",
+        "3": "sings the whole rhyme with actions and tells which comes in the day and which at night"
+      },
+      "source": {"sheet": "1O2qf5l7dRdVZMGfiaUWhw4KcTe8GpRErmnOrFF0uS2Q", "tab": "Sample_Time Table - 26-27", "cell": "B363"},
+      "confidence": "low",
+      "note": "F.N 10 W1 Rhymes P1 (B363), P2 (C365, E364). Level words awaiting Nimish's OK (ADR 0111)."
+    },
+    {
+      "ref": "K1-F002",
+      "name": "Introduction to number tracing 5 and 6",
+      "subject_code": "NUM",
+      "unit": "Maths",
+      "format": "practice",
+      "steps": [
+        "Suggested: Show the number 5 and count five objects together.",
+        "Suggested: Trace 5 in the air and on the board, then let the children trace it on C.W Pg 29.",
+        "Suggested: Do the same for 6, then let the children write each number once on their own."
+      ],
+      "materials": "Maths C.W book (Pg 29), crayons or pencils",
+      "lo_codes": [],
+      "needs_link": true,
+      "levels": {
+        "0": "is not paying attention in the class",
+        "1": "sits & tries to pay attention while the educator shows the numbers",
+        "2": "traces 5 and 6 but goes outside the dotted lines",
+        "3": "traces 5 and 6 neatly on the dotted lines and writes them on own"
+      },
+      "source": {"sheet": "1O2qf5l7dRdVZMGfiaUWhw4KcTe8GpRErmnOrFF0uS2Q", "tab": "Sample_Time Table - 26-27", "cell": "D364"},
+      "confidence": "low",
+      "note": "F.N 10 W1 Academic 2 Math, tracing 5 (D364); 6 follows in W2. Level words awaiting Nimish's OK (ADR 0111)."
+    },
+    {
+      "ref": "K1-F003",
+      "name": "Trace and write R and D (combination lines)",
+      "subject_code": "ENG",
+      "unit": "English",
+      "format": "practice",
+      "steps": [
+        "Suggested: Show R on the board and say which lines make it: a standing line, a curve and a slanting line.",
+        "Suggested: Let the children trace R on C.W Pg 53, then write it on their own.",
+        "Suggested: Do the same for D with a standing line and a curve."
+      ],
+      "materials": "English C.W book (Pg 53), pencils",
+      "lo_codes": [],
+      "needs_link": true,
+      "levels": {
+        "0": "is unwilling to sit for the class",
+        "1": "concentrates & observes the educator writing R and D",
+        "2": "traces R and D but the combination lines are not neat",
+        "3": "traces and writes R and D neatly with the right combination lines"
+      },
+      "source": {"sheet": "1O2qf5l7dRdVZMGfiaUWhw4KcTe8GpRErmnOrFF0uS2Q", "tab": "Sample_Time Table - 26-27", "cell": "B364"},
+      "confidence": "low",
+      "note": "F.N 10 W1 Writing - combination lines, Trace and Write R, Pg 53 (B364); D follows in W2. Level words awaiting Nimish's OK (ADR 0111)."
+    },
+    {
+      "ref": "K1-F004",
+      "name": "Name of farm animals",
+      "subject_code": "HIN",
+      "unit": "Hindi",
+      "format": "discussion/circle",
+      "steps": [
+        "Suggested: Show pictures of a cat, dog, cow, horse and goat and say each one's name in Hindi.",
+        "Suggested: Point to each picture and let the children say the Hindi name back.",
+        "Suggested: Let the children colour the picture on Hindi W.B Pg 15 and say the names of the animals they coloured."
+      ],
+      "materials": "Animal pictures, Hindi W.B (Pg 15), crayons",
+      "lo_codes": [],
+      "needs_link": true,
+      "levels": {
+        "0": "is unwilling to sit for the class",
+        "1": "sits & listens carefully in the class",
+        "2": "says the Hindi names of a few farm animals",
+        "3": "says the Hindi names of cat, dog, cow, horse and goat and colours the workbook picture"
+      },
+      "source": {"sheet": "1O2qf5l7dRdVZMGfiaUWhw4KcTe8GpRErmnOrFF0uS2Q", "tab": "Sample_Time Table - 26-27", "cell": "E363"},
+      "confidence": "low",
+      "note": "F.N 10 W1 Academic 1 Hindi (E363). Level words awaiting Nimish's OK (ADR 0111)."
+    },
+    {
+      "ref": "K1-F005",
+      "name": "Swar ए",
+      "subject_code": "HIN",
+      "unit": "Hindi",
+      "format": "practice",
+      "steps": [
+        "Suggested: Say the sound ए and show the letter on the board.",
+        "Suggested: Let the children say ए after the educator and name a word that starts with it.",
+        "Suggested: Trace ए in the air, then on the page, then let the children write it once on their own."
+      ],
+      "materials": "Hindi workbook, pencils",
+      "lo_codes": [],
+      "needs_link": true,
+      "levels": {
+        "0": "doesn't sit for the class",
+        "1": "listens and repeats the sound ए after the educator",
+        "2": "recognises ए but needs help to trace it",
+        "3": "recognises, says and traces ए on own"
+      },
+      "source": {"sheet": "1O2qf5l7dRdVZMGfiaUWhw4KcTe8GpRErmnOrFF0uS2Q", "tab": "Sample_Time Table - 26-27", "section": "F.N 10 Week 2 (from about row 373), Hindi"},
+      "confidence": "low",
+      "note": "F.N 10 W2 Hindi (ADR 0109). Level words awaiting Nimish's OK (ADR 0111)."
+    },
+    {
+      "ref": "K1-F006",
+      "name": "Memory Drawing",
+      "subject_code": "ART",
+      "unit": "Art & Craft",
+      "format": "hands-on",
+      "steps": [
+        "Suggested: Talk with the children about something they all saw, and ask what they remember of it.",
+        "Suggested: Give each child a sheet and crayons and let them draw it from memory.",
+        "Suggested: Ask each child to show the drawing and say what it shows."
+      ],
+      "materials": "Drawing sheets, crayons",
+      "lo_codes": [],
+      "needs_link": true,
+      "levels": {
+        "0": "is not interested in the activity",
+        "1": "holds the crayon and draws a little",
+        "2": "draws one or two things from memory with help",
+        "3": "draws what was seen from memory with details and says what it shows"
+      },
+      "source": {"sheet": "1O2qf5l7dRdVZMGfiaUWhw4KcTe8GpRErmnOrFF0uS2Q", "tab": "Sample_Time Table - 26-27", "cell": "B365"},
+      "confidence": "low",
+      "note": "F.N 10 W1 Monday event (B357) and Extracurricular (B365). Not ACT-K1-1222 (Memory drawing Diwali). Level words awaiting Nimish's OK (ADR 0111)."
+    }
+  ]
+}
