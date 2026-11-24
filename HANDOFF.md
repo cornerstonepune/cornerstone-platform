@@ -2,32 +2,25 @@
 
 _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 
-**Updated:** 2026-11-24 · **By:** Planner (loop-guard fix) · **Model:** claude-opus-5-5
-**Milestone:** M6 K1 pilot · **Branch:** plan/handoff-guard-930 · #927, #928, #930 merged · seed `plan/t925` pushed; build PR #929 open
+**Updated:** 2026-11-24 · **By:** Planner (test DB default) · **Model:** claude-opus-5-5
+**Milestone:** M6 K1 pilot · **Branch:** plan/test-db-default · #925 (PR #929), #926 (PR #933), #934 (PR #935) merged
 
 ## State
-- loop-guard fix merged (PR #930): builder rules now read only the builder's own non-merge commits after Plan-base that are not on main, so main merged into a build branch no longer counts as builder work. Test `packages/engine/tests/test_loop_guard.py` (nightly only, not `core`; red on old guard, green on fix, locally). Same bug is in the loop plugin template `templates/.github/loop/check_pr.py` (fix upstream too).
-- PROJECT.md §5 has M6 (G6.1–G6.5); ADR 0107 + 0108 (survey, importer rules). Issues #925 (K1 reader + `load-k1`), #926 (`Session.planned`, blocked by #925).
-- Rubric marking is already on approved S3 (period page, child cards vs `activity.level_0..3`): no new wireframe. No K1 class on live yet.
-- Fixture `supabase/seed/k1_tabs_2026_11_24/fn10_w1.csv` (sheet rows 349–372, merges filled).
-- Seed `plan/t925` (from plan/k1-pilot): `k1_week.py` skeleton, `load-k1` stub, `Vocabulary.k1`, seed vocab `meal` + `k1`; `tests/test_k1_week.py` (7) + `tests/holdout/test_k1_week_hidden.py` (6) red against the stub, green against the oracle `docs/loop/notes/k1-week-oracle.py.txt`. `bin/check` passes.
-- `--grade` required on `load-k1` (`test_grades`). Visible K1 tests are nightly only (core budget 230 full); hidden tests run on every PR.
+- ADR 0108 tickets 1–3 done: K1 week reader + `load-k1`, `Session.planned`, `engine enrol class --grade` (reviewer PASS, CI green).
+- #923 (people.py `_class_ids` reads `school.campus_grades` via `settings.config`): code committed in `.loop/wt/923` (51bf0d530), **2 of 3 attempts used, 1 left, no PR yet**. Attempt 1 failed only on the flaky test (#936); attempt 2 failed only because the builder wrote "Blocked: Bash was denied" in `docs/loop/handoff/923.md`, not on any test.
+- Fixed on this branch: `tests/conftest.py` defaults `TEST_DATABASE_URL` to the bin/testdb copy (54329) when no `.env`/env names a database and `CI` is unset; `.loop.json` test_command now starts `cd packages/engine && uv run pytest`. Proven in a no-`.env` worktree: core 229 passed (old conftest: import error). Blanked vars (bin/check) and CI keep no database. `guard.py`'s `>`-is-a-write rule (blocks `2>&1` on commands naming a test file) NOT fixed (LESSONS.md).
+- Flaky core test filed as #936 (`test_a_scan_read_whole`, KeyError 'missing'): passes on main, fails ~1 in 2 in build folders.
 
-## Nimish, 24 Nov (ADR 0109) — takes priority
-- Pilot is **Gurukul** K1 (K1 is at Neev and Gurukul). Focus: only F.N 10's activities; get their rubric words sorted first.
-- Rubric draft done: `docs/loop/notes/fn10-rubric-draft.md` — 15 activities with DRAFT level_0..3 words, marked for Radhika/coordinator sign-off. Nothing seeded.
-- Matches (ADR 0109 table updated): 0665 + 1146 confirmed; new K1-0782 (Block Room art & form), K2-M0018 (clay, K2 band), K2-0449 (Khari Kamai, K2 band, has words). 6 lessons have no activity: Sun & Moon rhyme, number tracing 5/6, trace R/D, Hindi farm animals, Hindi Swar ए, Memory Drawing.
-- Next: Nimish sends the sheet to Radhika; after sign-off, one plan job seeds the words (+ `also_bands` K1 on the two K2 rows if she agrees) and adds the 6 missing activities.
+## Next step
+1. After this PR merges: `gh pr update-branch`/re-prep #923 so its build folder has the new test_command and conftest. Consider a plugin fix for guard.py's `>` rule.
+2. #923 last attempt: add to its Don't: "work is committed; run Done-when as written from the build folder; if green, delete the Blocked section". `loop prep 923` → `loop build 923` → `loop finish 923` → reviewer → merge.
+3. Small follow-up ticket (reviewer on #935): `people.py:243` logs a dry run as "engine enrol k2 (dry run)" for any grade; stale "enrol k2" docstrings in people.py:1, signer.py:3, roster.py:130, tests/rows.py:427/449.
+4. Then ADR 0108 ticket 4 (K1 form mark → activity_observation + evidence_event): `loop plan` seed.
+5. Merge open handoff PR #931 (`plan/handoff`, checked out in another session's worktree) or close it in favour of this branch.
 
-## Next step (after the rubric job)
-1. `gh pr update-branch 929` so its CI runs the new guard (a plain re-run reuses the old merge ref) → reviewer → merge.
-2. (#925 build is PR #929.)
-3. One narrow `loop plan` job: seed `plan/t926` only (`Session.planned: bool = True`; `tests/test_k1_planned.py` + holdout DB row check).
-4. Then one job each for tickets 3 (`engine enrol --grade`) and 4 (K1 form mark → activity_observation + evidence_event).
-
-## Blocked / open questions (Nimish; block going live, not tickets 1–2)
-- K1 campus: Gurukul (sheet title) or Neev (`school.campus_grades`)? Radhika sign-off on the F.N 10 draft words? Two-part cells reading B (one session, coordinator picks activity) — confirm. Radhika's Children List CSV + email (Nimish runs enrol himself).
+## Blocked / open questions (Nimish; block going live, not tickets)
+- K1 campus: Gurukul (sheet title) or Neev (`school.campus_grades`)? Radhika sign-off on the F.N 10 rubric words (`docs/loop/notes/fn10-rubric-draft.md`)? Two-part cells reading B — confirm. Radhika's Children List CSV + email (Nimish runs enrol himself).
 
 ## Don't repeat
-- One deliverable per `loop plan` job, briefed with settled decisions: two whole-milestone jobs hit CONTEXT FULL (LESSONS.md).
-- Sheet merges only visible via get_spreadsheet `fields: sheets.merges`. ADR Goal lines: `Goal: none — why`. Run `uv run ruff format --check tests engine`. No grade code literal in Python (`test_grades`).
+- Don't spend a ticket attempt re-running `loop finish` on a flaky test without reading why it failed: my grep filter hid attempt 2's real reason.
+- One deliverable per `loop plan` job. Sheet merges only via get_spreadsheet `fields: sheets.merges`. No grade code literal in Python (`test_grades`).
