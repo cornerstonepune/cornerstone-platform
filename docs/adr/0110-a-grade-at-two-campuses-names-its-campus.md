@@ -1,7 +1,7 @@
 # 0110 — A grade at two campuses: the class-list import names its campus
 
 Date: 2026-11-24. Status: accepted (Plan, unattended; follows Nimish's ADR 0109).
-Goal: none. Proved by ticket #939's tests (`tests/test_enrol_campus.py` and its hidden tests).
+Goal: none — Proved by ticket #939's tests (`tests/test_enrol_campus.py` and its hidden tests).
 
 ## Context
 ADR 0109: K1 runs at Gurukul and at Neev, and the pilot is Gurukul K1. So `school.campus_grades` lists K1 under both.
