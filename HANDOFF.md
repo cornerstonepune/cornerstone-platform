@@ -15,6 +15,8 @@ _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 
 - Gurukul K1 Children List received from Nimish 24 Nov: 21 children, saved OUTSIDE git at `/Users/nimishshah/cornerstone/private/k1-gurukul-children-2026.csv` (no birthdays; rows 18–19 first name only). Enrol only after #939 merges (else the class lands at Neev); dry-run first; Nimish runs `--apply` himself. Never copy names into git/logs/issues.
 
+- **#939 ESCALATED** (rescue used): PR #943 CI red on hidden tests `tests/holdout/test_enrol_campus_hidden.py`: (a) dry run at a named campus doesn't print "would add the class K1-A"; (b) `enrol class` exits 2 with a usage error, so an option the hidden test passes isn't accepted by the CLI. Next: `loop plan` to tighten #939 (name the exact CLI option + dry-run line in the ticket body), then a fresh build. Children enrol stays blocked on it.
+
 ## Next step
 1. Nimish's go → merge #942 → after migrate-live runs, read back on live: 15 rows with 4 words, 2 rows with K1 in also_bands, 6 new K1 activities; tick G6.6.
 2. PR #943 (#939): `loop ci 943`, reviewer, merge.
