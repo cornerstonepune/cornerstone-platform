@@ -3,7 +3,7 @@
 _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 
 **Updated:** 2026-11-24 · **By:** Planner (K1 at Gurukul) · **Model:** claude-opus-5-5
-**Milestone:** M6 K1 pilot · **Branch:** plan/k1-gurukul · ADR 0109 applied, ADR 0110 written, #939 seeded
+**Milestone:** M6 K1 pilot · **Branch:** plan/k1-gurukul (PR #941) · ADR 0109 applied, ADR 0110 written, #939 seeded
 
 ## State
 - Checked before touching the seed: with K1 under both campuses in `school.campus_grades`, `people._class_ids` (main and #938) matches two campuses and refuses with "no campus holds grade K1". The seed was **not** changed on main.
@@ -13,6 +13,7 @@ _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 - PROJECT.md: G6.1–G6.3 ticked; the K1 campus open question is removed; M6 now depends on #939.
 
 ## Next step
+0. PR #941: every check green except browser core, still running when this was written; merge when green.
 1. Merge #938, then `loop run-ticket 939` (it merges main into the seed).
 2. Then ADR 0108 ticket 4 (K1 form mark → activity_observation + evidence_event); the rubric-words goal from ADR 0109 goes into M6.
 3. Still open from the last handoff: the follow-up for "engine enrol k2 (dry run)" wording; flaky #936; PR #931.
@@ -23,4 +24,5 @@ _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 
 ## Don't repeat
 - A seed branch built in a scratch worktree still needs the main checkout off `main`, or the guard hook refuses the commit.
+- ADR `Goal:` line must be `none — <reason>` (test_promises), not `none. …`.
 - `bin/testdb fresh` needs an empty database; tests need both DATABASE_URL and TEST_DATABASE_URL set to it.
