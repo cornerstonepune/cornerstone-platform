@@ -2,10 +2,11 @@
 
 _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 
-**Updated:** 2026-11-24 · **By:** Planner (rubric job) · **Model:** claude-opus-5-5
-**Milestone:** M6 K1 pilot · **Branch:** plan/fn10-rubrics (from plan/k1-pilot; PR #927 still open) · seed `plan/t925` pushed
+**Updated:** 2026-11-24 · **By:** Planner (loop-guard fix) · **Model:** claude-opus-5-5
+**Milestone:** M6 K1 pilot · **Branch:** plan/guard-merged-main · #927 + #928 merged · seed `plan/t925` pushed; build PR #929 open
 
 ## State
+- loop-guard fix (this PR): builder rules now read only the builder's own non-merge commits after Plan-base that are not on main, so main merged into a build branch no longer counts as builder work. Test `packages/engine/tests/test_loop_guard.py`. Same bug is in the loop plugin template `templates/.github/loop/check_pr.py` (fix upstream too).
 - PROJECT.md §5 has M6 (G6.1–G6.5); ADR 0107 + 0108 (survey, importer rules). Issues #925 (K1 reader + `load-k1`), #926 (`Session.planned`, blocked by #925).
 - Rubric marking is already on approved S3 (period page, child cards vs `activity.level_0..3`): no new wireframe. No K1 class on live yet.
 - Fixture `supabase/seed/k1_tabs_2026_11_24/fn10_w1.csv` (sheet rows 349–372, merges filled).
@@ -19,8 +20,8 @@ _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 - Next: Nimish sends the sheet to Radhika; after sign-off, one plan job seeds the words (+ `also_bands` K1 on the two K2 rows if she agrees) and adds the 6 missing activities.
 
 ## Next step (after the rubric job)
-1. `loop ci 927` → merge #927 when green (`gh pr merge 927 --merge`).
-2. Build #925: `loop prep 925` → `loop build 925` → `loop finish 925` → reviewer → merge.
+1. Merge this guard PR when green, then `gh pr update-branch 929` so its CI runs the new guard (a plain re-run reuses the old merge ref) → reviewer → merge.
+2. (#925 build is PR #929.)
 3. One narrow `loop plan` job: seed `plan/t926` only (`Session.planned: bool = True`; `tests/test_k1_planned.py` + holdout DB row check).
 4. Then one job each for tickets 3 (`engine enrol --grade`) and 4 (K1 form mark → activity_observation + evidence_event).
 
