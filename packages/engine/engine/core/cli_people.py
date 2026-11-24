@@ -5,6 +5,7 @@ commands print counts, line numbers and roll numbers, never a name, an email or 
 email (the one they sign in with); the rows keep their staff id, not the email (goals/fix-staff-by-id.yaml).
 """
 
+from datetime import date
 from pathlib import Path
 
 import typer
@@ -85,4 +86,25 @@ def enrol_class(
     ),
 ) -> None:
     """Load a grade's class and its children from the Children List, with their roll numbers (ADR 0108)."""
-    raise NotImplementedError
+    who = need_by(apply, by)
+    try:
+        day = date.fromisoformat(since) if since else None
+    except ValueError as e:
+        raise typer.BadParameter("--from is a day like 2026-11-05") from e
+    with db.connect() as conn:
+        try:
+            out = people.enrol_k2(
+                conn,
+                grade,
+                csv_path,
+                who,
+                apply,
+                match_existing,
+                day,
+                teacher,
+                override_reason,
+                section.strip(),
+            )
+        except ValueError as e:
+            raise typer.BadParameter(str(e)) from e
+        finish(conn, out, apply)
