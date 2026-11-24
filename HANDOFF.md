@@ -2,27 +2,24 @@
 
 _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 
-**Updated:** 2026-11-24 · **By:** Planner (K1 at Gurukul) · **Model:** claude-opus-5-5
-**Milestone:** M6 K1 pilot · **Branch:** plan/k1-gurukul (PR #941) · ADR 0109 applied, ADR 0110 written, #939 seeded
+**Updated:** 2026-11-24 · **By:** Coordinator (loop:run, side session) · **Model:** claude-opus-5-5
+**Milestone:** M6 K1 pilot · **Branch:** plan/coord-handoff · stopped at 150k context
 
 ## State
-- Checked before touching the seed: with K1 under both campuses in `school.campus_grades`, `people._class_ids` (main and #938) matches two campuses and refuses with "no campus holds grade K1". The seed was **not** changed on main.
-- Also found: `school_class_label_key` allows one class of a label per school year, and the import labels a class by its grade, so Gurukul K1 and Neev K1 cannot both exist in one year (ADR 0110).
-- #939 written: `enrol class --campus`; refuse in words when two campuses hold the grade, or when the other campus already has that year's class. Seed `plan/t939`, **branched from #938's head** (`t923-people-py-reads-school-campus-`), carries the seed change (K1 at Gurukul too; ASSUMED wording now excludes K1) and an updated `test_enrol_grade.py` (K1 → `--campus Gurukul`). Proven red: 11 fail, 1 passes (existing behaviour); lint clean.
-- #940 (`load-k1 --campus`) written then closed: two K1-A classes in one year can't exist, so it isn't needed now.
-- PROJECT.md: G6.1–G6.3 ticked; the K1 campus open question is removed; M6 now depends on #939.
+- **PR #942** (plan/fn10-rubric-words, ADR 0111): signed-off F.N 10 words on 15 rows, K1 added to also_bands of ACT-K2-M0018 + ACT-K2-0449, six new K1 activities (their words await Nimish's OK, docs/loop/notes/fn10-new-activity-words.md). CI GREEN. Reviewer PASS (non-blocking: test doesn't prove pre-filled words survive; notice counts rows not fields; a repo-only rebuild lacks the 15 rows' words). Unverified on live: ACT-K2-M0018 exists, ACT-K2-0449 has level_0; the G6.6 read-back covers both.
+- Gurukul K1 Children List CSV received (21 children, outside git under ~/cornerstone/private/). Enrol only after #939 merges; dry-run first, Nimish runs --apply. Never copy names anywhere.
+- **Merging to main = going live**: .github/workflows/migrate.yml applies live's missing migrations after main's CI, then releases engine/site. So merging #942 puts the words on live. .loop.json release has require_go: true, so get Nimish's one-line go before merging #942.
+- **#939** (enrol class --campus): attempts 1-3 FAILED only because the shared test DB lacked plan/t939's seed (K1 at both campuses) and the builder's handoff kept a Blocked section (loop finish refuses any Blocked section). Fable rescue passed locally (core 229 passed). `loop finish 939 --rescue` was running at session end with TEST_DATABASE_URL pointing at db t939: check `gh pr list` for its PR, then loop ci, reviewer, merge, `loop clean 939`.
+- The rescuer left two untracked probe tests (test_zz_probe_939*.py) in the 939 build folder: not committed (outside ticket files); `loop clean 939` removes them.
+- Local test DBs: postgres rebuilt fresh 24 Nov from plan/fn10-rubric-words; t939 built from plan/t939 (drop it after #939 merges). Run `git worktree prune` for this session's scratch worktrees.
 
 ## Next step
-0. PR #941: every check green except browser core, still running when this was written; merge when green.
-1. Merge #938, then `loop run-ticket 939` (it merges main into the seed).
-2. Then ADR 0108 ticket 4 (K1 form mark → activity_observation + evidence_event); the rubric-words goal from ADR 0109 goes into M6.
-3. Still open from the last handoff: the follow-up for "engine enrol k2 (dry run)" wording; flaky #936; PR #931.
-
-## Blocked / open questions (Nimish; block going live, not tickets)
-- Radhika's sign-off on the F.N 10 rubric words (`docs/loop/notes/fn10-rubric-draft.md`). Radhika's Children List CSV + email.
-- When Neev K1 joins in the same year: how are the two classes called (the class label)? See ADR 0110.
+1. Nimish's go → merge #942 → after migrate-live runs, read back on live: 15 rows with 4 words, 2 rows with K1 in also_bands, 6 new K1 activities; tick G6.6.
+2. #939 PR: CI, reviewer, merge.
+3. ADR 0108 ticket 4 (form mark → activity_observation + evidence_event, G6.4) via loop plan, then build.
+4. Small ticket: people.py:243 dry-run label "engine enrol k2"; stale "enrol k2" docstrings (people.py:1, signer.py:3, roster.py:130, tests/rows.py:427/449).
+5. G6.5: load F.N 10 W1+W2 on live for Gurukul K1 after the CSV enrol. Close #931 in favour of this branch.
 
 ## Don't repeat
-- A seed branch built in a scratch worktree still needs the main checkout off `main`, or the guard hook refuses the commit.
-- ADR `Goal:` line must be `none — <reason>` (test_promises), not `none. …`.
-- `bin/testdb fresh` needs an empty database; tests need both DATABASE_URL and TEST_DATABASE_URL set to it.
+- A ticket that changes a seed needs a test DB built from its seed branch: build a separate DB (bin/testdb fresh …/t<N> from a scratch worktree of plan/t<N>) and pass TEST_DATABASE_URL to loop build/finish, before attempt 1. Tell the builder to delete its Blocked section once tests pass.
+- Don't put export/VAR= in .loop.json commands or 2>&1 beside test paths in briefs. Don't re-ask K1's campus.

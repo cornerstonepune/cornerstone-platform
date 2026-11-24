@@ -179,6 +179,7 @@ _Every milestone is a vertical slice Nimish can click through. Goals are yes/no;
   - [x] G6.3 `engine enrol` takes `--grade`, so the K1 class and its children can be made — `tests/test_enrol_grade.py`
   - [ ] G6.4 A form mark on a K1 lesson yields `activity_observation` + `evidence_event` — ticket 4, not yet written
   - [ ] G6.5 F.N 10 W1 and W2 are loaded on live for the K1 class — `session` row count for K1 on live
+  - [ ] G6.6 Every F.N 10 lesson has an activity with four level words: the 15 signed-off rows, ACT-K2-M0018 + ACT-K2-0449 shared with K1, six new K1 activities (ADR 0111) — `tests/test_fn10_words.py`, then the 15 rows' words read back on live after release
 - **Depends on:** #939 (`enrol class --campus`: K1 is at Gurukul and Neev, ADR 0109, 0110); Nimish: the Children List CSV. No new wireframe (S3 covers marking).
 
 ## 6. Open questions (Plan resolves before the milestone they block)
