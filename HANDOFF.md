@@ -12,7 +12,11 @@ _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 - Seed `plan/t925` (from plan/k1-pilot): `k1_week.py` skeleton, `load-k1` stub, `Vocabulary.k1`, seed vocab `meal` + `k1`; `tests/test_k1_week.py` (7) + `tests/holdout/test_k1_week_hidden.py` (6) red against the stub, green against the oracle `docs/loop/notes/k1-week-oracle.py.txt`. `bin/check` passes.
 - `--grade` required on `load-k1` (`test_grades`). Visible K1 tests are nightly only (core budget 230 full); hidden tests run on every PR.
 
-## Next step
+## Nimish, 24 Nov (ADR 0109) — takes priority
+- Pilot is **Gurukul** K1 (K1 is at Neev and Gurukul). Focus: only F.N 10's activities; get their rubric words sorted first.
+- ADR 0109 lists the 8 matched activities (all with 0 level words) and 8 sheet lessons with no activity row. Next: draft level_0..3 words for those, Radhika/coordinator signs off, seed them. Then class + children at Gurukul, then the importer.
+
+## Next step (after the rubric job)
 1. `loop ci 927` → merge #927 when green (`gh pr merge 927 --merge`).
 2. Build #925: `loop prep 925` → `loop build 925` → `loop finish 925` → reviewer → merge.
 3. One narrow `loop plan` job: seed `plan/t926` only (`Session.planned: bool = True`; `tests/test_k1_planned.py` + holdout DB row check).
