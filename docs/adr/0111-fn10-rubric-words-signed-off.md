@@ -1,7 +1,7 @@
 # 0111 — F.N 10 rubric words signed off; two K2 rows shared with K1; six new K1 activities
 
 Date: 2026-11-24. Status: accepted (Nimish, in chat, 24 Nov; written by Plan).
-Goal: G6.6 (PROJECT.md M6) — `packages/engine/tests/test_fn10_words.py` (in the core; the engine core budget goes 230 → 231 for it).
+Goal: none — proved by PROJECT.md M6 G6.6 and its test `packages/engine/tests/test_fn10_words.py` (in the core; the engine core budget goes 230 → 231 for it).
 
 ## Decisions (Nimish, 24 Nov, in chat)
 1. The F.N 10 rubric words in `docs/loop/notes/fn10-rubric-draft.md` are **signed off as drafted**: level_0..level_3 on
