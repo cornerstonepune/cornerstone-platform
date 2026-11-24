@@ -1,7 +1,7 @@
 # 0108 — K1 pilot: what already exists, what is missing, and the importer's shape
 
 Date: 2026-11-24. Status: proposed (Plan). Survey only: no tickets, no PROJECT.md change yet.
-Goal: K1 pilot milestone (to be added to PROJECT.md §5 next session; its goals start "GK1.").
+Goal: none — this records the survey and the importer's shape; the K1 milestone and its goals are added to PROJECT.md next session.
 
 ## What already exists (checked in code and, read-only, on live)
 - **Rubric entry is already on the approved period page.** `docs/frontend/wireframes/period.html` (S3, approved) draws "Mark the class":
