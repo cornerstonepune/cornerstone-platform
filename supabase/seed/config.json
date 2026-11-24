@@ -2473,8 +2473,8 @@
     },
     {
       "key": "school.campus_grades",
-      "description": "MM-0 (D-077): which campus runs which grades, by the campus's name. A class made by the class-list import goes to the campus that holds its grade. ASSUMED from the brief, not read from D-077: Nimish confirms the split (#891).",
-      "value": {"Gurukul": ["K2", "G1", "G2", "G3", "G4"], "Neev": ["PG", "N", "K1"]}
+      "description": "MM-0 (D-077): which campus runs which grades, by the campus's name. A class made by the class-list import goes to the campus that holds its grade; a grade at two campuses (K1, ADR 0109) needs `--campus`. ASSUMED from the brief, not read from D-077, for every grade but K1: Nimish confirms the split (#891).",
+      "value": {"Gurukul": ["K1", "K2", "G1", "G2", "G3", "G4"], "Neev": ["PG", "N", "K1"]}
     },
     {
       "key": "money.rules",

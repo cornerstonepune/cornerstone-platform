@@ -163,8 +163,21 @@ def _grade(conn: db.Conn, tenant: Any, name: str) -> str:
     return str(row["code"])
 
 
+def _campus_id(conn: db.Conn, tenant: Any, grade: str, named: str | None) -> Any:
+    """The id of the campus a class of `grade` goes to: the one named (`--campus`), else the one campus the setting
+    `school.campus_grades` gives the grade, else the only campus. Two campuses holding the grade and none named refuses."""
+    raise NotImplementedError
+
+
 def _class_ids(
-    conn: db.Conn, tenant: Any, grade: str, year: str, letter: str, apply: bool, out: Report
+    conn: db.Conn,
+    tenant: Any,
+    grade: str,
+    year: str,
+    letter: str,
+    apply: bool,
+    out: Report,
+    campus: str | None = None,
 ) -> Any:
     """The K2 class of that year, made when it is not there. → its id, or None on a dry run that has no class yet."""
     campuses = conn.execute("select id, name from campus where tenant_id = %s", (tenant,)).fetchall()
@@ -228,6 +241,7 @@ def enrol_k2(
     teacher: str | None = None,
     reason: str | None = None,
     letter: str = DEFAULT_LETTER,
+    campus: str | None = None,
 ) -> Report:
     """`by` is the signer's email, refused before anything is read unless it is a member of staff; rows carry their id."""
     out = Report()
