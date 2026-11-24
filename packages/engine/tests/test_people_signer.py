@@ -48,7 +48,7 @@ def test_the_staff_import_is_signed_by_an_email_on_the_staff_list_and_stores_the
 def test_enrolment_is_signed_by_the_staff_id_of_the_email(tmp_path):
     assert run("staff", "import", "--apply", "--by", SIGNER).exit_code == 0
     done = run(
-        "enrol", "k2", listing(tmp_path), "--apply", "--by", "Cy@example.test", "--from", FROM,
+        "enrol", "class", "--grade", "K2", listing(tmp_path), "--apply", "--by", "Cy@example.test", "--from", FROM,
         "--teacher", "ann@example.test",
     )  # fmt: skip
     assert done.exit_code == 0, done.output_plain
@@ -65,7 +65,7 @@ def test_a_signer_who_is_not_staff_is_refused_before_any_write_in_a_dry_run_too(
     assert run("staff", "import", "--apply", "--by", SIGNER).exit_code == 0
     before = written()
     for extra in ([], ["--apply"]):
-        out = run("enrol", "k2", listing(tmp_path), *extra, "--by", who, "--from", FROM)
+        out = run("enrol", "class", "--grade", "K2", listing(tmp_path), *extra, "--by", who, "--from", FROM)
         assert out.exit_code != 0, out.output_plain
         assert "--by" in out.output_plain and "staff" in out.output_plain
         assert who not in out.output_plain  # the refusal does not echo what was typed
@@ -91,7 +91,18 @@ def test_the_staff_import_refuses_a_signer_who_is_not_on_the_list_and_writes_not
 def test_a_signer_on_the_staff_list_signs_an_enrolment_with_no_import_first(tmp_path):
     """The staff list is the staff tables (CP-27 group 4): whoever is on it is a member of staff from the start."""
     staff, grants, _ = written()
-    out = run("enrol", "k2", listing(tmp_path, children(2)), "--apply", "--by", SIGNER, "--from", FROM)
+    out = run(
+        "enrol",
+        "class",
+        "--grade",
+        "K2",
+        listing(tmp_path, children(2)),
+        "--apply",
+        "--by",
+        SIGNER,
+        "--from",
+        FROM,
+    )
     assert out.exit_code == 0, out.output_plain
     assert written() == (staff, grants, 2)
     assert {e["recorded_by"] for e in rows("select recorded_by from enrolment")} == {staff_id(SIGNER)}
@@ -102,7 +113,9 @@ def test_a_signer_on_the_staff_list_signs_an_enrolment_with_no_import_first(tmp_
 def test_a_second_run_signed_by_the_same_email_adds_nothing(tmp_path):
     load = [
         "enrol",
-        "k2",
+        "class",
+        "--grade",
+        "K2",
         listing(tmp_path),
         "--apply",
         "--by",
@@ -129,7 +142,9 @@ def test_no_name_or_email_is_in_any_text_column_of_the_people_tables_after_a_ful
     assert run("staff", "import", "--apply", "--by", SIGNER).exit_code == 0
     done = run(
         "enrol",
-        "k2",
+        "class",
+        "--grade",
+        "K2",
         listing(tmp_path),
         "--apply",
         "--by",
@@ -183,7 +198,20 @@ def test_no_report_prints_the_signers_email_or_name_or_a_childs_name(tmp_path):
     path = listing(tmp_path)
     for extra in ([], ["--apply"]):
         seen.append(
-            run("enrol", "k2", path, *extra, "--by", SIGNER, "--from", FROM, "--teacher", "ann@example.test")
+            run(
+                "enrol",
+                "class",
+                "--grade",
+                "K2",
+                path,
+                *extra,
+                "--by",
+                SIGNER,
+                "--from",
+                FROM,
+                "--teacher",
+                "ann@example.test",
+            )
         )
     for out in seen:
         assert out.exit_code == 0, out.output_plain

@@ -63,6 +63,7 @@ tests/test_loaders.py::test_load_does_not_overwrite_a_skill_set_edited_in_the_ap
 tests/test_loaders.py::test_a_seed_edit_does_not_overwrite_an_activity_the_database_has_and_an_activity_it_lacks_is_added
 tests/test_apply_seed.py::test_an_objective_a_person_edited_is_never_overwritten
 tests/test_apply_seed.py::test_an_activity_a_person_has_edited_is_not_overwritten
+tests/test_fn10_words.py::test_fn10_words_and_new_k1_activities_land_as_signed_off
 tests/test_frameworks.py::test_loading_twice_changes_nothing_and_never_overwrites_a_persons_link
 
 # 8. Timetable: no clashes, and moves follow the rules

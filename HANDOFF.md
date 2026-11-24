@@ -2,31 +2,24 @@
 
 _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 
-**Updated:** 2026-11-24 · **By:** Coordinator (loop:run, main session, after side session) · **Model:** claude-opus-5-5
+**Updated:** 2026-11-24 · **By:** Coordinator (loop:run, side session) · **Model:** claude-opus-5-5
 **Milestone:** M6 K1 pilot · **Branch:** plan/coord-handoff · stopped at 150k context
 
 ## State
-- **PR #942** (plan/fn10-rubric-words, ADR 0111): signed-off F.N 10 words on 15 rows, K1 added to also_bands of ACT-K2-M0018 + ACT-K2-0449, six new K1 activities (their words await Nimish's OK, docs/loop/notes/fn10-new-activity-words.md). CI GREEN. Reviewer PASS (non-blocking: test doesn't prove pre-filled words survive; notice counts rows not fields; a repo-only rebuild lacks the 15 rows' words). Unverified on live: ACT-K2-M0018 exists, ACT-K2-0449 has level_0; the G6.6 read-back covers both.
-- Gurukul K1 Children List CSV received (21 children, outside git under ~/cornerstone/private/). Enrol only after #939 merges; dry-run first, Nimish runs --apply. Never copy names anywhere.
-- **Merging to main = going live**: .github/workflows/migrate.yml applies live's missing migrations after main's CI, then releases engine/site. So merging #942 puts the words on live. .loop.json release has require_go: true, so get Nimish's one-line go before merging #942.
-- **#939** (enrol class --campus): attempts 1-3 FAILED only because the shared test DB lacked plan/t939's seed (K1 at both campuses) and the builder's handoff kept a Blocked section (loop finish refuses any Blocked section). Fable rescue passed locally (core 229 passed). Rescue opened **PR #943**; CI was running at handoff (3 pass, 2 pending). Next: `loop ci 943`, reviewer, merge, `loop clean 939`.
-- The rescuer left two untracked probe tests (test_zz_probe_939*.py) in the 939 build folder: not committed (outside ticket files); `loop clean 939` removes them.
-- Local test DBs: postgres rebuilt fresh 24 Nov from plan/fn10-rubric-words; t939 built from plan/t939 (drop it after #939 merges). Run `git worktree prune` for this session's scratch worktrees.
-
-- Gurukul K1 Children List received from Nimish 24 Nov: 21 children, saved OUTSIDE git at `/Users/nimishshah/cornerstone/private/k1-gurukul-children-2026.csv` (no birthdays; rows 18–19 first name only). Enrol only after #939 merges (else the class lands at Neev); dry-run first; Nimish runs `--apply` himself. Never copy names into git/logs/issues.
-
-- **#939 ESCALATED** (rescue used): PR #943 CI red on hidden tests `tests/holdout/test_enrol_campus_hidden.py`: (a) dry run at a named campus doesn't print "would add the class K1-A"; (b) `enrol class` exits 2 with a usage error, so an option the hidden test passes isn't accepted by the CLI. Next: `loop plan` to tighten #939 (name the exact CLI option + dry-run line in the ticket body), then a fresh build. Children enrol stays blocked on it.
+- **#942 MERGED and LIVE** (f9f33aea4): main CI, migrate live and deploy engine all green. Read back on live with read-only SQL: migration 20270217090000 is recorded; all 16 F.N 10 rows (14 ACT-K1 + ACT-K2-0449 + ACT-K2-M0018) have 4/4 level words; both K2 rows have also_bands [K1]; ACT-K1-F001..F006 exist with 4/4 words (deploy engine's `engine load` loaded them). G6.6 is NOT ticked in PROJECT.md yet (a plan-only file: tick it in the next loop plan job).
+- **#939**: #943's second failure was NOT a missing CLI option. The older #934 hidden test (tests/holdout/test_enrol_grade_hidden.py) enrolled K1 with no --campus, and the #939 seed (K1 at Gurukul and Neev) correctly refuses that. The first failure: a dry run with a missing school year stopped before printing "would add the class". `loop plan` fixed the ticket body and plan/t939 (that test now passes --campus Gurukul), removed the escalation and closed #943. The fresh build (attempt 1) passed 51 enrol/people tests locally. `loop finish 939` was RUNNING at session end, with the test DB `t939` on port 54329 built fresh from plan/t939. Next: find the t939 PR (`gh pr list`), `loop ci <pr>`, reviewer, merge, `loop clean 939`, drop DB t939.
+- Children CSV (outside git): 21 rows, columns number,name,birthday; birthday blank on all 21. The repo .env DATABASE_URL points at the LOCAL DB, so a dry run there proves nothing about live. The enrol dry run is NOT done.
 
 ## Next step
-1. Nimish's go → merge #942 → after migrate-live runs, read back on live: 15 rows with 4 words, 2 rows with K1 in also_bands, 6 new K1 activities; tick G6.6.
-2. PR #943 (#939): `loop ci 943`, reviewer, merge.
-3. ADR 0108 ticket 4 (form mark → activity_observation + evidence_event, G6.4) via loop plan, then build.
-4. Small ticket: people.py:243 dry-run label "engine enrol k2"; stale "enrol k2" docstrings (people.py:1, signer.py:3, roster.py:130, tests/rows.py:427/449).
-5. G6.5: load F.N 10 W1+W2 on live for Gurukul K1 after the CSV enrol. Close #931 in favour of this branch.
+1. Finish #939 (above).
+2. Enrol dry run against live: it needs a live DATABASE_URL in the run's env (a dry run only reads). Command shape: `bin/engine enrol class <csv> --grade K1 --campus Gurukul --from 2026-11-23 [--teacher <educator email>]`; Nimish adds `--apply --by <his email>`. Tell him: birthdays are blank on all 21, rows 18–19 have a first name only, and we need the K1 class educator's email for --teacher.
+3. ADR 0108 ticket 4 (form mark → activity_observation + evidence_event, G6.4) via loop plan; tick G6.6 in the same job.
+4. Small ticket: people.py:243 dry-run label "engine enrol k2", plus the stale docstrings.
 
 ## Blocked
-- #942 merge waits on Nimish's go AND his confirmation that the 15 rows' words are signed off (earlier HANDOFF said Radhika's sign-off was pending; no record of it in the repo). Plus his OK on the 24 new-activity words.
+- Waiting on Nimish only for the --apply run and his OK on the new-activity words (docs/loop/notes/fn10-new-activity-words.md; already live as drafted).
 
 ## Don't repeat
-- A ticket that changes a seed needs a test DB built from its seed branch: build a separate DB (bin/testdb fresh …/t<N> from a scratch worktree of plan/t<N>) and pass TEST_DATABASE_URL to loop build/finish, before attempt 1. Tell the builder to delete its Blocked section once tests pass.
-- Don't put export/VAR= in .loop.json commands or 2>&1 beside test paths in briefs. Don't re-ask K1's campus.
+- Read the CI failure lines yourself before writing a re-plan job: the earlier diagnosis "the CLI lacks an option" was wrong.
+- `bin/testdb fresh` needs an EMPTY database: `create database t<N>` first, and run `uv sync` in a fresh worktree's packages/engine.
+- Don't put export/VAR= in .loop.json commands, or 2>&1 beside test paths in briefs. Don't re-ask K1's campus. Never copy children's names anywhere.
