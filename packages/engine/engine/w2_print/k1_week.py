@@ -42,6 +42,11 @@ def _cut(cell: str, vocab: tt.Vocabulary) -> list[list[str]]:
     return parts
 
 
+def _unplanned(cell: str, vocab: tt.Vocabulary) -> bool:
+    heads = re.compile("|".join(f"(?:{h})" for h in vocab.k1["part_heads"]), re.I)
+    return all(heads.fullmatch(tt._one_line(x)) for x in cell.split("\n") if tt._one_line(x))
+
+
 def parts_of(cell: str, vocab: tt.Vocabulary) -> list[str]:
     """A cell cut at its period-name lines, each part one line."""
     return [" ".join(p) for p in _cut(cell, vocab)]
@@ -126,5 +131,6 @@ def read_k1_week_csv(text: str, vocab: tt.Vocabulary, cal: ld.Calendar) -> ld.Lo
             cell = ones[0] if period.fixed and not ones[i] else ones[i]
             lesson = not period.fixed and cell
             subject, key, at = _lines(raw[i], n, w, ords, vocab, load) if lesson else (None, None, None)
-            load.sessions.append(ld.Session(d, period.start, subject, cell, key, at, n))
+            planned = period.fixed or not _unplanned(raw[i], vocab)
+            load.sessions.append(ld.Session(d, period.start, subject, cell, key, at, n, planned))
     return load
