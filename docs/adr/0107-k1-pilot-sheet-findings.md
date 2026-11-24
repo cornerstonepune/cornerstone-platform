@@ -1,6 +1,7 @@
 # 0107 — K1 pilot: what the planning sheet holds, and what is still open
 
-Status: proposed (Plan, 24 Nov 2026). Nothing built yet.
+Date: 2026-11-24. Status: proposed (Plan). Nothing built yet.
+Goal: none — this records what the sheet holds and what is open; the K1 pilot has no goal in PROJECT.md until Nimish answers.
 
 ## Context
 Nimish asked for a K1 (Neev, Jr KG) pilot for "fortnight 10 and 11": Radhika ma'am opens the timetable, clicks a period, fills the
