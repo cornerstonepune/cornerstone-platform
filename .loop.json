@@ -1,5 +1,5 @@
 {
-  "test_command": "cd packages/engine && export TEST_DATABASE_URL=${TEST_DATABASE_URL:-postgresql://postgres:postgres@127.0.0.1:54329/postgres} && uv run pytest -q -p no:cacheprovider -m core tests && if ls tests/holdout/test_*.py >/dev/null 2>&1; then uv run pytest -q -p no:cacheprovider tests/holdout; fi",
+  "test_command": "cd packages/engine && uv run pytest -q -p no:cacheprovider -m core tests && if ls tests/holdout/test_*.py >/dev/null 2>&1; then uv run pytest -q -p no:cacheprovider tests/holdout; fi",
   "typecheck_command": "cd packages/engine && uv run pytest -q -p no:cacheprovider tests/test_types.py",
   "lint_command": "cd packages/engine && uv run ruff check engine tests && uv run ruff format --check engine tests",
   "coverage_command": "",

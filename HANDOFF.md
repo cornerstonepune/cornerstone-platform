@@ -2,28 +2,29 @@
 
 _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 
-**Updated:** 2026-11-24 · **By:** Coordinator · **Model:** claude-opus-5-5
-**Milestone:** M6 K1 pilot (ADR 0108/0109) · **Branch:** plan/handoff · #929 (#925) and #933 (#926) merged · seed for #934 pushed
+**Updated:** 2026-11-24 · **By:** Planner (test DB default) · **Model:** claude-opus-5-5
+**Milestone:** M6 K1 pilot · **Branch:** plan/test-db-default · #925 (PR #929), #926 (PR #933), #934 (PR #935) merged
 
 ## State
-- #925 merged as PR #929: `k1_week.py` reader + `engine timetable load-k1` (dry run, `--sql`, `--apply`). Review PASS.
-- #926 merged as PR #933: `Session.planned`; empty / period-name-only cell = not planned yet, writer writes `v.pl::boolean`. Review PASS.
-- #934 (ticket 3, enrol `--grade`) seeded by `loop plan` (base main; 21 red on skeleton, green on an uncommitted oracle, ~30/40 lines). Planner renamed the command to `engine enrol class --grade <code>` (no default; recorded in issue #934 only, no ADR because ADR files are protected → next plan job should add one). Visible test not in `core` (core list full 230/230).
-- Rubric draft for F.N 10 still waits on Radhika's sign-off (`docs/loop/notes/fn10-rubric-draft.md`); nothing seeded.
+- ADR 0108 tickets 1–3 done: K1 week reader + `load-k1`, `Session.planned`, `engine enrol class --grade` (reviewer PASS, CI green).
+- #923 (people.py `_class_ids` reads `school.campus_grades` via `settings.config`): code committed in `.loop/wt/923` (51bf0d530), **2 of 3 attempts used, 1 left, no PR yet**. Attempt 1 failed only on the flaky test (#936); attempt 2 failed only because the builder wrote "Blocked: Bash was denied" in `docs/loop/handoff/923.md`, not on any test.
+- Fixed on this branch: `tests/conftest.py` defaults `TEST_DATABASE_URL` to the bin/testdb copy (54329) when no `.env`/env names a database and `CI` is unset; `.loop.json` test_command now starts `cd packages/engine && uv run pytest`. Proven in a no-`.env` worktree: core 229 passed (old conftest: import error). Blanked vars (bin/check) and CI keep no database. `guard.py`'s `>`-is-a-write rule (blocks `2>&1` on commands naming a test file) NOT fixed (LESSONS.md).
+- Flaky core test filed as #936 (`test_a_scan_read_whole`, KeyError 'missing'): passes on main, fails ~1 in 2 in build folders.
 
 ## Next step
-1. `loop prep 934` → `loop build 934` → `loop finish 934` → reviewer → merge. Check the brief has the shell note (see Don't repeat) before building.
-2. One `loop plan` job: ADR for the `engine enrol class` rename (+ update stale `engine enrol k2` mentions in `goals/*.yaml`, `people.py` log line).
-3. One `loop plan` job for ticket 4 (K1 form mark → activity_observation + evidence_event).
-4. Follow-up tickets from reviews (one plan job, small): k1_week checks every day's date == Monday + i and week number ∈ {1,2} (+ test with a wrong Friday date); reload of a week must update `planned`/text (today `on conflict do nothing` keeps the old row) or document "clear the week first"; share the time-row pattern and `_cut`/`_unplanned` rules instead of copies.
+1. After this PR merges: `gh pr update-branch`/re-prep #923 so its build folder has the new test_command and conftest. Consider a plugin fix for guard.py's `>` rule.
+2. #923 last attempt: add to its Don't: "work is committed; run Done-when as written from the build folder; if green, delete the Blocked section". `loop prep 923` → `loop build 923` → `loop finish 923` → reviewer → merge.
+3. Small follow-up ticket (reviewer on #935): `people.py:243` logs a dry run as "engine enrol k2 (dry run)" for any grade; stale "enrol k2" docstrings in people.py:1, signer.py:3, roster.py:130, tests/rows.py:427/449.
+4. Then ADR 0108 ticket 4 (K1 form mark → activity_observation + evidence_event): `loop plan` seed.
+5. Merge open handoff PR #931 (`plan/handoff`, checked out in another session's worktree) or close it in favour of this branch.
 
 ## Blocked / open questions (Nimish; block going live, not tickets)
-- K1 campus: Gurukul (sheet) or Neev (`school.campus_grades`)? Radhika sign-off on F.N 10 words? Two-part cells reading B — confirm. Radhika's Children List CSV.
-- **New:** holiday cells (e.g. Tue 24 Nov "Academic 1 / General Awareness", "Block Room") currently make NO plan lines — the #925 handoff wrongly said they do. ADR 0108 says "nothing lost". Keep plan lines for holidays or drop them? Then pin it with a test.
+- K1 campus: Gurukul (sheet title) or Neev (`school.campus_grades`)? Radhika sign-off on the F.N 10 rubric words (`docs/loop/notes/fn10-rubric-draft.md`)? Two-part cells reading B — confirm. Radhika's Children List CSV + email (Nimish runs enrol himself).
+- Holiday cells (e.g. Tue 24 Nov "Academic 1 / General Awareness", "Block Room") make NO plan lines today; ADR 0108 says "nothing lost". Keep or drop them? Then pin it with a test.
 
 ## Don't repeat
-- `loop build` runs `dontAsk` + `Bash(<word> *)` allowlist: compound commands, pipes, `export`, heredoc commits, `bin/check` get refused and the builder stops uncommitted. Append a shell note to `.git/loop/tickets/<N>-brief.md` after `loop prep` (one simple command per call; `uv run --directory packages/engine pytest …`; `git commit -m "<one line>"`; handoff via Write tool, no Blocked section). Rebuild doesn't cost an attempt. LESSONS.md has it.
-- A seed based on another seed branch conflicts once that ticket squash-merges: cherry-pick the seed's own commit onto main (done for plan/t926).
-- Required checks need the branch up to date: after any merge to main, `gh pr update-branch` + `loop ci` again before `gh pr merge`.
-- `loop plan` runs in the main checkout (cwd=repo): don't switch branches there while it runs. Hooks refuse writes while the main checkout is on `main`.
-- Local test DB dirty → `drop database postgres with (force)` + recreate via template1, then `bin/testdb fresh`. One deliverable per `loop plan` job. No grade code literal in Python.
+- Don't spend a ticket attempt re-running `loop finish` on a flaky test without reading why it failed: my grep filter hid attempt 2's real reason.
+- One deliverable per `loop plan` job. Sheet merges only via get_spreadsheet `fields: sheets.merges`. No grade code literal in Python (`test_grades`).
+- Builders run `dontAsk` with a `Bash(<word> *)` allowlist: compound commands, pipes, `export`, heredoc commits get refused. After `loop prep`, append a shell note to the brief (one simple command per call, single-line `git commit -m`, no Blocked section).
+- Seed cut from another seed branch conflicts once that ticket squash-merges: cherry-pick the seed's own commit onto main. After any merge to main: `gh pr update-branch` + `loop ci` before `gh pr merge`.
+- `loop plan` runs in the main checkout: don't switch branches there while it runs. Dirty local test DB → drop + recreate `postgres` via template1, then `bin/testdb fresh`.
