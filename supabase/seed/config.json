@@ -783,7 +783,8 @@
           "lunch",
           "reflection",
           "dispersal",
-          "boarding the bus"
+          "boarding the bus",
+          "meal"
         ],
         "specialist": [
           "pe",
@@ -946,7 +947,18 @@
         },
         "planner_header_cell": "expression",
         "calendar_date_format": "%A, %B %d, %Y",
-        "afternoon_before_hour": 7
+        "afternoon_before_hour": 7,
+        "k1": {
+          "title": "F\\.N\\s*(\\d+)\\s*Week\\s*(\\d)",
+          "date_format": "%d.%m.%y",
+          "part_heads": [
+            "academic\\s*\\d+",
+            "extracurricular",
+            "(rhymes|story)\\.\\s*p\\d+",
+            "music\\s*\\(guest\\)"
+          ],
+          "week_b_first_ord": 501
+        }
       }
     },
     {
