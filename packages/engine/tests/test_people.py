@@ -71,7 +71,7 @@ def wipe(conn):
     # a child is never deleted (their evidence cannot be); a test's children are set aside, out of every class
     conn.execute(
         "update child set active = false where id in (select e.child_id from enrolment e"
-        " join school_class c on c.id = e.class_id where c.label in ('K2', 'SL-THREE'))"
+        " join school_class c on c.id = e.class_id where c.label in ('K1', 'K2', 'SL-THREE'))"
     )
     conn.execute("delete from staff_role_grant")
     conn.execute("delete from enrolment")
@@ -105,7 +105,19 @@ def rows(sql, *params):
 def load_everything(tmp_path, *flags):
     imported = run("staff", "import", "--apply", "--by", SIGNER)
     assert imported.exit_code == 0, imported.output_plain
-    return run("enrol", "k2", listing(tmp_path), "--apply", "--by", SIGNER, "--from", FROM, *flags)
+    return run(
+        "enrol",
+        "class",
+        "--grade",
+        "K2",
+        listing(tmp_path),
+        "--apply",
+        "--by",
+        SIGNER,
+        "--from",
+        FROM,
+        *flags,
+    )
 
 
 @needs_db
@@ -191,7 +203,19 @@ def test_a_child_is_in_a_class_only_through_an_enrolment_and_a_move_closes_one_a
 @needs_db
 def test_a_second_class_teacher_warns_and_is_allowed_only_with_a_recorded_reason(tmp_path, school):
     assert load_everything(tmp_path, "--teacher", "ann@example.test").exit_code == 0
-    again = ["enrol", "k2", listing(tmp_path), "--apply", "--by", SIGNER, "--from", FROM, "--teacher"]
+    again = [
+        "enrol",
+        "class",
+        "--grade",
+        "K2",
+        listing(tmp_path),
+        "--apply",
+        "--by",
+        SIGNER,
+        "--from",
+        FROM,
+        "--teacher",
+    ]
     warned = run(*again, "bea@example.test")
     assert warned.exit_code == 1 and "already has a class educator" in warned.output_plain
     assert "--override-reason" in warned.output_plain
@@ -267,11 +291,11 @@ def test_staff_import_grants_each_persons_campus_role_once_and_leaves_the_list_a
 @needs_db
 def test_enrol_k2_is_a_dry_run_until_applied_and_a_second_run_changes_nothing(tmp_path, school):
     path = listing(tmp_path)
-    dry = run("enrol", "k2", path, "--from", FROM)
+    dry = run("enrol", "class", "--grade", "K2", path, "--from", FROM)
     assert dry.exit_code == 0 and "children added: 22" in dry.output_plain and "dry run" in dry.output_plain
     assert rows("select count(*) n from child_now where section = 'K2'")[0]["n"] == 0
     assert rows("select count(*) n from school_class")[0]["n"] == 0
-    assert run("enrol", "k2", path, "--apply").exit_code != 0  # --by is needed
+    assert run("enrol", "class", "--grade", "K2", path, "--apply").exit_code != 0  # --by is needed
     assert load_everything(tmp_path).exit_code == 0
 
     def state():
@@ -286,7 +310,7 @@ def test_enrol_k2_is_a_dry_run_until_applied_and_a_second_run_changes_nothing(tm
         )
 
     first = state()
-    again = run("enrol", "k2", path, "--apply", "--by", SIGNER, "--from", FROM)
+    again = run("enrol", "class", "--grade", "K2", path, "--apply", "--by", SIGNER, "--from", FROM)
     assert (
         again.exit_code == 0
         and "already there: 22" in again.output_plain
@@ -307,7 +331,9 @@ def test_a_list_with_a_duplicate_or_a_bad_row_is_refused_in_words_and_writes_not
         "10,,01/01/2021",  # no name
     ]
     run("staff", "import", "--apply", "--by", SIGNER)
-    out = run("enrol", "k2", listing(tmp_path, lines), "--apply", "--by", SIGNER, "--from", FROM)
+    out = run(
+        "enrol", "class", "--grade", "K2", listing(tmp_path, lines), "--apply", "--by", SIGNER, "--from", FROM
+    )
     assert out.exit_code == 1 and "nothing was written" in (text := out.output_plain)
     for line, why in (
         (5, "also on line 3"),
@@ -321,13 +347,17 @@ def test_a_list_with_a_duplicate_or_a_bad_row_is_refused_in_words_and_writes_not
     assert rows("select count(*) n from child_now where section = 'K2'")[0]["n"] == 0
     assert rows("select count(*) n from school_class")[0]["n"] == 0
     # a missing column is refused whole
-    short = run("enrol", "k2", listing(tmp_path, ["number,name", "1,Placeholder X"], name="s.csv"))
+    short = run(
+        "enrol", "class", "--grade", "K2", listing(tmp_path, ["number,name", "1,Placeholder X"], name="s.csv")
+    )
     assert short.exit_code != 0 and "no column called birthday" in short.output_plain
     # a roll number already held by a different child is refused, never overwritten; --match-existing is the way to say "same"
     assert (
         run(
             "enrol",
-            "k2",
+            "class",
+            "--grade",
+            "K2",
             listing(tmp_path, children(2), name="a.csv"),
             "--apply",
             "--by",
@@ -339,7 +369,9 @@ def test_a_list_with_a_duplicate_or_a_bad_row_is_refused_in_words_and_writes_not
     )
     other = run(
         "enrol",
-        "k2",
+        "class",
+        "--grade",
+        "K2",
         listing(tmp_path, ["number,name,birthday", f"1,Placeholder Someone Else,{born(1)}"], name="b.csv"),
         "--apply",
         "--by",
