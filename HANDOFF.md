@@ -2,8 +2,8 @@
 
 _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 
-**Updated:** 2026-11-24 · **By:** Coordinator · **Model:** claude-opus-5-5
-**Milestone:** M6 K1 pilot · **Branch:** plan/k1-pilot (PR #927 open, CI running) · seed `plan/t925` pushed
+**Updated:** 2026-11-24 · **By:** Planner (rubric job) · **Model:** claude-opus-5-5
+**Milestone:** M6 K1 pilot · **Branch:** plan/fn10-rubrics (from plan/k1-pilot; PR #927 still open) · seed `plan/t925` pushed
 
 ## State
 - PROJECT.md §5 has M6 (G6.1–G6.5); ADR 0107 + 0108 (survey, importer rules). Issues #925 (K1 reader + `load-k1`), #926 (`Session.planned`, blocked by #925).
@@ -14,7 +14,9 @@ _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 
 ## Nimish, 24 Nov (ADR 0109) — takes priority
 - Pilot is **Gurukul** K1 (K1 is at Neev and Gurukul). Focus: only F.N 10's activities; get their rubric words sorted first.
-- ADR 0109 lists the 8 matched activities (all with 0 level words) and 8 sheet lessons with no activity row. Next: draft level_0..3 words for those, Radhika/coordinator signs off, seed them. Then class + children at Gurukul, then the importer.
+- Rubric draft done: `docs/loop/notes/fn10-rubric-draft.md` — 15 activities with DRAFT level_0..3 words, marked for Radhika/coordinator sign-off. Nothing seeded.
+- Matches (ADR 0109 table updated): 0665 + 1146 confirmed; new K1-0782 (Block Room art & form), K2-M0018 (clay, K2 band), K2-0449 (Khari Kamai, K2 band, has words). 6 lessons have no activity: Sun & Moon rhyme, number tracing 5/6, trace R/D, Hindi farm animals, Hindi Swar ए, Memory Drawing.
+- Next: Nimish sends the sheet to Radhika; after sign-off, one plan job seeds the words (+ `also_bands` K1 on the two K2 rows if she agrees) and adds the 6 missing activities.
 
 ## Next step (after the rubric job)
 1. `loop ci 927` → merge #927 when green (`gh pr merge 927 --merge`).
@@ -23,7 +25,7 @@ _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 4. Then one job each for tickets 3 (`engine enrol --grade`) and 4 (K1 form mark → activity_observation + evidence_event).
 
 ## Blocked / open questions (Nimish; block going live, not tickets 1–2)
-- K1 campus: Gurukul (sheet title) or Neev (`school.campus_grades`)? Who writes K1 level words (0 of 634 have level_0)? Two-part cells reading B (one session, coordinator picks activity) — confirm. Radhika's Children List CSV + email (Nimish runs enrol himself).
+- K1 campus: Gurukul (sheet title) or Neev (`school.campus_grades`)? Radhika sign-off on the F.N 10 draft words? Two-part cells reading B (one session, coordinator picks activity) — confirm. Radhika's Children List CSV + email (Nimish runs enrol himself).
 
 ## Don't repeat
 - One deliverable per `loop plan` job, briefed with settled decisions: two whole-milestone jobs hit CONTEXT FULL (LESSONS.md).
