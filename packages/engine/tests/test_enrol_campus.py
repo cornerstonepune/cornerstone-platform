@@ -51,21 +51,20 @@ def test_k1_at_gurukul_goes_to_gurukul(tmp_path, school):  # noqa: F811
 
 
 @needs_db
-def test_k1_a_at_each_campus_is_its_own_class_with_its_own_children(tmp_path, school):  # noqa: F811
+def test_k1_at_the_other_campus_in_the_same_year_refuses_in_words(tmp_path, school):  # noqa: F811
+    """A school year has one class of a name (`school_class_label_key`), and the import names a class by its grade:
+    Neev's K1 this year means Gurukul's cannot be made. The import says so; it never crashes or reuses Neev's class."""
     assert run("staff", "import", "--apply", "--by", SIGNER).exit_code == 0
     neev = ["number,name,birthday", *(f"{i},Placeholder Neev {i:02d},{born(i)}" for i in range(1, 6))]
     assert (
         _enrol(tmp_path, "--campus", "Neev", "--apply", "--by", SIGNER, name="neev.csv", lines=neev).exit_code
         == 0
     )
-    done = _enrol(tmp_path, "--campus", "Gurukul", "--apply", "--by", SIGNER)
-    assert done.exit_code == 0, done.output_plain
-    assert _classes() == [("K1", "A", "Gurukul"), ("K1", "A", "Neev")]
-    per_campus = rows(
-        "select p.name, count(*) as n from enrolment e join school_class c on c.id = e.class_id"
-        " join campus p on p.id = c.campus_id where e.to_date is null group by p.name order by p.name"
-    )
-    assert [(r["name"], r["n"]) for r in per_campus] == [("Gurukul", 22), ("Neev", 5)]
+    out = _enrol(tmp_path, "--campus", "Gurukul", "--apply", "--by", SIGNER)
+    assert out.exit_code != 0
+    assert "already a class at Neev" in out.output_plain
+    assert _classes() == [("K1", "A", "Neev")]
+    assert rows("select count(*) as n from enrolment where to_date is null")[0]["n"] == 5
 
 
 @needs_db

@@ -50,18 +50,20 @@ def test_one_campus_holding_the_grade_needs_no_name(conn):
     assert _campus_of(conn, people._class_ids(conn, t, "K2", YEAR, "A", True, Report())) == "North"
 
 
-def test_the_other_campus_class_of_the_same_grade_and_letter_is_never_reused(conn):
+def test_the_other_campus_class_of_the_same_grade_is_never_reused_and_is_refused_in_words(conn):
     t = _school(conn, ["North", "South"], BOTH)
     north = people._class_ids(conn, t, "K1", YEAR, "A", True, Report(), "North")
-    south = people._class_ids(conn, t, "K1", YEAR, "A", True, Report(), "South")
-    assert north != south
-    assert (_campus_of(conn, north), _campus_of(conn, south)) == ("North", "South")
     assert people._class_ids(conn, t, "K1", YEAR, "A", True, Report(), "North") == north
+    for apply in (True, False):  # a dry run says what the real run would
+        with pytest.raises(ValueError, match="K1 for 2099-00 is already a class at North"):
+            people._class_ids(conn, t, "K1", YEAR, "A", apply, Report(), "South")
+    assert (
+        conn.execute("select count(*) as n from school_class where tenant_id = %s", (t,)).fetchone()["n"] == 1
+    )
 
 
-def test_a_dry_run_at_a_new_campus_says_it_would_add_the_class(conn):
+def test_a_dry_run_at_a_named_campus_says_it_would_add_the_class(conn):
     t = _school(conn, ["North", "South"], BOTH)
-    people._class_ids(conn, t, "K1", YEAR, "A", True, Report(), "North")
     out = Report()
     assert people._class_ids(conn, t, "K1", YEAR, "A", False, out, "South") is None
     assert any("would add the class K1-A" in line for line in out.lines)
