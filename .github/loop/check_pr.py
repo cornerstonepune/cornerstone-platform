@@ -69,13 +69,21 @@ def main():
     bbase = base
     if pb and subprocess.run(["git", "merge-base", "--is-ancestor", pb.group(1), "HEAD"]).returncode == 0:
         bbase = pb.group(1)
+    # The builder's own commits: non-merge, after Plan-base, not on the base branch. A diff from Plan-base would also
+    # count whatever a merge of main (`loop prep`, `gh pr update-branch`) brought in.
+    bcommits = [f"{bbase}..HEAD", f"^{base}"]
     bchanges = changes if bbase == base else []
     if bbase != base:
-        for line in sh("git", "diff", "--name-status", f"{bbase}...HEAD").splitlines():
+        first, deleted = {}, set()
+        log = sh("git", "log", "--no-merges", "--reverse", "--format=", "--name-status", *bcommits)
+        for line in filter(None, log.splitlines()):
             parts = line.split("\t")
-            bchanges.append((parts[0][0], parts[-1]))
-            if parts[0][0] == "R":
-                bchanges.append(("D", parts[1]))
+            for s, p in ([("D", parts[1])] if parts[0][0] == "R" else []) + [(parts[0][0], parts[-1])]:
+                first.setdefault(p, s)
+                if s == "D":
+                    deleted.add(p)
+        # a file the builder added keeps "A"; an existing one is "D" if the builder deleted it, else its first status
+        bchanges = [("D" if p in deleted and s != "A" else s, p) for p, s in first.items()]
 
     # 1–3  (ticket PRs leave docs/loop/handoff/<N>.md; other PRs update HANDOFF.md)
     ticket_handoff = any(p.startswith("docs/loop/handoff/") for p in paths)
@@ -102,7 +110,11 @@ def main():
         skip = lambda p: p == "HANDOFF.md" or p.startswith("docs/loop/") or matches(p, tests) or p.endswith((".lock", "lock.json", "lock.yaml"))
         files = [p for s_, p in bchanges if not skip(p)]
         lines = 0
-        for row in sh("git", "diff", "--numstat", f"{bbase}...HEAD").splitlines():
+        # shortcut: sums each builder commit's lines, so a line rewritten in two commits counts twice; fine while
+        # `loop finish` makes one builder commit per attempt, upgrade if budgets fail on multi-commit builds
+        numstat = (sh("git", "diff", "--numstat", f"{base}...HEAD") if bbase == base
+                   else sh("git", "log", "--no-merges", "--format=", "--numstat", *bcommits))
+        for row in numstat.splitlines():
             a, d, p = (row.split("\t") + ["", "", ""])[:3]
             if a.isdigit() and d.isdigit() and not skip(p):
                 lines += int(a) + int(d)
