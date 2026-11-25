@@ -16,7 +16,7 @@ row whose birthday is not read, so it refuses the whole K1 list. `pii.child.birt
 - Matching an existing child (`_same_person`): a blank list birthday matches whatever birthday is held. It never
   clears a held birthday and never makes the child look like a different child. Re-running the same blank list
   changes nothing.
-- A list birthday is still added to an existing child only where none is held.
+- On the --match-existing path a list birthday is still added only where none is held; a blank adds nothing.
 - Two rows with the same name and both birthdays blank are refused as the same child (the existing rule, keyed on
   name + birthday). Filling in one birthday is the way through. Assumed, not asked: double-typed rows are the likelier
   slip in a 21-child list than two children with one full name.
@@ -24,4 +24,6 @@ row whose birthday is not read, so it refuses the whole K1 list. `pii.child.birt
 
 ## Consequence
 Children can be on a class with no birthday. Anything later that needs an age (none does today) must handle NULL.
-When the school sends birthdays, re-running the list with them filled in adds them to children who hold none.
+Re-running the list with birthdays filled in does NOT add them today: a child already enrolled in that class is
+"already there" and untouched (only the --match-existing path adds a missing birthday). Filling birthdays in later
+needs its own ticket when the school sends them.
