@@ -6,9 +6,10 @@ prints a name, an email, a phone number or a birthday: a report says line number
 
 `import_staff` gives each person on the staff list (`staff` / `pii.staff`, the one list since CP-27 group 4) a dated
 grant of their role when it is held for the whole campus and they hold none. `enrol_k2` reads the school's Children List (number,
-name, birthday), makes the K2 campus-year-class when it is not there, and enrols each child with the number as their roll
-number. A child is made new unless `match_existing` says a child already sitting at that roll number in K2 is the same
-person; a child's evidence, answers and state are never read or written here.
+name, birthday), makes the grade's class for the campus and year when it is not there, and enrols each child with the number as
+their roll number. A child is made new unless `match_existing` says a child already sitting at that roll number in the grade is
+the same person; a blank birthday enrols the child with birthday not known (ADR 0112). A child's evidence, answers and state are
+never read or written here.
 """
 
 import csv
@@ -30,7 +31,7 @@ DEFAULT_LETTER = "A"  # the class's own section within the grade (K2-A)
 ROLL = re.compile(r"^[A-Za-z0-9-]{1,8}$")
 COLUMNS = ("number", "name", "birthday")
 DATE_FORMATS = ("%Y-%m-%d", "%d/%m/%Y", "%d-%m-%Y", "%d.%m.%Y", "%d %b %Y", "%d %B %Y")
-AGE_YEARS = (2, 10)  # a birthday outside this is a typing slip for a K2 list, refused rather than stored
+AGE_YEARS = (2, 10)  # a birthday outside this is a typing slip on a class list, refused rather than stored
 
 
 def _tenant(conn: db.Conn) -> Any:
@@ -44,8 +45,8 @@ def year_label(on: date) -> str:
 
 
 def parse_birthday(text: str, today: date) -> date:
-    """→ the date, day first as the school writes it. A two-digit year, a date that is not a date, and an age outside
-    K2's are refused, never guessed."""
+    """→ the date, day first as the school writes it. A two-digit year, a date that is not a date, and an age a class list
+    does not hold are refused, never guessed."""
     for fmt in DATE_FORMATS:
         try:
             d = datetime.strptime(text.strip(), fmt).date()
@@ -53,7 +54,7 @@ def parse_birthday(text: str, today: date) -> date:
             continue
         low, high = AGE_YEARS
         if not date(today.year - high - 1, today.month, 1) < d <= date(today.year - low, today.month, 28):
-            raise ValueError("that birthday is not a K2 child's — check the year")
+            raise ValueError("that birthday is outside the ages a class list holds — check the year")
         return d
     raise ValueError("birthday not read — write it 25/12/2020 or 2020-12-25")
 
@@ -104,7 +105,7 @@ class Row:
     roll: str
     first: str
     last: str
-    born: date
+    born: date | None
 
 
 def read_list(path: Path, today: date, out: Report) -> list[Row]:
@@ -122,7 +123,7 @@ def read_list(path: Path, today: date, out: Report) -> list[Row]:
     at = {c: head.index(c) for c in COLUMNS}
     kept: list[Row] = []
     seen_roll: dict[str, int] = {}
-    seen_child: dict[tuple[str, date], int] = {}
+    seen_child: dict[tuple[str, date | None], int] = {}
     for line, raw in enumerate(rows, start=2):
         if not any(cell.strip() for cell in raw):
             continue
@@ -136,11 +137,13 @@ def read_list(path: Path, today: date, out: Report) -> list[Row]:
         if not parts:
             out.refuse(f"line {line}: roll {cell['number']} has no name")
             continue
-        try:
-            born = parse_birthday(cell["birthday"], today)
-        except ValueError as e:
-            out.refuse(f"line {line}: roll {cell['number']}: {e}")
-            continue
+        born: date | None = None  # a blank birthday cell enrols the child with birthday not known (ADR 0112)
+        if cell["birthday"]:
+            try:
+                born = parse_birthday(cell["birthday"], today)
+            except ValueError as e:
+                out.refuse(f"line {line}: roll {cell['number']}: {e}")
+                continue
         who = (" ".join(parts).lower(), born)
         if cell["number"] in seen_roll:
             out.refuse(f"line {line}: roll {cell['number']} is also on line {seen_roll[cell['number']]}")
@@ -250,8 +253,17 @@ def _same_person(conn: db.Conn, child_id: Any, row: Row, by: str) -> bool:
         who
         and who["first_name"].lower() == row.first.lower()
         and who["last_name"].lower() == row.last.lower()
-        and (born is None or born["birthday"] in (None, row.born))
+        and (row.born is None or born is None or born["birthday"] in (None, row.born))
     )
+
+
+def _fill_birthday(conn: db.Conn, child_id: Any, born: date | None) -> None:
+    """A child already there gets the list's birthday only where none is held; a blank never writes NULL over one."""
+    if born is not None:
+        conn.execute(
+            "update pii.child set birthday = coalesce(birthday, %s) where child_id = %s",
+            (born, child_id),
+        )
 
 
 def enrol_k2(
@@ -318,11 +330,8 @@ def enrol_k2(
                     "insert into pii.child (tenant_id, child_id, first_name, last_name, birthday) values (%s,%s,%s,%s,%s)",
                     (tenant, child_id, r.first, r.last, r.born),
                 )
-            else:  # a child already there: the list's birthday is added only where none is held
-                conn.execute(
-                    "update pii.child set birthday = %s where child_id = %s and birthday is null",
-                    (r.born, child_id),
-                )
+            else:
+                _fill_birthday(conn, child_id, r.born)
             conn.execute("select enrol_child(%s,%s,%s,%s,%s)", (child_id, class_id, r.roll, since, who))
         if teacher:
             _grant_teacher(conn, tenant, teacher, class_id, since, who, reason)
