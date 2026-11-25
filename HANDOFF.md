@@ -7,12 +7,11 @@ _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 
 ## State
 - #946 merged (#948, dfedfe27c) and released: CI, deploy engine green. A blank class-list birthday enrols the child with birthday NULL (ADR 0112); a written-but-bad birthday still refuses the run.
-- Gurukul K1 list (~/cornerstone/private/, outside git) dry-run against a local DB built from main: 21 children added, class K1-A for 2026-27, no refusals. Live config school.campus_grades holds K1 at Gurukul and Neev.
-- NOT enrolled on live yet: Nimish runs it. `bin/engine` uses .env DATABASE_URL (local 127.0.0.1:54329), so the live run needs the live URL for that one command: `DATABASE_URL='<live>' bin/engine enrol class <csv> --grade K1 --campus Gurukul` (dry run), then add `--apply --by <his staff email>` [`--teacher <educator email>`].
-- Main checkout fast-forwarded to dfedfe27c so Nimish's bin/engine has #939 + #946.
+- **K1 Gurukul ENROLLED on live (25 Nov, Nimish's go):** class K1-A, 21 children, 21 birthdays not known. Read back on live via Supabase. Route used: AWS profile `cornerstone` -> lightsail key -> ssh ubuntu@engine server -> `docker cp` the CSV into deploy-engine-1 -> `engine enrol class /tmp/x.csv --grade K1 --campus Gurukul --apply --by <staff email>` -> delete both copies. `--by` must be an existing staff email (Nimish: nimish@cornerstoneschool.in). The CSV (names) is ~/cornerstone/private/k1-gurukul-children-2026-v2.csv, outside git; it supersedes the first file (5 rows differed).
+- Educator not linked yet: add `--teacher <email>` later, or ask which educator.
 
 ## Next step
-1. After Nimish's live --apply: read back live (school_class K1 at Gurukul, 21 enrolments), tick G6.6-related goal, then G6.5 (F.N 10 W1+W2 for Gurukul K1).
+1. Tick the K1-enrolled goal in PROJECT.md, then G6.5 (F.N 10 W1+W2 for Gurukul K1). Birthdays still to be filled in by the school (needs its own small ticket: re-running the list does not add them to an enrolled child).
 2. Reviewer follow-ups from #948 (one small ticket via loop plan): `_fill_birthday` dropped `and birthday is null` so a held birthday gets a no-op write that bumps updated_at; same name typed once with a birthday and once blank enrols two children (ADR 0112 covers only both-blank); tests/test_enrol_blank_birthday.py is not in tests/core.txt, so PR CI never ran it (I ran it locally: 38 passed).
 3. Queued small ticket: "engine enrol k2" dry-run label + stale "enrol k2" docstrings.
 4. ADR 0108 ticket 4 (G6.4) via loop plan.
