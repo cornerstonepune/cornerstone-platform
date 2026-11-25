@@ -257,6 +257,15 @@ def _same_person(conn: db.Conn, child_id: Any, row: Row, by: str) -> bool:
     )
 
 
+def _fill_birthday(conn: db.Conn, child_id: Any, born: date | None) -> None:
+    """A child already there gets the list's birthday only where none is held; a blank never writes NULL over one."""
+    if born is not None:
+        conn.execute(
+            "update pii.child set birthday = coalesce(birthday, %s) where child_id = %s",
+            (born, child_id),
+        )
+
+
 def enrol_k2(
     conn: db.Conn,
     grade_name: str,
@@ -321,11 +330,8 @@ def enrol_k2(
                     "insert into pii.child (tenant_id, child_id, first_name, last_name, birthday) values (%s,%s,%s,%s,%s)",
                     (tenant, child_id, r.first, r.last, r.born),
                 )
-            else:  # a child already there: the list's birthday fills only a birthday not held; a blank never clears one
-                conn.execute(
-                    "update pii.child set birthday = coalesce(birthday, %s) where child_id = %s",
-                    (r.born, child_id),
-                )
+            else:
+                _fill_birthday(conn, child_id, r.born)
             conn.execute("select enrol_child(%s,%s,%s,%s,%s)", (child_id, class_id, r.roll, since, who))
         if teacher:
             _grant_teacher(conn, tenant, teacher, class_id, since, who, reason)
