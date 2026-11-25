@@ -326,7 +326,7 @@ def test_a_list_with_a_duplicate_or_a_bad_row_is_refused_in_words_and_writes_not
         f"2,Placeholder Other,{born(8)}",  # roll 2 twice
         f"7,Placeholder Child 01,{born(1)}",  # the same child as roll 1, under another number
         "x y,Placeholder Bad,01/01/2020",  # not a roll number
-        "8,Placeholder Old,01/01/1990",  # not a K2 child's age
+        "8,Placeholder Old,01/01/1990",  # not a class-list age
         "9,Placeholder Slip,31/02/2021",  # not a date
         "10,,01/01/2021",  # no name
     ]
@@ -339,7 +339,7 @@ def test_a_list_with_a_duplicate_or_a_bad_row_is_refused_in_words_and_writes_not
         (5, "also on line 3"),
         (6, "same child as line 2"),
         (7, "not a roll number"),
-        (8, "not a K2 child's"),
+        (8, "outside the ages a class list holds"),
         (9, "birthday not read"),
         (10, "no name"),
     ):
