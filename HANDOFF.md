@@ -2,27 +2,22 @@
 
 _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 
-**Updated:** 2026-11-24 · **By:** Coordinator (loop:run, side session) · **Model:** claude-opus-5-5
-**Milestone:** M6 K1 pilot · **Branch:** plan/coord-handoff · stopped at 150k context
+**Updated:** 2026-11-25 · **By:** Plan (loop plan, Opus) · **Model:** claude-opus-5-5
+**Milestone:** M6 K1 pilot · **Branch:** plan/blank-birthday
 
 ## State
-- **PR #942** (plan/fn10-rubric-words, ADR 0111): signed-off F.N 10 words on 15 rows, K1 added to also_bands of ACT-K2-M0018 + ACT-K2-0449, six new K1 activities (their words await Nimish's OK, docs/loop/notes/fn10-new-activity-words.md). CI GREEN. Reviewer PASS (non-blocking: test doesn't prove pre-filled words survive; notice counts rows not fields; a repo-only rebuild lacks the 15 rows' words). Unverified on live: ACT-K2-M0018 exists, ACT-K2-0449 has level_0; the G6.6 read-back covers both.
-- Gurukul K1 Children List CSV received (21 children, outside git under ~/cornerstone/private/). Enrol only after #939 merges; dry-run first, Nimish runs --apply. Never copy names anywhere.
-- **Merging to main = going live**: .github/workflows/migrate.yml applies live's missing migrations after main's CI, then releases engine/site. So merging #942 puts the words on live. .loop.json release has require_go: true, so get Nimish's one-line go before merging #942.
-- **#939** (enrol class --campus): attempts 1-3 FAILED only because the shared test DB lacked plan/t939's seed (K1 at both campuses) and the builder's handoff kept a Blocked section (loop finish refuses any Blocked section). Fable rescue passed locally (core 229 passed). `loop finish 939 --rescue` was running at session end with TEST_DATABASE_URL pointing at db t939: check `gh pr list` for its PR, then loop ci, reviewer, merge, `loop clean 939`.
-- The rescuer left two untracked probe tests (test_zz_probe_939*.py) in the 939 build folder: not committed (outside ticket files); `loop clean 939` removes them.
-- Local test DBs: postgres rebuilt fresh 24 Nov from plan/fn10-rubric-words; t939 built from plan/t939 (drop it after #939 merges). Run `git worktree prune` for this session's scratch worktrees.
+- Nimish, 25 Nov: a blank birthday cell on the class list enrols the child with birthday NULL (ADR 0112). Why: the Gurukul K1 list (21 children) has no birthdays.
+- **#946** (size:small): blank birthday → NULL, written-but-bad still refuses, `_same_person` never mismatches on a blank, grade-neutral age words. Seed `plan/t946` pushed with failing visible tests (tests/test_enrol_blank_birthday.py + one wording line in test_people.py) and hidden tests (tests/holdout/test_enrol_blank_birthday_hidden.py). No seed/schema change: the shared test DB works.
+- #942 and #939 (#945) are merged on main.
 
 ## Next step
-1. Nimish's go → merge #942 → after migrate-live runs, read back on live: 15 rows with 4 words, 2 rows with K1 in also_bands, 6 new K1 activities; tick G6.6.
-2. #939 PR: CI, reviewer, merge.
-3. ADR 0108 ticket 4 (form mark → activity_observation + evidence_event, G6.4) via loop plan, then build.
-4. Small ticket: people.py:243 dry-run label "engine enrol k2"; stale "enrol k2" docstrings (people.py:1, signer.py:3, roster.py:130, tests/rows.py:427/449).
-5. G6.5: load F.N 10 W1+W2 on live for Gurukul K1 after the CSV enrol. Close #931 in favour of this branch.
-- Open question for Nimish: holiday cells (e.g. Tue 24 Nov "Academic 1 / General Awareness", "Block Room") make NO plan lines today; ADR 0108 says "nothing lost". Keep or drop them? Then pin it with a test.
+1. `loop run-ticket 946` → CI → reviewer → merge.
+2. Then the Gurukul K1 enrol: dry run first, Nimish runs --apply (list is outside git under ~/cornerstone/private/; never copy names).
+3. Queued small ticket: people.py "engine enrol k2" dry-run label and stale "enrol k2" docstrings (people.py:1, signer.py:3, roster.py:130, tests/rows.py). #946 deliberately leaves the label alone.
+4. ADR 0108 ticket 4 (form mark → activity_observation + evidence_event, G6.4) via loop plan.
+- Open question for Nimish: holiday cells (e.g. "Block Room") make no plan lines today; keep or drop them?
 
 ## Don't repeat
-- A ticket that changes a seed needs a test DB built from its seed branch: build a separate DB (bin/testdb fresh …/t<N> from a scratch worktree of plan/t<N>) and pass TEST_DATABASE_URL to loop build/finish, before attempt 1. Tell the builder to delete its Blocked section once tests pass.
-- Don't put export/VAR= in .loop.json commands or 2>&1 beside test paths in briefs. Don't re-ask K1's campus.
-- Builders run `dontAsk` with a `Bash(<word> *)` allowlist: compound commands, pipes, `export`, heredoc commits get refused. After `loop prep`, append a shell note to the brief (one simple command per call, single-line `git commit -m`, no Blocked section).
-- Seed cut from another seed branch conflicts once that ticket squash-merges: cherry-pick the seed's own commit onto main. After any merge to main: `gh pr update-branch` + `loop ci` before `gh pr merge`.
+- A ticket that changes a seed needs a test DB built from its seed branch (bin/testdb fresh …/t<N>) and TEST_DATABASE_URL passed to loop build/finish.
+- Builders run `dontAsk`: one simple command per call, single-line `git commit -m`, no Blocked section left in their handoff.
+- Seed cut from another seed branch conflicts once that ticket squash-merges: cherry-pick onto main. After any merge to main: `gh pr update-branch` + `loop ci` before `gh pr merge`.

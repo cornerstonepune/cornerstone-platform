@@ -6,9 +6,10 @@ prints a name, an email, a phone number or a birthday: a report says line number
 
 `import_staff` gives each person on the staff list (`staff` / `pii.staff`, the one list since CP-27 group 4) a dated
 grant of their role when it is held for the whole campus and they hold none. `enrol_k2` reads the school's Children List (number,
-name, birthday), makes the K2 campus-year-class when it is not there, and enrols each child with the number as their roll
-number. A child is made new unless `match_existing` says a child already sitting at that roll number in K2 is the same
-person; a child's evidence, answers and state are never read or written here.
+name, birthday), makes the grade's class for the campus and year when it is not there, and enrols each child with the number as
+their roll number. A child is made new unless `match_existing` says a child already sitting at that roll number in the grade is
+the same person; a blank birthday enrols the child with birthday not known (ADR 0112). A child's evidence, answers and state are
+never read or written here.
 """
 
 import csv
@@ -30,7 +31,7 @@ DEFAULT_LETTER = "A"  # the class's own section within the grade (K2-A)
 ROLL = re.compile(r"^[A-Za-z0-9-]{1,8}$")
 COLUMNS = ("number", "name", "birthday")
 DATE_FORMATS = ("%Y-%m-%d", "%d/%m/%Y", "%d-%m-%Y", "%d.%m.%Y", "%d %b %Y", "%d %B %Y")
-AGE_YEARS = (2, 10)  # a birthday outside this is a typing slip for a K2 list, refused rather than stored
+AGE_YEARS = (2, 10)  # a birthday outside this is a typing slip on a class list, refused rather than stored
 
 
 def _tenant(conn: db.Conn) -> Any:
@@ -44,8 +45,8 @@ def year_label(on: date) -> str:
 
 
 def parse_birthday(text: str, today: date) -> date:
-    """→ the date, day first as the school writes it. A two-digit year, a date that is not a date, and an age outside
-    K2's are refused, never guessed."""
+    """→ the date, day first as the school writes it. A two-digit year, a date that is not a date, and an age a class list
+    does not hold are refused, never guessed."""
     for fmt in DATE_FORMATS:
         try:
             d = datetime.strptime(text.strip(), fmt).date()
@@ -53,7 +54,7 @@ def parse_birthday(text: str, today: date) -> date:
             continue
         low, high = AGE_YEARS
         if not date(today.year - high - 1, today.month, 1) < d <= date(today.year - low, today.month, 28):
-            raise ValueError("that birthday is not a K2 child's — check the year")
+            raise ValueError("that birthday is outside the ages a class list holds — check the year")
         return d
     raise ValueError("birthday not read — write it 25/12/2020 or 2020-12-25")
 
@@ -104,7 +105,7 @@ class Row:
     roll: str
     first: str
     last: str
-    born: date
+    born: date | None
 
 
 def read_list(path: Path, today: date, out: Report) -> list[Row]:
@@ -122,7 +123,7 @@ def read_list(path: Path, today: date, out: Report) -> list[Row]:
     at = {c: head.index(c) for c in COLUMNS}
     kept: list[Row] = []
     seen_roll: dict[str, int] = {}
-    seen_child: dict[tuple[str, date], int] = {}
+    seen_child: dict[tuple[str, date | None], int] = {}
     for line, raw in enumerate(rows, start=2):
         if not any(cell.strip() for cell in raw):
             continue
@@ -136,11 +137,13 @@ def read_list(path: Path, today: date, out: Report) -> list[Row]:
         if not parts:
             out.refuse(f"line {line}: roll {cell['number']} has no name")
             continue
-        try:
-            born = parse_birthday(cell["birthday"], today)
-        except ValueError as e:
-            out.refuse(f"line {line}: roll {cell['number']}: {e}")
-            continue
+        born: date | None = None  # a blank birthday cell enrols the child with birthday not known (ADR 0112)
+        if cell["birthday"]:
+            try:
+                born = parse_birthday(cell["birthday"], today)
+            except ValueError as e:
+                out.refuse(f"line {line}: roll {cell['number']}: {e}")
+                continue
         who = (" ".join(parts).lower(), born)
         if cell["number"] in seen_roll:
             out.refuse(f"line {line}: roll {cell['number']} is also on line {seen_roll[cell['number']]}")
@@ -163,16 +166,42 @@ def _grade(conn: db.Conn, tenant: Any, name: str) -> str:
     return str(row["code"])
 
 
-def _class_ids(
-    conn: db.Conn, tenant: Any, grade: str, year: str, letter: str, apply: bool, out: Report
-) -> Any:
-    """The K2 class of that year, made when it is not there. → its id, or None on a dry run that has no class yet."""
+def _campus_id(conn: db.Conn, tenant: Any, grade: str, named: str | None) -> Any:
+    """The id of the campus a class of `grade` goes to: the one named (`--campus`), else the one campus the setting
+    `school.campus_grades` gives the grade, else the only campus. Two campuses holding the grade and none named refuses."""
     campuses = conn.execute("select id, name from campus where tenant_id = %s", (tenant,)).fetchall()
     names = settings.config(conn, "school.campus_grades", {}, tenant)  # {campus name: [grade, ...]}
+    if named is not None:
+        here = [c for c in campuses if c["name"].strip().lower() == named.strip().lower()]
+        if not here:
+            raise ValueError(f"no campus called {named}")
+        if names.get(here[0]["name"]) is not None and grade not in names[here[0]["name"]]:
+            raise ValueError(
+                f"{here[0]['name']} does not hold grade {grade} in the setting school.campus_grades"
+            )
+        return here[0]["id"]
     held = [c for c in campuses if grade in names.get(c["name"], [])]
-    campus = held or (campuses if len(campuses) == 1 else [])
-    if len(campus) != 1:
+    if len(held) > 1:
+        both = " and ".join(sorted(c["name"] for c in held))
+        raise ValueError(f"grade {grade} is at {both}: name the campus with --campus")
+    held = held or (campuses if len(campuses) == 1 else [])
+    if len(held) != 1:
         raise ValueError(f"no campus holds grade {grade}: name it in the setting school.campus_grades")
+    return held[0]["id"]
+
+
+def _class_ids(
+    conn: db.Conn,
+    tenant: Any,
+    grade: str,
+    year: str,
+    letter: str,
+    apply: bool,
+    out: Report,
+    campus: str | None = None,
+) -> Any:
+    """The class of `grade` at the named campus for that year, made when it is not there. → its id, or None on a dry run that has no class yet."""
+    campus_id = _campus_id(conn, tenant, grade, campus)
     y = conn.execute(
         "select id from academic_year where tenant_id = %s and label = %s", (tenant, year)
     ).fetchone()
@@ -180,6 +209,8 @@ def _class_ids(
         out.lines.append(f"  would add the school year {year}")
         out.count("years added")
         if not apply:
+            out.lines.append(f"  would add the class {grade}-{letter} for {year}")
+            out.count("classes added")
             return None
         start = int(year[:4])
         y = db.one(
@@ -188,10 +219,19 @@ def _class_ids(
             (tenant, year, date(start, 4, 1), date(start + 1, 3, 31)),
         )
     c = conn.execute(
-        "select id from school_class where tenant_id = %s and academic_year_id = %s and grade_code = %s"
-        " and section = %s",
-        (tenant, y["id"], grade, letter),
+        "select sc.id, sc.campus_id, sc.section, cp.name from school_class sc join campus cp on cp.id = sc.campus_id"
+        " where sc.tenant_id = %s and sc.academic_year_id = %s and sc.label = %s",
+        (tenant, y["id"], grade),
     ).fetchone()
+    if c is not None and c["campus_id"] != campus_id:
+        raise ValueError(
+            f"{grade} for {year} is already a class at {c['name']}: a school year has one class of a name (ADR 0110)"
+        )
+    if c is not None and c["section"] != letter:
+        raise ValueError(
+            f"{grade} for {year} is already a class at {c['name']} in section {c['section']}: "
+            "a school year has one class of a name (ADR 0110)"
+        )
     if c is None:
         out.lines.append(f"  would add the class {grade}-{letter} for {year}")
         out.count("classes added")
@@ -201,7 +241,7 @@ def _class_ids(
             conn,
             "insert into school_class (tenant_id, campus_id, academic_year_id, grade_code, section, label)"
             " values (%s,%s,%s,%s,%s,%s) returning id",
-            (tenant, campus[0]["id"], y["id"], grade, letter, grade),
+            (tenant, campus_id, y["id"], grade, letter, grade),
         )
     return c["id"]
 
@@ -213,8 +253,17 @@ def _same_person(conn: db.Conn, child_id: Any, row: Row, by: str) -> bool:
         who
         and who["first_name"].lower() == row.first.lower()
         and who["last_name"].lower() == row.last.lower()
-        and (born is None or born["birthday"] in (None, row.born))
+        and (row.born is None or born is None or born["birthday"] in (None, row.born))
     )
+
+
+def _fill_birthday(conn: db.Conn, child_id: Any, born: date | None) -> None:
+    """A child already there gets the list's birthday only where none is held; a blank never writes NULL over one."""
+    if born is not None:
+        conn.execute(
+            "update pii.child set birthday = coalesce(birthday, %s) where child_id = %s",
+            (born, child_id),
+        )
 
 
 def enrol_k2(
@@ -228,6 +277,7 @@ def enrol_k2(
     teacher: str | None = None,
     reason: str | None = None,
     letter: str = DEFAULT_LETTER,
+    campus: str | None = None,
 ) -> Report:
     """`by` is the signer's email, refused before anything is read unless it is a member of staff; rows carry their id."""
     out = Report()
@@ -237,7 +287,9 @@ def enrol_k2(
     rows = read_list(path, today, out)
     tenant = _tenant(conn)
     grade = _grade(conn, tenant, grade_name)
-    class_id = _class_ids(conn, tenant, grade, year_label(since), letter, apply and not out.refused, out)
+    class_id = _class_ids(
+        conn, tenant, grade, year_label(since), letter, apply and not out.refused, out, campus
+    )
     actor = who or "engine enrol k2 (dry run)"
     plan: list[tuple[Row, Any, str]] = []  # the row, its existing child (or None), what to do
     for r in rows:
@@ -278,11 +330,8 @@ def enrol_k2(
                     "insert into pii.child (tenant_id, child_id, first_name, last_name, birthday) values (%s,%s,%s,%s,%s)",
                     (tenant, child_id, r.first, r.last, r.born),
                 )
-            else:  # a child already there: the list's birthday is added only where none is held
-                conn.execute(
-                    "update pii.child set birthday = %s where child_id = %s and birthday is null",
-                    (r.born, child_id),
-                )
+            else:
+                _fill_birthday(conn, child_id, r.born)
             conn.execute("select enrol_child(%s,%s,%s,%s,%s)", (child_id, class_id, r.roll, since, who))
         if teacher:
             _grant_teacher(conn, tenant, teacher, class_id, since, who, reason)
