@@ -2,22 +2,23 @@
 
 _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 
-**Updated:** 2026-11-25 · **By:** Plan (loop plan, Opus) · **Model:** claude-opus-5-5
-**Milestone:** M6 K1 pilot · **Branch:** plan/blank-birthday
+**Updated:** 2026-11-25 · **By:** Coordinator (loop:run, side session) · **Model:** claude-opus-5-5
+**Milestone:** M6 K1 pilot · **Branch:** plan/handoff
 
 ## State
-- Nimish, 25 Nov: a blank birthday cell on the class list enrols the child with birthday NULL (ADR 0112). Why: the Gurukul K1 list (21 children) has no birthdays.
-- **#946** (size:small): blank birthday → NULL, written-but-bad still refuses, `_same_person` never mismatches on a blank, grade-neutral age words. Seed `plan/t946` pushed with failing visible tests (tests/test_enrol_blank_birthday.py + one wording line in test_people.py) and hidden tests (tests/holdout/test_enrol_blank_birthday_hidden.py). No seed/schema change: the shared test DB works.
-- #942 and #939 (#945) are merged on main.
+- #946 merged (#948, dfedfe27c) and released: CI, deploy engine green. A blank class-list birthday enrols the child with birthday NULL (ADR 0112); a written-but-bad birthday still refuses the run.
+- Gurukul K1 list (~/cornerstone/private/, outside git) dry-run against a local DB built from main: 21 children added, class K1-A for 2026-27, no refusals. Live config school.campus_grades holds K1 at Gurukul and Neev.
+- NOT enrolled on live yet: Nimish runs it. `bin/engine` uses .env DATABASE_URL (local 127.0.0.1:54329), so the live run needs the live URL for that one command: `DATABASE_URL='<live>' bin/engine enrol class <csv> --grade K1 --campus Gurukul` (dry run), then add `--apply --by <his staff email>` [`--teacher <educator email>`].
+- Main checkout fast-forwarded to dfedfe27c so Nimish's bin/engine has #939 + #946.
 
 ## Next step
-1. `loop run-ticket 946` → CI → reviewer → merge.
-2. Then the Gurukul K1 enrol: dry run first, Nimish runs --apply (list is outside git under ~/cornerstone/private/; never copy names).
-3. Queued small ticket: people.py "engine enrol k2" dry-run label and stale "enrol k2" docstrings (people.py:1, signer.py:3, roster.py:130, tests/rows.py). #946 deliberately leaves the label alone.
-4. ADR 0108 ticket 4 (form mark → activity_observation + evidence_event, G6.4) via loop plan.
+1. After Nimish's live --apply: read back live (school_class K1 at Gurukul, 21 enrolments), tick G6.6-related goal, then G6.5 (F.N 10 W1+W2 for Gurukul K1).
+2. Reviewer follow-ups from #948 (one small ticket via loop plan): `_fill_birthday` dropped `and birthday is null` so a held birthday gets a no-op write that bumps updated_at; same name typed once with a birthday and once blank enrols two children (ADR 0112 covers only both-blank); tests/test_enrol_blank_birthday.py is not in tests/core.txt, so PR CI never ran it (I ran it locally: 38 passed).
+3. Queued small ticket: "engine enrol k2" dry-run label + stale "enrol k2" docstrings.
+4. ADR 0108 ticket 4 (G6.4) via loop plan.
 - Open question for Nimish: holiday cells (e.g. "Block Room") make no plan lines today; keep or drop them?
 
 ## Don't repeat
-- A ticket that changes a seed needs a test DB built from its seed branch (bin/testdb fresh …/t<N>) and TEST_DATABASE_URL passed to loop build/finish.
-- Builders run `dontAsk`: one simple command per call, single-line `git commit -m`, no Blocked section left in their handoff.
-- Seed cut from another seed branch conflicts once that ticket squash-merges: cherry-pick onto main. After any merge to main: `gh pr update-branch` + `loop ci` before `gh pr merge`.
+- `loop build` passes `--allowedTools` space-joined, so `Bash(bin/check *)` splits and every builder shell call is denied (loop plugin bug, #946 lost 3 attempts). Workaround: run the `loop:builder(-small)` subagent from the coordinator session on the brief.
+- loop-guard sums each builder commit's lines: two commits double-count. Close+reopen a PR to re-run loop-guard after a body edit.
+- Build a ticket's test DB from that ticket's branch (bin/testdb fresh …/t<N>), never from a stale main checkout.
