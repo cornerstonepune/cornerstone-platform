@@ -1,0 +1,53 @@
+{
+ "input": {
+  "type": "object",
+  "required": [
+   "skill_code",
+   "name",
+   "description",
+   "subject",
+   "grades"
+  ],
+  "properties": {
+   "skill_code": {
+    "type": "string",
+    "description": "the registry skill's code, as issued (NUM.OPS.01)"
+   },
+   "name": {
+    "type": "string"
+   },
+   "description": {
+    "type": "string"
+   },
+   "subject": {
+    "type": "string"
+   },
+   "grades": {
+    "type": "array",
+    "items": {
+     "type": "string"
+    },
+    "description": "the bands whose objectives use the skill"
+   }
+  }
+ },
+ "output": {
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+   "choice",
+   "reason"
+  ],
+  "properties": {
+   "choice": {
+    "type": "array",
+    "items": {
+     "type": "string"
+    }
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ }
+}

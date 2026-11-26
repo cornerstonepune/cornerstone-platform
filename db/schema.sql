@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict YIGp2ICTDhZAB9UQXND926u0BYqxaL0Zi8lz8SeU1TwPzcWRExt11cVbARnxKMq
+\restrict Ll9SSpIQBG8nRCk0Zp1MxWg13u9YJL9ocgfxCIx94qKtAg8Lr9DqSqEirjpiRVr
 
 -- Dumped from database version 17.12 (Debian 17.12-1.pgdg13+1)
 -- Dumped by pg_dump version 17.12 (Debian 17.12-1.pgdg13+1)
@@ -3000,7 +3000,7 @@ CASE
     ELSE (status = ANY (ARRAY['approved'::text, 'rejected'::text, 'applied'::text, 'reverted'::text]))
 END),
     CONSTRAINT curriculum_proposal_confidence_check CHECK (((confidence >= (0)::numeric) AND (confidence <= (1)::numeric))),
-    CONSTRAINT curriculum_proposal_kind_check CHECK ((kind = ANY (ARRAY['plan_link'::text, 'materials_note'::text, 'skill'::text, 'objective'::text, 'levels'::text, 'lo_skill'::text, 'page_part'::text, 'material'::text, 'skill_offer'::text, 'mislevelled'::text, 'new_mistake'::text]))),
+    CONSTRAINT curriculum_proposal_kind_check CHECK ((kind = ANY (ARRAY['skill_group'::text, 'plan_link'::text, 'materials_note'::text, 'skill'::text, 'objective'::text, 'levels'::text, 'lo_skill'::text, 'page_part'::text, 'material'::text, 'skill_offer'::text, 'mislevelled'::text, 'new_mistake'::text]))),
     CONSTRAINT curriculum_proposal_machine_check CHECK ((btrim(machine) <> ''::text)),
     CONSTRAINT curriculum_proposal_status_check CHECK ((status = ANY (ARRAY['auto_passed'::text, 'needs_person'::text, 'rejected'::text, 'approved'::text, 'applied'::text, 'reverted'::text]))),
     CONSTRAINT curriculum_proposal_subject_code_check CHECK ((btrim(subject_code) <> ''::text)),
@@ -4196,6 +4196,82 @@ ALTER TABLE ONLY public.objective_statement FORCE ROW LEVEL SECURITY;
 --
 
 COMMENT ON TABLE public.objective_statement IS 'A learning objective held against a framework statement (CP-54): meets, partly meets or extends an outside statement; sits on a step of a progression; counts toward its one capability. source: school, machine or person (CP-48''s three words); a machine link is live, marked, until a person checks it.';
+
+
+--
+-- Name: skill_profile_group; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.skill_profile_group (
+    tenant_id uuid NOT NULL,
+    skill_code text NOT NULL,
+    framework_code text DEFAULT 'CS-PROFILE'::text NOT NULL,
+    statement_code text NOT NULL,
+    source text DEFAULT 'person'::text NOT NULL,
+    proposal_id uuid,
+    staff_id uuid NOT NULL,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    CONSTRAINT skill_profile_group_framework_code_check CHECK ((framework_code = 'CS-PROFILE'::text)),
+    CONSTRAINT skill_profile_group_source_check CHECK ((source = 'person'::text))
+);
+
+ALTER TABLE ONLY public.skill_profile_group FORCE ROW LEVEL SECURITY;
+
+
+--
+-- Name: TABLE skill_profile_group; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON TABLE public.skill_profile_group IS 'ADR 0115: the one capability-profile group a registry skill is evidence of, as a person approved it (the proposal it came from, the staff member who approved). Objectives of the bands in profile.skill_bands count toward the groups of their skills (view objective_profile_group).';
+
+
+--
+-- Name: objective_profile_group; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW public.objective_profile_group WITH (security_invoker='true') AS
+ WITH scoped AS (
+         SELECT lo.tenant_id,
+            lo.code
+           FROM (public.learning_objective lo
+             JOIN public.config c ON (((c.tenant_id = lo.tenant_id) AND (c.key = 'profile.skill_bands'::text))))
+          WHERE (lo.band IN ( SELECT jsonb_array_elements_text(c.value) AS jsonb_array_elements_text))
+        ), from_skills AS (
+         SELECT los.tenant_id,
+            los.lo_code,
+            spg.statement_code AS group_code,
+            array_agg(los.skill_code ORDER BY los.skill_code) AS skills
+           FROM ((public.learning_objective_skill los
+             JOIN scoped s ON (((s.tenant_id = los.tenant_id) AND (s.code = los.lo_code))))
+             JOIN public.skill_profile_group spg ON (((spg.tenant_id = los.tenant_id) AND (spg.skill_code = los.skill_code))))
+          GROUP BY los.tenant_id, los.lo_code, spg.statement_code
+        )
+ SELECT f.tenant_id,
+    f.lo_code,
+    f.group_code,
+    'skill'::text AS origin,
+    'person'::text AS source,
+    f.skills
+   FROM from_skills f
+UNION ALL
+ SELECT os.tenant_id,
+    os.lo_code,
+    os.statement_code AS group_code,
+    'default'::text AS origin,
+    os.source,
+    '{}'::text[] AS skills
+   FROM public.objective_statement os
+  WHERE ((os.framework_code = 'CS-PROFILE'::text) AND (os.relation = 'counts_toward'::text) AND ((os.source = 'person'::text) OR (NOT (EXISTS ( SELECT 1
+           FROM from_skills f
+          WHERE ((f.tenant_id = os.tenant_id) AND (f.lo_code = os.lo_code)))))));
+
+
+--
+-- Name: VIEW objective_profile_group; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON VIEW public.objective_profile_group IS 'ADR 0115: each objective''s capability-profile groups, derived: from its skills'' approved groups (origin skill) or, failing that, its own counts_toward row (origin default).';
 
 
 --
@@ -6209,6 +6285,14 @@ ALTER TABLE ONLY public.skill_prerequisite
 
 
 --
+-- Name: skill_profile_group skill_profile_group_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.skill_profile_group
+    ADD CONSTRAINT skill_profile_group_pkey PRIMARY KEY (tenant_id, skill_code);
+
+
+--
 -- Name: skill_registry_link skill_registry_link_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -7010,6 +7094,13 @@ CREATE INDEX skill_level_question_type_stopped_idx ON public.skill_level_questio
 --
 
 CREATE INDEX skill_lo_idx ON public.skill USING btree (tenant_id, lo_code);
+
+
+--
+-- Name: skill_profile_group_statement_idx; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX skill_profile_group_statement_idx ON public.skill_profile_group USING btree (tenant_id, statement_code);
 
 
 --
@@ -8165,6 +8256,13 @@ CREATE TRIGGER touch_updated_at BEFORE UPDATE ON public.skill_mistake FOR EACH R
 --
 
 CREATE TRIGGER touch_updated_at BEFORE UPDATE ON public.skill_prerequisite FOR EACH ROW EXECUTE FUNCTION internal.touch_updated_at();
+
+
+--
+-- Name: skill_profile_group touch_updated_at; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER touch_updated_at BEFORE UPDATE ON public.skill_profile_group FOR EACH ROW EXECUTE FUNCTION internal.touch_updated_at();
 
 
 --
@@ -9860,6 +9958,46 @@ ALTER TABLE ONLY public.skill_prerequisite
 
 
 --
+-- Name: skill_profile_group skill_profile_group_proposal_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.skill_profile_group
+    ADD CONSTRAINT skill_profile_group_proposal_id_fkey FOREIGN KEY (proposal_id) REFERENCES public.curriculum_proposal(id);
+
+
+--
+-- Name: skill_profile_group skill_profile_group_staff_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.skill_profile_group
+    ADD CONSTRAINT skill_profile_group_staff_id_fkey FOREIGN KEY (staff_id) REFERENCES public.staff(id);
+
+
+--
+-- Name: skill_profile_group skill_profile_group_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.skill_profile_group
+    ADD CONSTRAINT skill_profile_group_tenant_id_fkey FOREIGN KEY (tenant_id) REFERENCES public.tenant(id) ON DELETE CASCADE;
+
+
+--
+-- Name: skill_profile_group skill_profile_group_tenant_id_framework_code_statement_cod_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.skill_profile_group
+    ADD CONSTRAINT skill_profile_group_tenant_id_framework_code_statement_cod_fkey FOREIGN KEY (tenant_id, framework_code, statement_code) REFERENCES public.framework_statement(tenant_id, framework_code, code);
+
+
+--
+-- Name: skill_profile_group skill_profile_group_tenant_id_skill_code_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.skill_profile_group
+    ADD CONSTRAINT skill_profile_group_tenant_id_skill_code_fkey FOREIGN KEY (tenant_id, skill_code) REFERENCES public.registry_skill(tenant_id, code) ON DELETE CASCADE;
+
+
+--
 -- Name: skill_registry_link skill_registry_link_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -10879,6 +11017,13 @@ CREATE POLICY engine_all ON public.skill_prerequisite TO app_engine USING (true)
 
 
 --
+-- Name: skill_profile_group engine_all; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY engine_all ON public.skill_profile_group TO app_engine USING (true) WITH CHECK (true);
+
+
+--
 -- Name: skill_registry_link engine_all; Type: POLICY; Schema: public; Owner: -
 --
 
@@ -11682,6 +11827,13 @@ CREATE POLICY service_role_all ON public.skill_prerequisite TO service_role USIN
 
 
 --
+-- Name: skill_profile_group service_role_all; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY service_role_all ON public.skill_profile_group TO service_role USING (true) WITH CHECK (true);
+
+
+--
 -- Name: skill_registry_link service_role_all; Type: POLICY; Schema: public; Owner: -
 --
 
@@ -11818,6 +11970,12 @@ ALTER TABLE public.skill_mistake ENABLE ROW LEVEL SECURITY;
 --
 
 ALTER TABLE public.skill_prerequisite ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: skill_profile_group; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.skill_profile_group ENABLE ROW LEVEL SECURITY;
 
 --
 -- Name: skill_registry_link; Type: ROW SECURITY; Schema: public; Owner: -
@@ -12250,6 +12408,13 @@ CREATE POLICY web_all ON public.skill_prerequisite TO app_web USING (true) WITH 
 
 
 --
+-- Name: skill_profile_group web_all; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY web_all ON public.skill_profile_group TO app_web USING (true) WITH CHECK (true);
+
+
+--
 -- Name: skill_registry_link web_all; Type: POLICY; Schema: public; Owner: -
 --
 
@@ -12488,5 +12653,5 @@ CREATE POLICY web_rule ON public.staff_role_grant TO app_web USING (((tenant_id 
 -- PostgreSQL database dump complete
 --
 
-\unrestrict YIGp2ICTDhZAB9UQXND926u0BYqxaL0Zi8lz8SeU1TwPzcWRExt11cVbARnxKMq
+\unrestrict Ll9SSpIQBG8nRCk0Zp1MxWg13u9YJL9ocgfxCIx94qKtAg8Lr9DqSqEirjpiRVr
 
