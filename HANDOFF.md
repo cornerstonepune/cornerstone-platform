@@ -2,7 +2,7 @@
 
 _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 
-**Updated:** 2026-11-26 · **By:** Plan (loop plan, Opus) · **Model:** claude-opus-5-5
+**Updated:** 2026-11-26 (ADR goal line fixed) · **By:** Plan (loop plan, Opus) · **Model:** claude-opus-5-5
 **Milestone:** profile mapping G1–G4 (ADR 0115) · **Branch:** plan/profile-groups (pushed, no PR yet)
 
 ## State
