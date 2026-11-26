@@ -1127,6 +1127,12 @@
       "seed_once": true
     },
     {
+      "key": "timetable.offers",
+      "description": "Activity groups a lesson is OFFERED without its head TEACHING them (ADR 0117): grade, then the lesson's subject code (`session.subject_code`, `other` included), then the `activity.strand` values. Unlike `timetable.heads`, these never say which subject a head teaches (no objectives, offer sequence or who may edit). K1 pilot only: the signed-off French rhyme on a rhymes lesson, trace R and D on a clay lesson, smelling bottles on an `other` lesson, number tracing on a music lesson.",
+      "value": {"K1": {"rhymes": ["Music"], "clay": ["English"], "other": ["Block Room"], "music": ["Maths"]}},
+      "seed_once": true
+    },
+    {
       "key": "timetable.one_off_units",
       "description": "Words that mark a unit as a one-off or a standing routine rather than a step in the teaching order (a field visit, a celebration day, a weekly quiz, \"see source LO\"). A unit whose name holds one (any case) sits last in the picker, under Other, and never moves \"next up\" (CP-74). Machine-made from the units live on 17 Nov 2026; the coordinators edit it.",
       "value": ["see source", "field visit", "diwas", "math day", "science day", "independence day", "friendship day", "weekly", "twice a week", "every alternate", "olympiad", "exhibition", "& celebration", "celebrating", "projects"],

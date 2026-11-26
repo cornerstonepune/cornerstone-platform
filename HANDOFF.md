@@ -16,7 +16,7 @@ _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 2. K1 attach (ADR 0114 on plan/handoff): `attach.py` in `~/Library/Application Support/Claude/side-session-notes/local_07a3d48e-bf4c-43ef-98fc-95c421cdfa35/`,
    piped to `sudo docker exec -i deploy-engine-1 python -` on ubuntu@3.111.248.87; dry run expects 3 of 8 ok, then `--apply`.
 3. Check a rubric on the live site; tick G6.x only as live proves; merge #949 (BLOCKED, cause unchecked).
-4. Ticket G6.8: offer-only groups on a head (5 lessons, first on 30 Nov).
+4. G6.8 = #955 (size:small, ADR 0117, seed `plan/t955`, setting `timetable.offers`): `loop run-ticket 955`; first lesson 30 Nov.
 5. Profile mapping: tickets a–g per ADR 0115 §Consequence, seed branches `plan/t<N>`.
 
 ## Ask Nimish
