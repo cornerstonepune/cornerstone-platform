@@ -1,6 +1,6 @@
 # 0116 — M7: the profile-group work as seven tickets, and the contracts between them
 
-Date: 2026-11-26. Status: accepted (planner, unattended; builds on ADR 0115, which Nimish accepted).
+Date: 2026-11-26. Status: superseded by ADR 0117 (the short route, Nimish 26 Nov); its ticket plan is not built.
 Goal: none — the M7 tickets are not written yet; proved when each ticket's tests pass and, on live, `engine curriculum profile-check` shows the word kind above 0.
 
 ## Context

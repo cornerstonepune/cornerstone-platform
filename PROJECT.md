@@ -184,17 +184,14 @@ _Every milestone is a vertical slice Nimish can click through. Goals are yes/no;
   - [ ] G6.8 ACT-K1-0665, ACT-K1-F003, ACT-K1-0783 and ACT-K1-F002 are offered on their K1 lessons: a head offers a group without teaching it (ADR 0113) — ticket, not yet written
 - **Depends on:** #939 (`enrol class --campus`: K1 is at Gurukul and Neev, ADR 0109, 0110); Nimish: the Children List CSV. No new wireframe (S3 covers marking).
 
-### M7 — G1–G4 profile groups through approved skill groups (ADR 0115, 0116) · In progress
-- **Delivers:** each G1–G4 objective counts toward the profile groups its skills reach, once Nimish approves each skill's group; `engine curriculum profile-check` shows how far that has got.
+### M7 — G1–G4 profile groups through approved skill groups (ADR 0115, 0117) · In progress
+- **Delivers:** each G1–G4 objective counts toward every profile group its skills reach, from one skill→group list Nimish approved in chat (the short route, ADR 0117); `engine curriculum profile-check` shows the counts per grade.
 - **Goals:**
-  - [ ] G7.1 `engine curriculum profile-check` counts objectives by class and every word, `kind` included — `tests/test_profile_check.py`
-  - [ ] G7.2 Only a profile approver decides a skill_group proposal; approve writes `skill_profile_group` — `tests/test_profile_decide.py`
-  - [ ] G7.3 `engine curriculum profile-propose` writes needs_person proposals with the active prompt only, never a group — `tests/test_profile_propose.py`
-  - [ ] G7.4 An active skill needs a recorded passing score for its version and non-draft gold — `tests/test_skill_record.py`
-  - [ ] G7.5 A child's picture counts evidence in full toward each of an objective's groups — `tests/test_chain_picture_groups.py`
-  - [ ] G7.6 Library card decides skill_group proposals; S35 lists several groups — after the redrawn S27/S35 are approved
-  - [ ] G7.7 On live: profile-check shows the word kind above 0 — after Nimish marks the gold and approves groups
-- **Depends on:** PR #953 (merged). Nimish: mark the draft gold; `engine staff grant <email> profile_approver`.
+  - [ ] G7.1 The approved skill→group list loads into `skill_profile_group` with the seed — `tests/test_profile_seed.py`
+  - [ ] G7.2 A child's report counts an objective toward every group its skills reach, the subject default only when it has none — `tests/test_chain_picture_groups.py`
+  - [ ] G7.3 `engine curriculum profile-check` prints per grade G1–G4 the objectives reaching capable, kind, unafraid and each group; kind above 0 on the seed — `tests/test_profile_check.py`
+  - [ ] G7.4 On live: profile-check shows the word kind above 0 — after Nimish's go (loop-release)
+- **Depends on:** PR #953 (merged); Nimish's approval of the list in chat. No new wireframe (no screen changes shape).
 
 ## 6. Open questions (Plan resolves before the milestone they block)
 - Order: M1–M3 (proof) before M4 (money, dated 1 Dec Sports Day / 31 Dec)? The Sports Day date is 8 days away and slices G–L aren't started — blocks M4.
