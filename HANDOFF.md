@@ -2,7 +2,7 @@
 
 _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 
-**Updated:** 2026-11-26 (session 3) · **By:** Plan (Opus) · **Model:** claude-opus-5-5
+**Updated:** 2026-11-26 (session 3, end) · **By:** Plan (Opus) · **Model:** claude-opus-5-5
 **Milestone:** M6 K1 pilot · **Branch:** plan/mapping-explorer
 
 ## State
@@ -12,7 +12,7 @@ _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 
 ## Next step
 0. Mapping explorer (Nimish's side ask, a read-only Artifact, not a ticket): page WRITTEN, not checked or published. Source + exact finish steps: docs/loop/notes/mapping-explorer.md ("State" section). New bad news for Nimish: no objective reaches "kind" (all 7 kind groups empty); 16 of 24 groups empty; all Science + Global perspectives objectives map to "Changing my mind", which looks wrong.
-0b. Nimish, 26 Nov: find and fix every mapping issue of this kind (kind reached by nothing, unmapped character/routine objectives, suspect SCI/GP mapping, empty groups, K1 empty, no skill/activity) through the loop: a code check per issue + a scored, seeded prompt that only PROPOSES fixes for review. Issue list, proposed shape and 4 open questions: docs/loop/notes/mapping-explorer.md (last section). Session 3: Nimish added HOW (Opus learns the pattern from good mappings, writes the prompt, prompt fixes gaps); proposed fit + his pending yes/no in the notes' last section. Survey done (in the notes): the `capability-link` CHOOSE skill already does this job; SCI/GP is config `lo.capability_default`. Next: trace why character/routine get no group, ask the remaining questions + confirm the approach, ADR, then `loop plan`.
+0b. Profile mapping (Nimish, 26 Nov): scope is G1-G4 only. His model: objective -> registry skill (~244) -> group (capable/kind/unafraid); map each SKILL once (Opus proposes group + reason, a person approves), objectives inherit. Read the last 3 sections of docs/loop/notes/mapping-explorer.md (survey, his idea, what to verify). Pending his yes ("map through skills for G1-G4?"). Next: verify the skill->group table and how full it is, count skill-less G1-G4 objectives, ADR 0113, then `loop plan`. No tests yet; nothing built.
 1. `loop run-ticket 946` → CI → reviewer → merge.
 2. Then the Gurukul K1 enrol: dry run first, Nimish runs --apply (list is outside git under ~/cornerstone/private/; never copy names).
 3. Queued small ticket: people.py "engine enrol k2" dry-run label and stale "enrol k2" docstrings (people.py:1, signer.py:3, roster.py:130, tests/rows.py). #946 deliberately leaves the label alone.
