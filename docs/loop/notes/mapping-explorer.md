@@ -123,3 +123,17 @@ Coordinator's answer (to verify next session, nothing checked against live data)
   skills (no per-objective row) or keep one primary.
 - kind/capable/unafraid are words on the 24 groups, not groups; a behavioural skill maps to one of the 7 groups carrying kind.
 Proposed: review ~244 skill rows (Opus proposes group + reason, a person approves) instead of 2,593 objectives. Needs his yes + ADR 0113.
+
+## Verified, 26 Nov (session 5, live data read-only + `chain_draft._capability_of_skill`)
+- G1–G4: 1,666 live objectives. 1,569 academic all count toward a group (all `source='machine'`, 0 by a person);
+  97 routine + 1 character count toward none. The 411 character objectives are K2, outside this scope.
+- Those 1,569 rows use 7 of 24 groups: language-and-reading 556, number-and-measure 402, change-my-mind 259,
+  imagine-and-express 123, design-and-build 117, use-tools-well 88, how-the-world-works 24. Kind: 0.
+- The skill → profile link today is the spine (`docs/spine/spine.json`), and it stops at the 8 CAPABILITIES, not the
+  24 groups. G1–G4 objectives use 123 of the 244 registry skills; all 123 reach a capability, 40 reach two or more.
+  Skills by capability: academic mastery 69, communication & collaboration 40 (holds 2 kind groups), reasoning 21,
+  making 10, technology 8, self & others 7, society & planet 6, learning & agency 2.
+- Through skills, 816 of the 1,385 skill-linked objectives reach one capability and 569 reach two or more, so
+  "one group per objective" (unique index) vs "every group its skills reach" is a real choice.
+- 281 G1–G4 objectives have no skill (272 academic that hold a machine group today, 9 routine).
+- ADR number: 0113 is taken by PR #952 (K1 pilot offers); this decision moves to 0114.
