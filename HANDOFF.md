@@ -2,22 +2,27 @@
 
 _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 
-**Updated:** 2026-11-25 · **By:** Plan (loop plan, Opus) · **Model:** claude-opus-5-5
-**Milestone:** M6 K1 pilot · **Branch:** plan/blank-birthday
+**Updated:** 2026-11-26 (context full; plan PR not opened yet) · **By:** Plan (loop plan, Opus) · **Model:** claude-opus-5-5
+**Milestone:** profile mapping G1–G4 (ADR 0115) · **Branch:** plan/profile-groups
 
 ## State
-- Nimish, 25 Nov: a blank birthday cell on the class list enrols the child with birthday NULL (ADR 0112). Why: the Gurukul K1 list (21 children) has no birthdays.
-- **#946** (size:small): blank birthday → NULL, written-but-bad still refuses, `_same_person` never mismatches on a blank, grade-neutral age words. Seed `plan/t946` pushed with failing visible tests (tests/test_enrol_blank_birthday.py + one wording line in test_people.py) and hidden tests (tests/holdout/test_enrol_blank_birthday_hidden.py). No seed/schema change: the shared test DB works.
-- #942 and #939 (#945) are merged on main.
+- Migration `20270219090000_skill_profile_group.sql` finished: table `skill_profile_group`, view `objective_profile_group`,
+  proposal kind `skill_group`, role `profile_approver` (may_grant founder; added to `internal.people_vocabulary` so new
+  schools get it). `people.decides.skill_groups = ["profile_approver"]`. Proved on a fresh DB (`bin/testdb fresh` into
+  database `pg_profile` on 54329): applies, re-runs clean, view returns 30 rows all origin `default` on the seed.
+  `rules.json` and `db/schema.sql` regenerated. Engine core: 230 passed, 1 skipped; ruff clean (final run on `pg_profile`).
+- Skill folder `supabase/seed/skills/skill-group/` (CHOOSE, v1, active:false), 5 bars `skill_bar.skill-group.*`.
+  Gold: 32 DRAFT cases covering all 24 groups (every kind group), each `marked_by: "draft"` with a `doubt` line.
+- GLOSSARY: profile group, skill group, on default, profile approver.
+
+## Needs Nimish
+- Mark the draft gold in `supabase/seed/skills/skill-group/gold.json` (fix `choice`, set `marked_by`), esp. the 12 with a `doubt`.
+- After merge and deploy: `engine staff grant <his email> profile_approver --by …` (nobody holds the role yet).
 
 ## Next step
-1. `loop run-ticket 946` → CI → reviewer → merge.
-2. Then the Gurukul K1 enrol: dry run first, Nimish runs --apply (list is outside git under ~/cornerstone/private/; never copy names).
-3. Queued small ticket: people.py "engine enrol k2" dry-run label and stale "enrol k2" docstrings (people.py:1, signer.py:3, roster.py:130, tests/rows.py). #946 deliberately leaves the label alone.
-4. ADR 0108 ticket 4 (form mark → activity_observation + evidence_event, G6.4) via loop plan.
-- Open question for Nimish: holiday cells (e.g. "Block Room") make no plan lines today; keep or drop them?
+1. Open the plan PR from plan/profile-groups, `loop ci`, merge.
+2. Tickets a–g (see ADR 0115 §Consequence and the issue list) with seed branches `plan/t<N>`.
 
 ## Don't repeat
-- A ticket that changes a seed needs a test DB built from its seed branch (bin/testdb fresh …/t<N>) and TEST_DATABASE_URL passed to loop build/finish.
-- Builders run `dontAsk`: one simple command per call, single-line `git commit -m`, no Blocked section left in their handoff.
-- Seed cut from another seed branch conflicts once that ticket squash-merges: cherry-pick onto main. After any merge to main: `gh pr update-branch` + `loop ci` before `gh pr merge`.
+- ADR numbers 0113/0114 are taken twice on other branches. Don't touch PR #952 or plan/k1-pilot-offers.
+- Use a separate test database (not `postgres`, which other sessions use): `create database pg_profile`, then `bin/testdb fresh`.

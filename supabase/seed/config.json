@@ -44,6 +44,9 @@
         ],
         "week": [
           "educator"
+        ],
+        "skill_groups": [
+          "profile_approver"
         ]
       }
     },
@@ -160,6 +163,11 @@
       "key": "curriculum.teaching_formats",
       "description": "CP-54: the formats an activity may take (the editable list the activity skill reads). Per-format additions and the subject-and-stage default mix are rows of the same kind; add a format here, not in code.",
       "value": ["hands-on", "investigation", "project", "group task", "practice", "discussion/circle", "performance", "game"]
+    },
+    {
+      "key": "profile.skill_bands",
+      "description": "ADR 0115 (Nimish, 26 Nov): the bands whose objectives count toward the capability-profile groups their skills reach (view objective_profile_group); an objective of another band, or one with no skill whose group is approved, keeps its own group (lo.capability_default). K1 and K2 are out until a decision adds them.",
+      "value": ["G1", "G2", "G3", "G4"]
     },
     {
       "key": "lo.capability_default",
