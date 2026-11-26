@@ -2,23 +2,22 @@
 
 _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 
-**Updated:** 2026-11-26 · **By:** Opus, direct (Nimish: "get out of the loop, just get this done")
-**Branch:** plan/profile-map-data
+**Updated:** 2026-11-26 (~13:25 IST) · **By:** Coordinator (loop:run, side session local_07a3d48e) · **Model:** claude-sonnet-5-5
+**Lanes:** M6 K1 pilot (G6.8 live) · profile mapping G1–G4 (live, #958 merged) · **Branch:** plan/handoff (PR #949)
 
-## State
-- G1–G4 learner-profile mapping is LIVE (written 26 Nov via the Supabase connector, then recorded as migration 20270222090000):
-  - 399 objective→skill links for 257 G1–G4 objectives that had none (source 'person'). 25 unsure ones left out (Nimish).
-  - skill_profile_group: all 244 skills → one profile group, approver = Nimish (staff 31f56cec…, role founder + profile_approver, no password).
-- Verified on live through view objective_profile_group: G1–G4 kind 130 (was 0), capable 1,474, unafraid 424; 1,666 of 1,667 objectives reach a word.
-- Drafts were model-made (subagents) and checked in code; 67 of 244 skill groups were marked unsure (mostly motor skills → My feelings and my body; values → Fairness and living together). No educator review yet.
-- Mapping Explorer page: https://claude.ai/artifact/8Y939ggPhXLUuBS7p8Fopz (republished from live after this change).
+## K1 pilot — state (verified 13:06 IST)
+- Live: K1-A 21 children, educator account, 99 slots (23 Nov-4 Dec). **17 of 45 teaching slots have a rubric** (rest: 14 Sports Day practice, 10 past 23-25 Nov, 4 with no activity attached). Voice key set. #952 and #957 released; Smelling Bottles rubric seen on the live site.
+- Unproven: 0 K1 marks, 0 evidence; no mark on live has produced evidence_event; child summaries last computed 18 Nov; no website voice note tried; educator sign-in unchecked.
+- Next: (1) save one real mark; trace it to evidence_event and the child page. (2) Tick PROJECT.md G6.5-G6.8 as live proves; merge #949; `loop clean 955`; remove worktree scratchpad/g68.
+- Nimish to OK model-drafted level words of F001-F006. Tickets: educator picks activity on S3; later fortnights' load; voice confirm default; 30 s cap; silent voice failure; add test_k1_offer_only.py to tests/core.txt; `tt_edit.py:120` checks the old subject; #948 notes.
 
-## Next step
-1. Merge this PR (CI green); migrate live will no-op (rows already there).
-2. The 25 objectives still without a skill: the 244-skill list has no fitting skill (Hindi sandhi, keyboard notes, dyeing, …). Needs new skills or Nimish's call.
-3. K2 and K1 are out of this scope (Nimish).
-4. PRs #954 / #956 (loop plan for the same work) are superseded by this; close them.
+## Profile mapping — state (from main, #958)
+- LIVE: 399 objective→skill links (G1–G4), 244 skill groups, approver Nimish; migration 20270222090000. View check: kind 130 (was 0); 1,666 of 1,667 objectives reach a word. Model-drafted, 67 groups unsure, no educator review.
+- 25 objectives have no fitting skill (new skills or Nimish's call). K1/K2 out of scope. PRs #954/#956 superseded: close them.
+- Nimish asked that this work run directly, without loop tickets/planner/builder sessions.
 
-## Don't repeat
-- Nimish asked for this work to run directly, without loop tickets/planner/builder sessions. Six sessions stalled on the 150k budget doing process work.
-- skill_profile_group.staff_id is NOT NULL: a skill group needs a named approver in staff.
+## Don't repeat / blocked
+- One owner per PR. Long sessions stall on the context budget. `loop build` splits --allowedTools; a builder under a scratchpad worktree gets no shell: let `loop finish` run the checks.
+- An ADR Goal line naming a PROJECT.md goal must read `Goal: none — proved by …`.
+- Main checkout may be on another session's branch: use a worktree, never switch it. Separate test DB per job.
+- `nightly` on main failed 25 and 26 Nov. Never print child names; passwords/keys typed by Nimish only.

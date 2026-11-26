@@ -1,2 +1,8 @@
 {"issue": 925, "size": "standard", "model": "sonnet", "attempts": 3, "result": "pr", "ts": "2026-11-24T13:58:39"}
 {"issue": 926, "size": "standard", "model": "sonnet", "attempts": 1, "result": "pr", "ts": "2026-11-24T16:35:51"}
+{"issue": 923, "size": "small", "model": "haiku", "attempts": 3, "result": "pr", "ts": "2026-11-24T18:11:44"}
+{"issue": 939, "size": "standard", "model": "fable", "attempts": 4, "result": "pr", "ts": "2026-11-24T20:10:32"}
+{"issue": 939, "size": "standard", "attempts": 4, "result": "escalated", "ts": "2026-11-24T20:22:50"}
+{"issue": 939, "size": "standard", "model": "sonnet", "attempts": 1, "result": "pr", "ts": "2026-11-24T20:48:23"}
+{"issue": 939, "size": "standard", "model": "sonnet", "attempts": 2, "result": "pr", "ts": "2026-11-25T01:25:18"}
+{"issue": 946, "size": "small", "model": "haiku", "attempts": 2, "result": "pr", "ts": "2026-11-25T07:49:49"}
