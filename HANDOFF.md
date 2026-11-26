@@ -2,31 +2,32 @@
 
 _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 
-**Updated:** 2026-11-26 (#952 merged with main) · **By:** Plan (Opus) · **Model:** claude-opus-5-5
-**Lanes:** M6 K1 pilot (PR #952, plan/k1-pilot-offers) · profile mapping G1–G4 (ADR 0115, #953 merged)
+**Updated:** 2026-11-26 (short route chosen; context full after pushing fee22baf3) · **By:** coordinator (loop run, Opus) · **Model:** claude-opus-5-5
+**Milestone:** M7 — G1–G4 profile groups (ADR 0115, 0117) · **Branch:** plan/profile-tickets (PR #956)
 
 ## State
-- K1: PR #952 NOT merged; nothing changed on live. `tests/test_k1_pilot_offers.py` on local DB `k1offers`: 9 passed;
-  migration blanked: 8 failed, 1 passed. Nimish decided all of ADR 0113 (skill links, K1 = K2 observed rule, 1 adult).
-- Profile mapping: #953 on main (migration `20270219090000_skill_profile_group.sql`, skill `skill-group` v1 inactive,
-  32 DRAFT gold cases, GLOSSARY terms). No tickets yet.
+- Nimish chose the SHORT ROUTE (ADR 0117, supersedes ADR 0116's seven tickets): one skill→group list he approves in
+  chat, seeded into `skill_profile_group`; readers use view `objective_profile_group`; one count command
+  `engine curriculum profile-check`. No S27/S35 redraw, no approval screen.
+- PR #956 carries ADR 0116 (marked superseded), ADR 0117, PROJECT.md M7 G7.1–G7.4, `tests/profile_rows.py` (proven), and
+  the gold "okay to all" commit from #954 (cherry-picked; #954 still OPEN, close it after #956 merges).
+- profile_rows.py: `a_staff` runs `internal.people_vocabulary` before a grant; `scope_to_test_band` adds band T9 so seeded
+  G1–G4 rows don't count in tests. Run tests with TEST_DATABASE_URL=…54329/pg_profile (`postgres` lacks ADR 0115).
 
-## Next step (in order)
-1. CI green on #952 → loop:reviewer → `gh pr merge 952 --squash --delete-branch`; confirm `migrate live` + `deploy engine`.
-2. K1 attach (ADR 0114 on plan/handoff): `attach.py` in `~/Library/Application Support/Claude/side-session-notes/local_07a3d48e-bf4c-43ef-98fc-95c421cdfa35/`,
-   piped to `sudo docker exec -i deploy-engine-1 python -` on ubuntu@3.111.248.87; dry run expects 3 of 8 ok, then `--apply`.
-3. Check a rubric on the live site; tick G6.x only as live proves; merge #949 (BLOCKED, cause unchecked).
-4. Ticket G6.8: offer-only groups on a head (5 lessons, first on 30 Nov).
-5. Profile mapping: tickets a–g per ADR 0115 §Consequence, seed branches `plan/t<N>`.
+## Tests
+- tests/test_promises.py passes locally (5 passed) after the ADR 0117 goal-line fix; full bin/check not re-run; CI on #956 pending.
 
-## Ask Nimish
-- Mark the draft gold in `supabase/seed/skills/skill-group/gold.json` (fix `choice`, set `marked_by`), esp. the 12 with a `doubt`.
-- After deploy: `engine staff grant <his email> profile_approver --by …` (nobody holds the role yet).
+## Next step
+0. CI green on #956 → `gh pr merge 956`; then `gh pr close 954 -c "folded into #956"`. Facts for step 1: side-session-notes/local_6d8eb21c…/short-route-handover.md + skills_g14_seed.json.
+1. Draft one group per registry skill used by G1–G4 objectives (seed registry.json + live, ~125 skills), keep the 32 gold
+   choices, publish a readable page; Nimish approves in chat (record his words in the commit).
+2. One ticket (seed + test on `plan/t<N>`): approved list → `skill_profile_group`; chain_picture.py and objective-chain.ts
+   read `objective_profile_group`; `engine curriculum profile-check` per grade. Builder → CI → reviewer → merge.
+3. Run profile-check on pg_profile with the seeds; quote counts; kind > 0. Then loop-release on Nimish's go.
+
+## Needs Nimish
+- Approve the skill→group list in chat. Go for release. Later (only for future changes): `engine staff grant <email> profile_approver`.
 
 ## Don't repeat
-- An ADR Goal line naming a PROJECT.md goal must read `Goal: none — proved by …`, or test_promises takes the rest as a path.
-- Use a separate test database per session (`create database <name>`, then `bin/testdb fresh`); not `postgres`.
-- Main checkout may be on another session's branch with uncommitted work: use a worktree, never switch it.
-
-## Blocked / unverified
-- `nightly` on main failed 25 and 26 Nov. Never print child names; passwords/keys typed by Nimish only.
+- Don't touch plan/k1-pilot-offers. Use a worktree, never switch the main checkout. Next free ADR: 0118.
+- Use database `pg_profile` on 54329, not `postgres`.
