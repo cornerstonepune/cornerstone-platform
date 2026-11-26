@@ -110,3 +110,16 @@ Classes 4 (K1 empty) and 6 (topic names) are data, not model work. Class 5 (no s
   `engine/checks/chain_layers.py`.
 - Who approves: only a coordinator edits curriculum today (curriculum_edit.py L56); "who decides each kind" is config.json L16-31.
 - No ADR covers the profile mapping; next free number 0113.
+
+## Nimish, 26 Nov (last): scope G1-G4, and map through skills
+Dictated: do G1 to G4 only. His understanding of the agreed backend: objective -> skill (~230 registry skills) -> capable/kind/unafraid.
+So the job should be one mapping of each SKILL's wording to a group; behavioural skills land in kind. "What am I missing?"
+Coordinator's answer (to verify next session, nothing checked against live data):
+- The profile report reads objective -> group directly (`objective_statement counts_toward`); skills only SHORTLIST groups
+  for the `capability-link` step. Find the skill -> group table (`chain_draft.capability`) and how full it is.
+- 447 objectives have no skill; check how many are G1-G4 and whether they are the 527 character/routine ones. Those reach
+  nothing through skills until they get a skill.
+- An objective with several skills could reach several groups; the unique index allows one. Decide: derive groups through
+  skills (no per-objective row) or keep one primary.
+- kind/capable/unafraid are words on the 24 groups, not groups; a behavioural skill maps to one of the 7 groups carrying kind.
+Proposed: review ~244 skill rows (Opus proposes group + reason, a person approves) instead of 2,593 objectives. Needs his yes + ADR 0113.
