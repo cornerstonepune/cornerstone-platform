@@ -21,7 +21,8 @@ select json_build_object(
    left join (select lo_code, count(*) n from activity_objective group by 1) a on a.lo_code=lo.code
    where not lo.retired),
  'links', (select json_agg(json_build_array(lo_code, skill_code)) from learning_objective_skill x where exists (select 1 from learning_objective l where l.code=x.lo_code and not l.retired)),
- 'skills', (select json_agg(json_build_array(code, name, coalesce(domain_name,domain,''), coalesce(strand,''), coalesce(skill_type,''))) from registry_skill)
+ 'skills', (select json_agg(json_build_array(code, name, coalesce(domain_name,domain,''), coalesce(strand,''), coalesce(skill_type,''))) from registry_skill),
+ 'grades', (select json_agg(json_build_array(code, name, ord) order by ord) from grade)
 ) as d
 ```
 Result on 26 Nov: 2,593 live objectives, 2,753 objective→skill links, 244 skills, every link resolves.
@@ -31,7 +32,11 @@ Result on 26 Nov: 2,593 live objectives, 2,753 objective→skill links, 244 skil
 - K1 has no objectives or activities in the database (grades with objectives: K2, G1–G4).
 - Language and reading alone holds 952 objectives; number and measure 421.
 
-## Next step
-Build one self-contained HTML (data inlined): headline findings; a mind map Words → Capabilities → Groups → Grades →
-Objectives (collapsible, counts on every node); a table with filters for grade, subject, word, capability, group, kind,
-signal, skill, "no group" and text search. Load the artifact-design skill first; publish with the Artifact tool.
+## More findings (26 Nov, session 2)
+- No objective reaches "kind": all 7 kind groups are empty. 16 of 24 groups have no objectives.
+- All Science (177) and Global perspectives (110) objectives count toward "Changing my mind" (reasoning); "How the world works" gets 34. Looks mis-mapped (e.g. "names a habitat"). Flag to Nimish, don't fix silently.
+- 447 objectives have no skill; 890 have no activity. Topic name is empty for every objective (unit used instead).
+
+## State: page written, NOT checked, NOT published
+Source: `mapping-explorer/mapping-explorer.html` (d3 7.8.5 mind map, word x grade grid, findings computed in JS, filterable/sortable table, row detail, Copy as CSV) + `build.py`.
+To finish: run the query above, save the `d` object as `mapping-explorer/raw.json` (keep it out of git), `python3 build.py` -> `data.json` + `preview.html` (data inlined). Open preview.html once in the browser pane (one look: mind map labels/links, grid, table filters), fix what it shows, then publish `mapping-explorer.html` with the Artifact tool, `files: {"data.json": ...}`, icon "map". Put the URL here and in HANDOFF.

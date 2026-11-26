@@ -1,0 +1,455 @@
+<title>Mapping Explorer</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Inter:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&display=swap">
+<style>
+/* Layout: one reading column — findings, a word × grade grid, the mind map, then the filterable table.
+   Deliberately single-theme: the founder's ivory-paper design language (tokens copied from ~/.claude/design/reference/tokens.css). */
+:root {
+  color-scheme: light;
+  --paper: #F4F0E5; --paper-soft: #FCFAF5; --paper-deep: #EBE5D6; --paper-rule: #E4DDCB;
+  --ink: #17140F; --ink-2: #3A332A; --ink-3: #59503F; --ink-4: #7C7361; --ink-5: #B4A996; --ink-rule: #D8CEB9;
+  --signal-pos: #2C6B41; --signal-pos-soft: #DEE9DB;
+  --signal-neg: #AB4425; --signal-neg-strong: #7A2C15; --signal-neg-soft: #F2DCD1; --signal-neg-rule: #DDB2A0;
+  --signal-warn: #9A7008; --signal-warn-soft: #F1E6C5; --signal-warn-rule: #D7C37D;
+  --signal-info: #3A5872; --signal-info-soft: #DAE1E9;
+  --data-1: #25394A; --data-2: #2C6B41; --data-3: #B8860B;
+  --accent: #25394A; --accent-2: #B8860B; --accent-soft: #DAE1E9;
+  --glass-fill: linear-gradient(160deg, rgba(255,255,255,0.74) 0%, rgba(255,255,255,0.48) 52%, rgba(252,250,245,0.40) 100%);
+  --glass-fill-strong: linear-gradient(160deg, rgba(255,255,255,0.90) 0%, rgba(255,255,255,0.70) 100%);
+  --glass-border: rgba(120, 104, 76, 0.16);
+  --shadow-glass: 0 1px 1px rgba(74,60,30,0.03), 0 6px 16px -6px rgba(74,60,30,0.10), 0 20px 40px -24px rgba(37,57,74,0.18);
+  --inset-glass: inset 0 1px 0 rgba(255,255,255,0.70), inset 0 0 0 1px rgba(255,255,255,0.22);
+  --wash-1: rgba(62, 92, 118, 0.22); --wash-2: rgba(184, 134, 11, 0.16);
+  --font-serif: 'Source Serif 4', 'Iowan Old Style', Charter, Georgia, serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  --font-num: 'Geist', 'Inter', -apple-system, 'Segoe UI', Helvetica, sans-serif;
+  --t-display-s: 34px; --t-h2: 21px; --t-h3: 18px; --t-body: 15px; --t-body-s: 14px; --t-caption: 13px; --t-micro: 12px;
+  --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 20px; --s-6: 24px; --s-7: 32px; --s-8: 40px; --s-9: 56px;
+  --r-1: 3px; --r-2: 6px; --r-btn: 9px; --r-card: 14px; --r-pill: 999px;
+  --tr-mark: 0.10em;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--paper); color: var(--ink); font-family: var(--font-sans); font-size: var(--t-body); line-height: 1.55;
+  background-image: radial-gradient(60% 40% at 0% 0%, var(--wash-1), transparent 70%), radial-gradient(50% 40% at 100% 20%, var(--wash-2), transparent 70%);
+  background-attachment: fixed;
+}
+.wrap { max-width: 1180px; margin: 0 auto; padding-block: var(--s-8) var(--s-9);
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: grid; gap: var(--s-7); }
+.num { font-family: var(--font-num); font-variant-numeric: tabular-nums; }
+.eyebrow { font-size: var(--t-micro); letter-spacing: var(--tr-mark); text-transform: uppercase; color: var(--ink-3); font-weight: 600; }
+h1 { font-family: var(--font-serif); font-weight: 600; font-size: var(--t-display-s); line-height: 1.1; margin: var(--s-2) 0 var(--s-3); text-wrap: balance; }
+h2 { font-family: var(--font-serif); font-weight: 600; font-size: var(--t-h2); margin: 0; text-wrap: balance; }
+.lede { color: var(--ink-2); max-width: 68ch; margin: 0; }
+.meta { color: var(--ink-3); font-size: var(--t-caption); margin-top: var(--s-2); }
+.pane { background: var(--glass-fill); border: 1px solid var(--glass-border); border-radius: var(--r-card);
+  box-shadow: var(--shadow-glass), var(--inset-glass); backdrop-filter: blur(18px) saturate(1.4); -webkit-backdrop-filter: blur(18px) saturate(1.4);
+  padding: var(--s-6); min-width: 0; }
+.pane-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: var(--s-2) var(--s-4); margin-bottom: var(--s-4); }
+.pane-head p { margin: 0; color: var(--ink-3); font-size: var(--t-caption); max-width: 70ch; }
+
+/* findings */
+.findings { display: grid; gap: var(--s-3); grid-template-columns: repeat(auto-fit, minmax(min(100%, 330px), 1fr)); }
+.finding { border-left: 3px solid var(--sev); padding: var(--s-3) var(--s-4); background: var(--paper-soft); border-radius: 0 var(--r-2) var(--r-2) 0; display: grid; gap: var(--s-1); align-content: start; }
+.finding[data-sev="neg"] { --sev: var(--signal-neg); }
+.finding[data-sev="warn"] { --sev: var(--signal-warn); }
+.finding[data-sev="info"] { --sev: var(--signal-info); }
+.finding .tag { font-size: var(--t-micro); letter-spacing: var(--tr-mark); text-transform: uppercase; font-weight: 600; color: var(--sev); }
+.finding .big { font-family: var(--font-num); font-size: 28px; font-weight: 600; line-height: 1.1; color: var(--ink); }
+.finding .big small { font-size: var(--t-body-s); font-weight: 500; color: var(--ink-3); margin-left: var(--s-1); }
+.finding p { margin: 0; font-size: var(--t-body-s); color: var(--ink-2); }
+.linkbtn { all: unset; cursor: pointer; color: var(--accent); font-size: var(--t-caption); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; justify-self: start; }
+.linkbtn:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible, tr:focus-visible, .node:focus-visible { outline: 2px solid var(--accent-2); outline-offset: 2px; }
+
+/* word x grade grid */
+.scroll { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; }
+.grid th, .grid td { padding: var(--s-2) var(--s-3); text-align: right; border-bottom: 1px solid var(--paper-rule); font-size: var(--t-body-s); }
+.grid th:first-child, .grid td:first-child { text-align: left; }
+.grid thead th { font-size: var(--t-micro); letter-spacing: var(--tr-mark); text-transform: uppercase; color: var(--ink-3); font-weight: 600; }
+.grid td.cell { cursor: pointer; font-family: var(--font-num); font-variant-numeric: tabular-nums; }
+.grid td.cell:hover { outline: 1px solid var(--ink-5); }
+.grid td.zero { color: var(--signal-neg); background: var(--signal-neg-soft); font-weight: 600; }
+.grid td .bar { display: block; height: 4px; margin-top: 3px; border-radius: 2px; background: var(--wc); opacity: .55; margin-left: auto; }
+.wordchip { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; }
+.wordchip::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--wc); }
+.w-capable { --wc: var(--data-1); } .w-kind { --wc: var(--data-2); } .w-unafraid { --wc: var(--data-3); } .w-none { --wc: var(--signal-neg); }
+
+/* mind map */
+.mapbox { overflow: auto; max-height: 72vh; border: 1px solid var(--paper-rule); border-radius: var(--r-btn); background: var(--paper-soft); }
+.mapbox svg { display: block; }
+.mapbox .link { fill: none; stroke: var(--ink-5); stroke-width: 1.2; }
+.mapbox .node { cursor: pointer; }
+.mapbox .node circle { stroke-width: 1.6; }
+.mapbox .label { font-family: var(--font-sans); font-size: 13px; fill: var(--ink); }
+.mapbox .count { font-family: var(--font-num); font-size: 12px; fill: var(--ink-3); font-variant-numeric: tabular-nums; }
+.mapbox .zero .label { fill: var(--signal-neg-strong); }
+.mapbox .zero .count { fill: var(--signal-neg); font-weight: 600; }
+.mapbox .lo .label { fill: var(--ink-2); }
+.mapbox .more .label { fill: var(--accent); text-decoration: underline; }
+.legend { display: flex; flex-wrap: wrap; gap: var(--s-2) var(--s-4); font-size: var(--t-caption); color: var(--ink-3); margin-top: var(--s-3); }
+.maptools { display: flex; flex-wrap: wrap; gap: var(--s-2); }
+
+/* controls */
+button.btn { font: inherit; font-size: var(--t-caption); font-weight: 600; color: var(--ink); background: var(--glass-fill-strong); border: 1px solid var(--ink-rule); border-radius: var(--r-btn); padding: 6px 12px; cursor: pointer; }
+button.btn:hover { border-color: var(--ink-4); }
+button.btn.primary { background: var(--accent); color: var(--paper-soft); border-color: var(--accent); }
+.filters { display: grid; gap: var(--s-3); grid-template-columns: repeat(auto-fill, minmax(min(100%, 170px), 1fr)); margin-bottom: var(--s-4); }
+.filters label { display: grid; gap: 4px; font-size: var(--t-micro); letter-spacing: var(--tr-mark); text-transform: uppercase; color: var(--ink-3); font-weight: 600; min-width: 0; }
+.filters select, .filters input[type="search"] { font: inherit; font-size: var(--t-body-s); letter-spacing: 0; text-transform: none; color: var(--ink); background: var(--paper-soft); border: 1px solid var(--ink-rule); border-radius: var(--r-2); padding: 6px 8px; width: 100%; min-width: 0; }
+.filters select.on, .filters input.on { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+.filters .search { grid-column: span 2; }
+@media (max-width: 420px) { .filters .search { grid-column: auto; } }
+.filters .check { display: flex; align-items: center; gap: var(--s-2); text-transform: none; letter-spacing: 0; font-size: var(--t-body-s); color: var(--ink-2); font-weight: 500; align-self: end; padding-bottom: 6px; }
+.resultbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--s-2) var(--s-4); margin-bottom: var(--s-3); font-size: var(--t-body-s); color: var(--ink-2); }
+.resultbar .actions { display: flex; gap: var(--s-2); flex-wrap: wrap; }
+
+/* main table */
+.los { font-size: var(--t-body-s); min-width: 980px; }
+.los thead th { position: sticky; top: 0; z-index: 1; background: var(--paper-deep); text-align: left; font-size: var(--t-micro); letter-spacing: var(--tr-mark); text-transform: uppercase; color: var(--ink-3); font-weight: 600; padding: var(--s-2) var(--s-3); cursor: pointer; white-space: nowrap; user-select: none; }
+.los thead th[aria-sort="ascending"]::after { content: " ↑"; } .los thead th[aria-sort="descending"]::after { content: " ↓"; }
+.los thead th.r, .los td.r { text-align: right; }
+.los td { padding: var(--s-2) var(--s-3); border-bottom: 1px solid var(--paper-rule); vertical-align: top; }
+.los tbody tr.row { cursor: pointer; }
+.los tbody tr.row:hover td { background: rgba(255,255,255,0.55); }
+.los .code { font-family: var(--font-num); font-size: var(--t-caption); color: var(--ink-3); white-space: nowrap; }
+.los .title { min-width: 300px; max-width: 460px; }
+.los .unit { color: var(--ink-3); font-size: var(--t-caption); }
+.los .grp { min-width: 170px; }
+.los .nogrp { color: var(--signal-neg); font-weight: 600; }
+.los .zeroish { color: var(--signal-neg); }
+.pill { display: inline-block; font-size: var(--t-micro); font-weight: 600; padding: 1px 8px; border-radius: var(--r-pill); background: var(--paper-deep); color: var(--ink-2); white-space: nowrap; }
+.pill.k-character { background: var(--signal-warn-soft); color: var(--signal-warn); }
+.pill.k-routine { background: var(--signal-info-soft); color: var(--signal-info); }
+.pill.k-academic { background: var(--accent-soft); color: var(--accent); }
+.words { display: flex; gap: var(--s-2); flex-wrap: wrap; margin-top: 2px; font-size: var(--t-caption); }
+.words .wordchip { font-weight: 500; color: var(--ink-3); }
+.words .wordchip::before { width: 7px; height: 7px; }
+tr.detail td { background: var(--paper-soft); padding: var(--s-4); }
+.detail-grid { display: grid; gap: var(--s-4); grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
+.detail-grid h4 { margin: 0 0 var(--s-1); font-size: var(--t-micro); letter-spacing: var(--tr-mark); text-transform: uppercase; color: var(--ink-3); }
+.detail-grid p, .detail-grid ul { margin: 0; font-size: var(--t-body-s); color: var(--ink-2); }
+.detail-grid ul { padding-left: 18px; }
+.empty { padding: var(--s-7) var(--s-4); text-align: center; color: var(--ink-3); }
+.more-row { display: flex; justify-content: center; margin-top: var(--s-4); }
+.tablebox { max-height: 78vh; overflow: auto; border: 1px solid var(--paper-rule); border-radius: var(--r-btn); background: var(--paper-soft); }
+#copyfallback { width: 100%; height: 120px; margin-top: var(--s-2); font-family: var(--font-num); font-size: var(--t-micro); }
+footer { color: var(--ink-3); font-size: var(--t-caption); max-width: 80ch; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Cornerstone · curriculum to learner profile</div>
+    <h1>Mapping Explorer</h1>
+    <p class="lede">How every live learning objective flows up into the learner profile: grade → objective → profile group → capability → the three words, <b>capable</b>, <b>kind</b> and <b>unafraid</b>. Skills and activities hang off each objective.</p>
+    <p class="meta" id="meta"></p>
+  </header>
+
+  <section class="pane" aria-labelledby="h-find">
+    <div class="pane-head"><h2 id="h-find">What to notice first</h2><p>Worst first. Each card opens the matching objectives in the table.</p></div>
+    <div class="findings" id="findings"></div>
+  </section>
+
+  <section class="pane" aria-labelledby="h-grid">
+    <div class="pane-head"><h2 id="h-grid">Which words each grade reaches</h2><p>Objectives per word and grade. One objective can count toward two words (its group carries both), so rows don't add up to the total. Click a number to see those objectives.</p></div>
+    <div class="scroll"><table class="grid" id="grid"></table></div>
+  </section>
+
+  <section class="pane" aria-labelledby="h-map">
+    <div class="pane-head"><h2 id="h-map">Mind map</h2>
+      <div class="maptools"><button class="btn" id="m-groups" type="button">Show groups</button><button class="btn" id="m-grades" type="button">Show grades</button><button class="btn" id="m-fold" type="button">Fold to words</button></div></div>
+    <p class="meta" style="margin:0 0 var(--s-3)">Word → capability → group → grade → objectives. The number on each branch is the objectives under it. Click a branch to open or fold it; click an objective to see it in the table.</p>
+    <div class="mapbox" id="map"></div>
+    <div class="legend"><span class="wordchip w-capable">capable</span><span class="wordchip w-kind">kind</span><span class="wordchip w-unafraid">unafraid</span><span class="wordchip w-none">reaches no word</span><span>Red label = nothing maps here</span></div>
+  </section>
+
+  <section class="pane" aria-labelledby="h-table" id="table-pane">
+    <div class="pane-head"><h2 id="h-table">Every objective</h2><p>Filter, sort by any column, click a row for its skills and its group's “I can” line.</p></div>
+    <div class="filters" id="filters">
+      <label class="search">Search<input type="search" id="f-q" placeholder="Code, words in the objective, unit or skill"></label>
+      <label>Grade<select id="f-grade"></select></label>
+      <label>Subject<select id="f-subj"></select></label>
+      <label>Word<select id="f-word"></select></label>
+      <label>Capability<select id="f-cap"></select></label>
+      <label>Group<select id="f-grp"></select></label>
+      <label>Kind<select id="f-kind"></select></label>
+      <label>Signal<select id="f-signal"></select></label>
+      <label>Skill<select id="f-skill"></select></label>
+      <label class="check"><input type="checkbox" id="f-nogroup"> Only objectives that reach no group</label>
+    </div>
+    <div class="resultbar"><span id="count"></span><span class="actions"><button class="btn" id="reset" type="button">Clear filters</button><button class="btn primary" id="copy" type="button">Copy as CSV</button></span></div>
+    <textarea id="copyfallback" hidden readonly aria-label="CSV of the filtered objectives"></textarea>
+    <div class="tablebox"><table class="los" id="los"><thead><tr>
+      <th data-k="code">Code</th><th data-k="grade">Grade</th><th data-k="subj">Subject</th><th data-k="title">Objective</th><th data-k="grp">Profile group</th><th data-k="kind">Kind</th><th data-k="signal">Signal</th><th data-k="nsk" class="r">Skills</th><th data-k="acts" class="r">Activities</th>
+    </tr></thead><tbody id="rows"></tbody></table></div>
+    <div class="more-row"><button class="btn" id="more" type="button" hidden>Show 100 more</button></div>
+  </section>
+
+  <footer id="foot"></footer>
+</div>
+
+<!--DATA-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<script>
+(async () => {
+const D = window.__DATA || await fetch('data.json').then(r => r.json());
+const $ = s => document.querySelector(s);
+const fmt = n => n.toLocaleString('en-IN');
+const pct = (a, b) => b ? Math.round(100 * a / b) + '%' : '0%';
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const WORDS = ['capable', 'kind', 'unafraid'];
+const SHOWN_GRADES = ['K1', 'K2', 'G1', 'G2', 'G3', 'G4'];
+const gradeOrd = Object.fromEntries(D.grades.map(([c], i) => [c, i]));
+const gradeName = Object.fromEntries(D.grades);
+
+// groups keyed "capability.group"
+const G = {};
+D.caps.forEach(c => c.groups.forEach(g => { G[`${c.code}.${g.code}`] = { ...g, key: `${c.code}.${g.code}`, cap: c }; }));
+const skillByIdx = D.skills;
+const LOS = D.los.map(([code, grade, subj, u, title, signal, kind, grp, acts, conf, sk]) => {
+  const g = G[grp];
+  return { code, grade, subj, unit: D.units[u], title, signal, kind, grp, acts, conf, sk, g, words: g ? g.words : [],
+    hay: (code + ' ' + title + ' ' + D.units[u] + ' ' + sk.map(i => skillByIdx[i][0] + ' ' + skillByIdx[i][1]).join(' ')).toLowerCase() };
+});
+const N = LOS.length;
+const byGroup = {}; LOS.forEach(o => (byGroup[o.grp] ||= []).push(o));
+const subjName = c => c ? (D.subjects[c] || c) : 'No subject';
+
+// ---------- header + findings (every number computed here from the data) ----------
+$('#meta').innerHTML = `Live database, ${D.asOf} · <span class="num">${fmt(N)}</span> live objectives · <span class="num">${fmt(LOS.reduce((a, o) => a + o.sk.length, 0))}</span> objective→skill links · <span class="num">${fmt(D.skills.length)}</span> skills · <span class="num">${Object.keys(G).length}</span> profile groups in <span class="num">${D.caps.length}</span> capabilities`;
+
+const allGroups = Object.values(G);
+const kindGroups = allGroups.filter(g => g.words.includes('kind'));
+const kindN = LOS.filter(o => o.words.includes('kind')).length;
+const emptyGroups = allGroups.filter(g => !byGroup[g.key]);
+const noGroup = LOS.filter(o => !o.grp);
+const ng = k => noGroup.filter(o => o.kind === k).length;
+const sciGp = LOS.filter(o => o.subj === 'SCI' || o.subj === 'GP');
+const sciToMind = sciGp.filter(o => o.grp.endsWith('.change-my-mind')).length;
+const hww = (byGroup['v2-deep-knowledge.how-the-world-works'] || []).length;
+const perGrade = g => LOS.filter(o => o.grade === g).length;
+const withLos = SHOWN_GRADES.filter(perGrade);
+const topGroup = Object.entries(byGroup).filter(([k]) => k).sort((a, b) => b[1].length - a[1].length)[0];
+const noSkill = LOS.filter(o => !o.sk.length).length, noAct = LOS.filter(o => !o.acts).length;
+
+const F = [
+  { sev: 'neg', tag: 'Kind is never reached', big: `${kindN}<small>objectives</small>`,
+    text: `None of the ${kindGroups.length} groups that carry “kind” (${kindGroups.map(g => g.name).join(', ')}) has a single objective. Nothing a child does in class can show up as kind today.`,
+    act: 'Show the kind branch', go: () => { mapOpenWord('kind'); $('#h-map').scrollIntoView({ behavior: 'smooth' }); } },
+  { sev: 'neg', tag: 'Empty profile groups', big: `${emptyGroups.length}<small>of ${allGroups.length} groups</small>`,
+    text: `Only ${allGroups.length - emptyGroups.length} groups receive objectives. Empty: ${emptyGroups.map(g => g.name).join(', ')}.`,
+    act: 'See them on the mind map', go: () => { mapShow(3); $('#h-map').scrollIntoView({ behavior: 'smooth' }); } },
+  { sev: 'neg', tag: 'Objectives that reach no word', big: `${fmt(noGroup.length)}<small>of ${fmt(N)} · ${pct(noGroup.length, N)}</small>`,
+    text: `They count toward no profile group, so they reach none of capable, kind or unafraid. All are character (${fmt(ng('character'))}) or routine (${fmt(ng('routine'))}) objectives — the very ones that should feed kind and unafraid.`,
+    act: 'Show these objectives', go: () => setFilters({ nogroup: true }) },
+  { sev: 'warn', tag: 'Looks mis-mapped — check', big: `${fmt(sciToMind)}<small>of ${fmt(sciGp.length)} Science + Global perspectives</small>`,
+    text: `Every Science and Global perspectives objective counts toward “Changing my mind” (reasoning), e.g. “names a habitat where plants live”. “How the world works” gets only ${hww}. Naming habitats reads like how-the-world-works.`,
+    act: 'Show Changing my mind', go: () => setFilters({ grp: 'v2-reasoning.change-my-mind' }) },
+  { sev: 'warn', tag: 'K1 has nothing', big: `0<small>K1 objectives</small>`,
+    text: `Objectives exist only for ${withLos.join(', ')}. K1, the pilot grade, has no objectives or activities in the database. K2 alone holds ${fmt(perGrade('K2'))} (${pct(perGrade('K2'), N)}).`,
+    act: 'Show K2', go: () => setFilters({ grade: 'K2' }) },
+  { sev: 'info', tag: 'One group dominates', big: `${fmt(topGroup[1].length)}<small>${pct(topGroup[1].length, N)} of all</small>`,
+    text: `${G[topGroup[0]].name} holds the most objectives. Number and measure has ${fmt((byGroup['v2-deep-knowledge.number-and-measure'] || []).length)}. Gaps elsewhere: ${fmt(noSkill)} objectives have no skill linked and ${fmt(noAct)} have no activity.`,
+    act: `Show ${G[topGroup[0]].name}`, go: () => setFilters({ grp: topGroup[0] }) },
+];
+$('#findings').innerHTML = F.map((f, i) => `<article class="finding" data-sev="${f.sev}"><span class="tag">${f.tag}</span><span class="big">${f.big}</span><p>${esc(f.text)}</p><button class="linkbtn" type="button" data-f="${i}">${f.act} →</button></article>`).join('');
+$('#findings').addEventListener('click', e => { const b = e.target.closest('[data-f]'); if (b) F[+b.dataset.f].go(); });
+
+// ---------- word x grade grid ----------
+(function grid() {
+  const rows = [...WORDS.map(w => ({ w, label: w, test: o => o.words.includes(w) })), { w: 'none', label: 'reaches no word', test: o => !o.grp }];
+  const max = Math.max(...rows.flatMap(r => SHOWN_GRADES.map(g => LOS.filter(o => o.grade === g && r.test(o)).length)));
+  let h = `<thead><tr><th>Word</th>${SHOWN_GRADES.map(g => `<th>${g}</th>`).join('')}<th>All grades</th></tr></thead><tbody>`;
+  rows.forEach(r => {
+    h += `<tr><td><span class="wordchip w-${r.w}">${r.label}</span></td>`;
+    SHOWN_GRADES.forEach(g => {
+      const n = LOS.filter(o => o.grade === g && r.test(o)).length;
+      h += `<td class="cell${n ? '' : ' zero'}" data-w="${r.w}" data-g="${g}" tabindex="0">${fmt(n)}<span class="bar w-${r.w}" style="width:${Math.round(100 * n / max)}%"></span></td>`;
+    });
+    const t = LOS.filter(r.test).length;
+    h += `<td class="cell${t ? '' : ' zero'}" data-w="${r.w}" data-g="" tabindex="0"><b>${fmt(t)}</b></td></tr>`;
+  });
+  h += `<tr><td>All objectives</td>${SHOWN_GRADES.map(g => `<td class="num">${fmt(perGrade(g))}</td>`).join('')}<td class="num"><b>${fmt(N)}</b></td></tr></tbody>`;
+  $('#grid').innerHTML = h;
+  const go = c => setFilters(c.dataset.w === 'none' ? { nogroup: true, grade: c.dataset.g } : { word: c.dataset.w, grade: c.dataset.g });
+  $('#grid').addEventListener('click', e => { const c = e.target.closest('td.cell'); if (c) go(c); });
+  $('#grid').addEventListener('keydown', e => { const c = e.target.closest('td.cell'); if (c && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); go(c); } });
+})();
+
+// ---------- mind map ----------
+const LEAF_LIMIT = 8;
+function gradeNodes(list, filt) {
+  return SHOWN_GRADES.filter(g => list.some(o => o.grade === g)).map(g => {
+    const items = list.filter(o => o.grade === g);
+    const kids = items.slice(0, LEAF_LIMIT).map(o => ({ name: o.title.replace(/^The child /, ''), type: 'lo', lo: o }));
+    if (items.length > LEAF_LIMIT) kids.push({ name: `${fmt(items.length - LEAF_LIMIT)} more — open in table`, type: 'more', filt: { ...filt, grade: g } });
+    return { name: g, type: 'grade', n: items.length, children: kids };
+  });
+}
+function treeData() {
+  const words = WORDS.map(w => {
+    const caps = D.caps.map(c => {
+      const groups = c.groups.filter(g => g.words.includes(w)).map(g => {
+        const key = `${c.code}.${g.code}`, list = byGroup[key] || [];
+        return { name: g.name, type: 'group', n: list.length, children: gradeNodes(list, { grp: key }) };
+      });
+      return groups.length ? { name: c.name, type: 'cap', n: groups.reduce((a, g) => a + g.n, 0), children: groups } : null;
+    }).filter(Boolean);
+    return { name: w, type: 'word', word: w, n: caps.reduce((a, c) => a + c.n, 0), children: caps };
+  });
+  const none = { name: 'reaches no word', type: 'word', word: 'none', n: noGroup.length,
+    children: ['character', 'routine', 'academic'].map(k => { const l = noGroup.filter(o => o.kind === k); return l.length ? { name: `${k} objectives`, type: 'cap', n: l.length, children: gradeNodes(l, { nogroup: true, kind: k }) } : null; }).filter(Boolean) };
+  return { name: 'Learner profile', type: 'root', n: N, children: [...words, none] };
+}
+const COLX = [0, 170, 300, 590, 830, 910];
+const ROW = 24;
+const measure = (() => { const c = document.createElement('canvas').getContext('2d'); return (t, font) => { c.font = font; return c.measureText(t).width; }; })();
+const root = d3.hierarchy(treeData());
+root.each(d => { d._kids = d.children; });
+function setDepth(maxDepth) { root.each(d => { d.children = d.depth < maxDepth ? d._kids : null; }); render(); }
+function mapShow(depth) { setDepth(depth); }
+function mapOpenWord(w) {
+  root.each(d => { d.children = null; });
+  root.children = root._kids;
+  root.children.forEach(wd => { if (wd.data.word === w) { wd.children = wd._kids; (wd.children || []).forEach(c => { c.children = c._kids; }); } });
+  render();
+}
+function wordOf(d) { let a = d; while (a.depth > 1) a = a.parent; return a.depth === 1 ? a.data.word : null; }
+function labelText(d) { const t = d.data.name; return d.data.type === 'lo' && t.length > 64 ? t.slice(0, 62) + '…' : t; }
+function render() {
+  const nodes = [];
+  let row = 0;
+  (function place(d) { // simple outline layout: each visible leaf gets a row, parents sit at their first child's row
+    d.x = COLX[d.depth];
+    if (d.children) { const start = row; d.children.forEach(place); d.y = (start + row - 1) / 2 * ROW; }
+    else { d.y = row * ROW; row++; }
+    nodes.push(d);
+  })(root);
+  const width = COLX[5] + 430, height = row * ROW + 24;
+  const box = $('#map');
+  const svg = d3.create('svg').attr('width', width).attr('height', height).attr('role', 'tree').attr('aria-label', 'Mind map of words, capabilities, groups, grades and objectives');
+  const g = svg.append('g').attr('transform', 'translate(14,14)');
+  const lw = d => measure(labelText(d), '13px Inter, sans-serif') + (d.data.type === 'lo' || d.data.type === 'more' ? 0 : measure(' ' + fmt(d.data.n), '12px Geist, Inter, sans-serif') + 6);
+  nodes.filter(d => d.parent).forEach(d => {
+    const sx = d.parent.x + 10 + lw(d.parent) + 6, sy = d.parent.y, tx = d.x - 6, ty = d.y, mx = (sx + tx) / 2;
+    g.append('path').attr('class', 'link').attr('d', `M${sx},${sy} C${mx},${sy} ${mx},${ty} ${tx},${ty}`);
+  });
+  nodes.forEach(d => {
+    const t = d.data.type, w = wordOf(d);
+    const zero = t !== 'lo' && t !== 'more' && d.data.n === 0;
+    const ng = g.append('g').attr('class', `node ${t}${zero ? ' zero' : ''}`).attr('transform', `translate(${d.x},${d.y})`)
+      .attr('tabindex', 0).attr('role', 'treeitem');
+    if (d._kids) ng.attr('aria-expanded', !!d.children);
+    const col = w ? `var(--${w === 'none' ? 'signal-neg' : 'data-' + (WORDS.indexOf(w) + 1)})` : 'var(--ink)';
+    const r = t === 'root' ? 6 : t === 'word' ? 6 : t === 'lo' || t === 'more' ? 2.5 : 4.5;
+    ng.append('circle').attr('r', r).attr('fill', d._kids && !d.children ? col : 'var(--paper-soft)').attr('stroke', zero ? 'var(--signal-neg)' : col);
+    const tx = ng.append('text').attr('x', 10).attr('dy', '0.35em');
+    tx.append('tspan').attr('class', 'label').attr('font-weight', t === 'word' || t === 'root' ? 600 : 400).text(labelText(d));
+    if (t !== 'lo' && t !== 'more') tx.append('tspan').attr('class', 'count').attr('dx', 6).text(fmt(d.data.n));
+    ng.append('title').text(t === 'lo' ? `${d.data.lo.code} · ${d.data.lo.title}` : `${d.data.name}: ${fmt(d.data.n)} objectives`);
+    const act = () => {
+      if (t === 'lo') return setFilters({ q: d.data.lo.code }, d.data.lo.code);
+      if (t === 'more') return setFilters(d.data.filt);
+      if (d._kids) { d.children = d.children ? null : d._kids; render(); box.querySelector(`[data-id="${d.id}"]`)?.focus({ preventScroll: true }); }
+    };
+    d.id ??= Math.random().toString(36).slice(2);
+    ng.attr('data-id', d.id).on('click', act).on('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); act(); } });
+  });
+  box.replaceChildren(svg.node());
+}
+$('#m-groups').onclick = () => setDepth(3);
+$('#m-grades').onclick = () => setDepth(4);
+$('#m-fold').onclick = () => setDepth(1);
+setDepth(3);
+
+// ---------- table ----------
+const S = { q: '', grade: '', subj: '', word: '', cap: '', grp: '', kind: '', signal: '', skill: '', nogroup: false };
+let sortK = 'grade', sortDir = 1, shown = 100, openCode = null;
+const opt = (v, t, n) => `<option value="${esc(v)}">${esc(t)}${n !== undefined ? ` (${fmt(n)})` : ''}</option>`;
+const cnt = f => LOS.filter(f).length;
+$('#f-grade').innerHTML = opt('', 'All grades') + SHOWN_GRADES.map(g => opt(g, gradeName[g], perGrade(g))).join('');
+$('#f-subj').innerHTML = opt('', 'All subjects') + [...new Set(LOS.map(o => o.subj))].sort((a, b) => subjName(a).localeCompare(subjName(b))).map(s => opt(s, subjName(s), cnt(o => o.subj === s))).join('');
+$('#f-word').innerHTML = opt('', 'Any word') + WORDS.map(w => opt(w, w, cnt(o => o.words.includes(w)))).join('');
+$('#f-cap').innerHTML = opt('', 'All capabilities') + D.caps.map(c => opt(c.code, c.name, cnt(o => o.g && o.g.cap.code === c.code))).join('');
+$('#f-grp').innerHTML = opt('', 'All groups') + D.caps.map(c => `<optgroup label="${esc(c.name)}">${c.groups.map(g => opt(`${c.code}.${g.code}`, g.name, (byGroup[`${c.code}.${g.code}`] || []).length)).join('')}</optgroup>`).join('');
+$('#f-kind').innerHTML = opt('', 'All kinds') + ['academic', 'character', 'routine'].map(k => opt(k, k, cnt(o => o.kind === k))).join('');
+$('#f-signal').innerHTML = opt('', 'All signals') + [...new Set(LOS.map(o => o.signal))].sort().map(s => opt(s, s || 'No signal', cnt(o => o.signal === s))).join('');
+const skillUse = {}; LOS.forEach(o => o.sk.forEach(i => { skillUse[i] = (skillUse[i] || 0) + 1; }));
+const domains = [...new Set(D.skills.map(s => s[2]))].sort();
+$('#f-skill').innerHTML = opt('', 'Any skill') + opt('__none', 'No skill linked', cnt(o => !o.sk.length)) +
+  domains.map(dm => `<optgroup label="${esc(dm)}">${D.skills.map((s, i) => [s, i]).filter(([s]) => s[2] === dm).map(([s, i]) => opt(String(i), `${s[0]} ${s[1]}`, skillUse[i] || 0)).join('')}</optgroup>`).join('');
+
+const ids = { q: '#f-q', grade: '#f-grade', subj: '#f-subj', word: '#f-word', cap: '#f-cap', grp: '#f-grp', kind: '#f-kind', signal: '#f-signal', skill: '#f-skill' };
+Object.entries(ids).forEach(([k, sel]) => $(sel).addEventListener('input', e => { S[k] = e.target.value; shown = 100; draw(); }));
+$('#f-nogroup').addEventListener('change', e => { S.nogroup = e.target.checked; shown = 100; draw(); });
+$('#reset').onclick = () => setFilters({});
+function setFilters(f, open) {
+  Object.assign(S, { q: '', grade: '', subj: '', word: '', cap: '', grp: '', kind: '', signal: '', skill: '', nogroup: false }, f);
+  Object.entries(ids).forEach(([k, sel]) => { $(sel).value = S[k]; });
+  $('#f-nogroup').checked = S.nogroup; shown = 100; openCode = open || null; draw();
+  $('#table-pane').scrollIntoView({ behavior: 'smooth' });
+}
+const pass = o => (!S.grade || o.grade === S.grade) && (!S.subj || o.subj === S.subj) && (!S.word || o.words.includes(S.word))
+  && (!S.cap || (o.g && o.g.cap.code === S.cap)) && (!S.grp || o.grp === S.grp) && (!S.kind || o.kind === S.kind)
+  && (!S.signal || o.signal === S.signal) && (!S.skill || (S.skill === '__none' ? !o.sk.length : o.sk.includes(+S.skill)))
+  && (!S.nogroup || !o.grp) && (!S.q || S.q.toLowerCase().split(/\s+/).every(w => o.hay.includes(w)));
+const key = {
+  code: o => o.code, grade: o => gradeOrd[o.grade] * 1e5 + +o.code.replace(/\D/g, '').slice(-5), subj: o => subjName(o.subj), title: o => o.title,
+  grp: o => o.g ? o.g.name : '~', kind: o => o.kind, signal: o => o.signal || '~', nsk: o => o.sk.length, acts: o => o.acts,
+};
+document.querySelectorAll('#los th').forEach(th => th.addEventListener('click', () => {
+  const k = th.dataset.k; sortDir = sortK === k ? -sortDir : (k === 'nsk' || k === 'acts' ? -1 : 1); sortK = k; draw();
+}));
+let current = [];
+function draw() {
+  Object.entries(ids).forEach(([k, sel]) => $(sel).classList.toggle('on', !!S[k]));
+  const kf = key[sortK];
+  current = LOS.filter(pass).sort((a, b) => { const x = kf(a), y = kf(b); return (x < y ? -1 : x > y ? 1 : 0) * sortDir; });
+  document.querySelectorAll('#los th').forEach(th => th.setAttribute('aria-sort', th.dataset.k === sortK ? (sortDir > 0 ? 'ascending' : 'descending') : 'none'));
+  $('#count').innerHTML = `Showing <b class="num">${fmt(Math.min(shown, current.length))}</b> of <b class="num">${fmt(current.length)}</b> matching · <span class="num">${fmt(N)}</span> in all`;
+  const body = $('#rows');
+  if (!current.length) {
+    body.innerHTML = `<tr><td colspan="9" class="empty">${S.word === 'kind' ? 'No objective counts toward a “kind” group. That is the gap, not a filter problem.' : 'No objectives match these filters. Clear one to see more.'}</td></tr>`;
+  } else {
+    body.innerHTML = current.slice(0, shown).map(o => rowHtml(o) + (o.code === openCode ? detailHtml(o) : '')).join('');
+  }
+  $('#more').hidden = current.length <= shown;
+}
+function rowHtml(o) {
+  return `<tr class="row" data-code="${o.code}" tabindex="0" aria-expanded="${o.code === openCode}">
+    <td class="code">${o.code}</td><td>${o.grade}</td><td>${esc(subjName(o.subj))}</td>
+    <td class="title">${esc(o.title)}<div class="unit">${esc(o.unit)}</div></td>
+    <td class="grp">${o.g ? `${esc(o.g.name)}<div class="words">${o.words.map(w => `<span class="wordchip w-${w}">${w}</span>`).join('')}</div>` : '<span class="nogrp">No group</span>'}</td>
+    <td><span class="pill k-${o.kind}">${o.kind}</span></td><td>${esc(o.signal || '—')}</td>
+    <td class="r num${o.sk.length ? '' : ' zeroish'}">${o.sk.length}</td><td class="r num${o.acts ? '' : ' zeroish'}">${o.acts}</td></tr>`;
+}
+function detailHtml(o) {
+  const stage = ['K2', 'G1', 'G2'].includes(o.grade) ? 'Foundational' : ['G3', 'G4'].includes(o.grade) ? 'Preparatory' : null;
+  const sk = o.sk.map(i => D.skills[i]);
+  return `<tr class="detail"><td colspan="9"><div class="detail-grid">
+    <div><h4>Profile group</h4>${o.g ? `<p><b>${esc(o.g.name)}</b> in ${esc(o.g.cap.name)}</p><p>“${esc(o.g.can)}”</p>${stage ? `<p style="margin-top:6px"><b>${stage}</b> (${esc(D.levels.find(l => l.code === stage).name)}): “${esc(o.g.stages[stage])}”</p>` : ''}<p style="margin-top:6px;color:var(--ink-3)">${esc(o.g.cap.def)}</p>` : '<p class="nogrp">Counts toward no group, so it reaches none of capable, kind or unafraid.</p>'}</div>
+    <div><h4>Skills (${sk.length})</h4>${sk.length ? `<ul>${sk.map(s => `<li><span class="num">${esc(s[0])}</span> ${esc(s[1])} <span style="color:var(--ink-3)">· ${esc(s[2])}${s[4] ? ' · ' + esc(s[4].replace('_', ' ')) : ''}</span></li>`).join('')}</ul>` : '<p class="nogrp">No skill linked.</p>'}</div>
+    <div><h4>Objective</h4><p><span class="num">${o.code}</span> · ${esc(gradeName[o.grade])} · ${esc(subjName(o.subj))}</p><p>Unit: ${esc(o.unit)}</p><p>Activities that teach it: <b class="num">${o.acts}</b></p><p>Mapping confidence: ${esc(o.conf || 'not recorded')}</p></div>
+  </div></td></tr>`;
+}
+const toggleRow = tr => { const c = tr.dataset.code; openCode = openCode === c ? null : c; draw(); document.querySelector(`tr.row[data-code="${c}"]`)?.focus({ preventScroll: true }); };
+$('#rows').addEventListener('click', e => { const tr = e.target.closest('tr.row'); if (tr) toggleRow(tr); });
+$('#rows').addEventListener('keydown', e => { const tr = e.target.closest('tr.row'); if (tr && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); toggleRow(tr); } });
+$('#more').onclick = () => { shown += 100; draw(); };
+
+$('#copy').onclick = () => {
+  const q = v => `"${String(v).replace(/"/g, '""')}"`;
+  const lines = [['code', 'grade', 'subject', 'unit', 'objective', 'group', 'capability', 'words', 'kind', 'signal', 'skills', 'activities'].join(',')]
+    .concat(current.map(o => [o.code, o.grade, subjName(o.subj), o.unit, o.title, o.g ? o.g.name : '', o.g ? o.g.cap.name : '', o.words.join(' '), o.kind, o.signal, o.sk.map(i => D.skills[i][0]).join(' '), o.acts].map(q).join(',')));
+  const csv = lines.join('\n'), btn = $('#copy'), ta = $('#copyfallback');
+  const fallback = () => { ta.hidden = false; ta.value = csv; ta.focus(); ta.select(); btn.textContent = 'Select all and copy below'; };
+  try { navigator.clipboard.writeText(csv).then(() => { ta.hidden = true; btn.textContent = `Copied ${fmt(current.length)} rows`; setTimeout(() => { btn.textContent = 'Copy as CSV'; }, 2500); }, fallback); } catch { fallback(); }
+};
+draw();
+
+$('#foot').innerHTML = `Source: live database (learning_objective, objective_statement “counts toward” CS-PROFILE, learning_objective_skill, registry_skill, activity_objective) and the learner-profile seed, pulled ${D.asOf}. Retired objectives are left out. Every number on this page is counted from those rows in your browser; nothing is typed in by hand. Grades PG, Nursery and G5–G10 also have no objectives.`;
+})();
+</script>
