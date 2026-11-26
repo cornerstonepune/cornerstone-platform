@@ -20,7 +20,7 @@ _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 4. Then ticket G6.8: offer-only groups on a head (5 lessons, first on 30 Nov); plus the ticket list in plan/handoff HANDOFF.
 
 ## Ask Nimish
-- K1 weights and the rest of the observed rule = K2? (Nimish approved the F001-F006 skill links, 26 Nov.)
+- Nothing on #952. 26 Nov he approved the F001-F006 skill links and K1 observed weights + rule = K2 ("yes"), ADR 0113.
 
 ## Don't repeat
 - An ADR Goal line naming a PROJECT.md goal must read `Goal: none — proved by …`, or test_promises takes the rest as a path.

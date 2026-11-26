@@ -39,10 +39,10 @@ school skill writes no `evidence_event`; `observed.weights` had only K2; K1's `g
 | F006 Memory Drawing | ART.VIS.03 Representational drawing with detail | K1 "Memory drawing Diwali" uses it |
 
    Linked as `source = 'school'` like the other K1 links, because a `machine` link is never evidence.
-3. **Assumption for Nimish:** K1 counts an observed record exactly as K2 does (`observed.weights.K1` = K2's), and K1's
+3. **Decided by Nimish, 26 Nov:** K1 counts an observed record exactly as K2 does (`observed.weights.K1` = K2's), and K1's
    observed rule copies K2's secure level (3), secure days (2), recheck days (14) and `min_adults` (**1 adult**; K1's
-   default was 2). The 1 adult is no longer an assumption: Nimish decided it on 26 Nov. Without a rule K1 has no
-   observed picture at all. Say if the rest should differ.
+   default was 2). Asked "is scoring K1 observations the same way as K2 right?", he answered "yes"; the 1 adult he
+   decided separately the same day. Without a rule K1 has no observed picture at all.
 
 ## How it reaches live
 `timetable.heads` and `observed.weights` are `seed_once`: `engine load --settings` writes them once and never again,
