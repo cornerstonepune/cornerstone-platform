@@ -2,7 +2,7 @@
 
 Date: 2026-11-26. Status: accepted (Nimish's ask, 26 Nov, via the coordinator; written by Plan, unattended); amended the
 same day after review (below). Decisions and Consequences say what the code does now.
-Goal: PROJECT.md M6 G6.4 and G6.7, proved by their test `packages/engine/tests/test_k1_pilot_offers.py`.
+Goal: none — proved by PROJECT.md M6 G6.4 and G6.7 and their test `packages/engine/tests/test_k1_pilot_offers.py`.
 
 ## Why
 The F.N 10 K1 lessons are on live, but `tt_heads.ensure_offered` refused the activity choices signed off for them:
