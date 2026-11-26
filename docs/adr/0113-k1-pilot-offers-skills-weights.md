@@ -27,7 +27,7 @@ school skill writes no `evidence_event`; `observed.weights` had only K2; K1's `g
    ACT-K1-0783 Smelling Bottles (1 Dec), ACT-K1-F002 (2 Dec). Each needs a head to offer a group without teaching it.
 
 2. The six new F.N 10 activities get one school skill each, the closest skill other K1 activities already reach on
-   live (26 Nov). **Nimish to check each:**
+   live (26 Nov). **Approved by Nimish, 26 Nov:** "the 6 skill bit is approved".
 
 | Activity | Skill | Why |
 |---|---|---|
