@@ -29,10 +29,15 @@ _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 4. Redraw S27 (library proposals with a skill_group card: skill, proposed group + its "I can", reason, approve/reject)
    and S35 (an objective's several groups with origin skill/default) on a plan branch; c and g wait for approval.
 
+## K1 lane (other session; folded from main when #952 merged)
+- #952 merged. Next there: confirm `migrate live` + `deploy engine`; K1 attach (ADR 0114 on plan/handoff, attach.py in
+  side-session-notes/local_07a3d48e…); check a rubric live, tick G6.x only as live proves; #949 BLOCKED; ticket G6.8.
+- `nightly` on main failed 25 and 26 Nov (cause unchecked).
+
 ## Needs Nimish
 - After deploy: `engine staff grant <email> profile_approver` (nobody holds it yet). Gold marks done (#954).
 - Approve the redrawn S27 and S35 once drawn.
 
 ## Don't repeat
-- Don't touch PR #952 or plan/k1-pilot-offers. ADR 0116 is the next free number (0113/0114 are taken twice elsewhere).
+- Don't touch plan/k1-pilot-offers. Main checkout may be on another session's branch: use a worktree, never switch it. ADR 0116 is the next free number (0113/0114 are taken twice elsewhere).
 - Use database `pg_profile` on 54329, not `postgres`.

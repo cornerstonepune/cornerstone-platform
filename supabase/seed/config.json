@@ -616,7 +616,7 @@
     },
     {
       "key": "timetable.heads",
-      "description": "The heads a lesson can have (K2: its own short heads; Grades 1 to 4: the subject table's code, CP-71)  and the activity groups each head takes (CP-39): one list for the timetable and the activities. `code` is what `session.subject_code` holds; `groups` are the `activity.strand` values offered to a lesson of that head (none: the lesson takes no activity); `fixed_text` names a fixed lesson that is of this head though it has no subject code (the words its text begins with). An activity's head is worked out from its group here, never stored.",
+      "description": "The heads a lesson can have (K1 and K2: their own short heads, K1 sharing K2's and adding its own strand spellings, ADR 0113; Grades 1 to 4: the subject table's code, CP-71)  and the activity groups each head takes (CP-39): one list for the timetable and the activities. `code` is what `session.subject_code` holds; `groups` are the `activity.strand` values offered to a lesson of that head (none: the lesson takes no activity); `fixed_text` names a fixed lesson that is of this head though it has no subject code (the words its text begins with). An activity's head is worked out from its group here, never stored.",
       "value": [
         {"code": "math", "label": "Maths", "groups": ["Maths", "Block Room"]},
         {"code": "english", "label": "English", "groups": ["English"]},
@@ -624,20 +624,20 @@
         {"code": "reading", "label": "Reading time", "groups": ["English"]},
         {"code": "hindi", "label": "Hindi", "groups": ["Hindi"]},
         {"code": "story", "label": "Story", "groups": ["Story Telling"]},
-        {"code": "rhymes", "label": "Rhymes", "groups": ["Rhymes & Songs"]},
+        {"code": "rhymes", "label": "Rhymes", "groups": ["Rhymes & Songs", "Rhymes"]},
         {"code": "rhymes_dance", "label": "Rhymes and dance", "groups": ["Rhymes & Songs", "Dance"]},
-        {"code": "music", "label": "Music", "groups": ["Music"]},
+        {"code": "music", "label": "Music", "groups": ["Music", "Rhymes"]},
         {"code": "music_guest", "label": "Music (guest)", "groups": ["Music"]},
-        {"code": "art", "label": "Arts and crafts", "groups": ["Arts & Crafts"]},
+        {"code": "art", "label": "Arts and crafts", "groups": ["Arts & Crafts", "Art & Craft"]},
         {"code": "clay", "label": "Clay", "groups": ["Clay"]},
         {"code": "pe", "label": "Physical education", "groups": ["GMS"]},
-        {"code": "general_awareness", "label": "General awareness", "groups": ["Science & Geo", "BOB"]},
+        {"code": "general_awareness", "label": "General awareness", "groups": ["Science & Geo", "BOB", "Sci & Geo"]},
         {"code": "practical_life", "label": "Practical life", "groups": ["PLS"]},
         {"code": "fine_motor", "label": "Fine motor", "groups": ["FMS"]},
         {"code": "me_time", "label": "Me time", "groups": []},
         {"code": "routine", "label": "Routine", "groups": []},
         {"code": "cleanup", "label": "Cleanup", "groups": []},
-        {"code": "memory_drawing", "label": "Memory drawing", "groups": []},
+        {"code": "memory_drawing", "label": "Memory drawing", "groups": ["Sci & Geo"]},
         {"code": "projects", "label": "Projects", "groups": []},
         {"code": "NUM", "label": "Maths", "groups": ["Numeracy", "Maths", "Block Room"]},
         {"code": "ENG", "label": "English", "groups": ["Literacy", "Literacy - English", "English", "Phonics", "Rhymes & Songs", "Story Telling"]},
@@ -1148,6 +1148,10 @@
       "key": "observed.weights",
       "description": "How each observed record counts toward a grade's observed picture, by grade: a record of this kind and entry mode opens_secure (its yes counts toward secure), rechecks (a later yes re-checks) and lowers (a not-yet re-opens). A record with no entry here is not read (CP-27: was observed_weight).",
       "value": {
+        "K1": [
+          {"kind": "observed", "entry_mode": "group_as_expected", "opens_secure": false, "rechecks": true, "lowers": false},
+          {"kind": "observed", "entry_mode": "individual", "opens_secure": true, "rechecks": true, "lowers": true}
+        ],
         "K2": [
           {"kind": "observed", "entry_mode": "group_as_expected", "opens_secure": false, "rechecks": true, "lowers": false},
           {"kind": "observed", "entry_mode": "individual", "opens_secure": true, "rechecks": true, "lowers": true}
