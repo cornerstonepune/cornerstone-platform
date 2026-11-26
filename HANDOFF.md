@@ -2,22 +2,23 @@
 
 _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 
-**Updated:** 2026-11-25 · **By:** Coordinator (loop:run, side session) · **Model:** claude-opus-5-5
-**Milestone:** M6 K1 pilot · **Branch:** plan/handoff
+**Updated:** 2026-11-26 · **By:** Coordinator (loop:run, side session) · **Model:** claude-opus-5-5
+**Milestone:** M6 K1 pilot (Nimish presents to the K1 educator 26 Nov) · **Branch:** plan/handoff
 
-## State
-- #946 merged (#948, dfedfe27c) and released: CI, deploy engine green. A blank class-list birthday enrols the child with birthday NULL (ADR 0112); a written-but-bad birthday still refuses the run.
-- **K1 Gurukul ENROLLED on live (25 Nov, Nimish's go):** class K1-A, 21 children, 21 birthdays not known. Read back on live via Supabase. Route used: AWS profile `cornerstone` -> lightsail key -> ssh ubuntu@engine server -> `docker cp` the CSV into deploy-engine-1 -> `engine enrol class /tmp/x.csv --grade K1 --campus Gurukul --apply --by <staff email>` -> delete both copies. `--by` must be an existing staff email (Nimish: nimish@cornerstoneschool.in). The CSV (names) is ~/cornerstone/private/k1-gurukul-children-2026-v2.csv, outside git; it supersedes the first file (5 rows differed).
-- Educator not linked yet: add `--teacher <email>` later, or ask which educator.
+## State (live)
+- K1-A Gurukul: 21 children (ADR 0112), educator + class_teacher Radhika (radhika@cornerstoneschool.in).
+- F.N 10 W1+W2 loaded: 99 lessons, 48 plan lines (`engine timetable load-k1`; CSVs in ~/cornerstone/private/k1_fn10/).
+- 9 lessons have a school-chosen activity (tt_edit.edit as nimish@cornerstoneschool.in): 26 Nov hindi F004, beads 1146; 27 story 0975; 1-4 Dec stories, dustbin, swar, beads.
+- S3 checked in Chrome as Nimish on 26 Nov beads lesson: rubric 0-3, 21 children, Type the marks, Record. No mark saved; Radhika's sign-in not checked.
+- Voice: SARVAM_API_KEY NOT on server. Nimish runs `bash ~/cornerstone/private/set-voice-key.sh`; "No retention" in Sarvam first.
+- Server route: AWS profile cornerstone -> lightsail default key -> ssh ubuntu@3.111.248.87 -> `docker exec deploy-engine-1 engine ...`.
 
 ## Next step
-1. Tick the K1-enrolled goal in PROJECT.md, then G6.5 (F.N 10 W1+W2 for Gurukul K1). Birthdays still to be filled in by the school (needs its own small ticket: re-running the list does not add them to an enrolled child).
-2. Reviewer follow-ups from #948 (one small ticket via loop plan): `_fill_birthday` dropped `and birthday is null` so a held birthday gets a no-op write that bumps updated_at; same name typed once with a birthday and once blank enrols two children (ADR 0112 covers only both-blank); tests/test_enrol_blank_birthday.py is not in tests/core.txt, so PR CI never ran it (I ran it locally: 38 passed).
-3. Queued small ticket: "engine enrol k2" dry-run label + stale "enrol k2" docstrings.
-4. ADR 0108 ticket 4 (G6.4) via loop plan.
-- Open question for Nimish: holiday cells (e.g. "Block Room") make no plan lines today; keep or drop them?
+1. `loop plan` job (branch plan/k1-pilot-offers, running in the main checkout): timetable.heads so 8 refused choices are offered, F001-F006 skill links, observed.weights K1. Check its PR, CI, review, merge, then re-run attach for 11-26 rhyme F001, 11-27 art 1202, 11-30 rhyme 0665 / trace D F003 / animals 0630, 12-01 bottles 0783 / rhyme 0665, 12-02 trace 6 F002.
+2. Tick G6.5 (99 lessons live) and G6.6 in PROJECT.md.
+3. Follow-ups (tickets): educator chooses activity on S3 (coordinator-only today); voice confirm should default to the lesson's activity; recorder 30 s cap; voice failure is silent; #948 review notes (_fill_birthday no-op write, mixed blank/filled birthday duplicate, test not in core.txt); "enrol k2" labels; ADR 0108 ticket 4 is an unproven path, not a code gap.
 
 ## Don't repeat
-- `loop build` passes `--allowedTools` space-joined, so `Bash(bin/check *)` splits and every builder shell call is denied (loop plugin bug, #946 lost 3 attempts). Workaround: run the `loop:builder(-small)` subagent from the coordinator session on the brief.
-- loop-guard sums each builder commit's lines: two commits double-count. Close+reopen a PR to re-run loop-guard after a body edit.
-- Build a ticket's test DB from that ticket's branch (bin/testdb fresh …/t<N>), never from a stale main checkout.
+- `loop build` passes --allowedTools space-joined: builder shell calls are denied. Use the loop:builder(-small) subagent.
+- Past days and not-planned lessons refuse an activity; set it before the day.
+- Passwords and API keys are typed by Nimish, never by the session.
