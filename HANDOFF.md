@@ -2,22 +2,21 @@
 
 _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 
-**Updated:** 2026-11-26 (context full; no PR opened; ADR 0116 goal line and profile_rows.py format fixed; bin/check green) · **By:** Plan (loop plan, Opus) · **Model:** claude-opus-5-5
-**Milestone:** M7 — G1–G4 profile groups (ADR 0115, 0116) · **Branch:** plan/profile-tickets (pushed, no PR)
+**Updated:** 2026-11-26 (profile_rows.py fixed and proven; plan PR opened) · **By:** coordinator (loop run, Opus) · **Model:** claude-opus-5-5
+**Milestone:** M7 — G1–G4 profile groups (ADR 0115, 0116) · **Branch:** plan/profile-tickets (PR open)
 
 ## State
 - On plan/profile-tickets: ADR 0116 (M7, the seven tickets, the skill_group proposal shape, undecided rule, approve =
   upsert into skill_profile_group, profile-check classes, scored.json + activation guard, S27/S35 must be redrawn);
   PROJECT.md M7 goals G7.1–G7.7; `packages/engine/tests/profile_rows.py` (shared test rows for every M7 seed).
-- profile_rows.py is NOT yet proven: `a_staff(..., roles=["profile_approver"])` fails with FK
-  staff_role_grant_tenant_id_role_code_fkey — the test tenant has no `profile_approver` role row. Fix: call
-  `select internal.people_vocabulary(%s)` (t) in `a_staff` before granting, then re-run the probe below.
+- profile_rows.py proven (every helper, against pg_profile): `a_staff` runs `internal.people_vocabulary` before a grant;
+  `scope_to_test_band` adds the T9 grade row. Run tests with TEST_DATABASE_URL=…54329/pg_profile (.env names `postgres`,
+  which lacks the ADR 0115 migration).
 - No issues created, no seed branches yet. Wireframes S27/S35 not drawn yet.
 
 ## Next step
-1. Fix and prove profile_rows.py (temporary `tests/test_zz_probe.py`; run pytest with
-   DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:54329/pg_profile; `python -c` can't import `tests`).
-2. Open the PR from plan/profile-tickets (touches PROJECT.md → ADR 0116 is in it), `loop ci`, merge.
+1. Merge the plan PR of this branch once green (ADR 0116 + PROJECT.md M7 + profile_rows.py).
+2. Gold marks: PR #954 (plan/skill-group-gold-marks) records Nimish's "okay to all"; merge when green.
 3. Issues + seeds `plan/t<N>`, in order a, b, d, e, f, per ADR 0116. Files: a `engine/w1_bank/profile_check.py`
    (`counts`, `lines`, command `curriculum profile-check`); b `engine/w1_bank/learn.py` (VERDICTS gains
    `skill_group: (approve, reject)`; role check via `money_rules.roles_of` vs `people.decides.skill_groups`);
@@ -31,7 +30,7 @@ _Overwritten at the end of every session. Keep under 30 lines. Facts only._
    and S35 (an objective's several groups with origin skill/default) on a plan branch; c and g wait for approval.
 
 ## Needs Nimish
-- Mark the draft gold in `supabase/seed/skills/skill-group/gold.json`; then `engine staff grant <email> profile_approver`.
+- After deploy: `engine staff grant <email> profile_approver` (nobody holds it yet). Gold marks done (#954).
 - Approve the redrawn S27 and S35 once drawn.
 
 ## Don't repeat

@@ -18,7 +18,11 @@ SKILLS = ("ART.CLAY.01", "ART.CLAY.02", "ART.CRAFT.01")
 
 
 def scope_to_test_band(conn, t):
-    """profile.skill_bands becomes the test's band alone, for this transaction."""
+    """The test's band (a grade row of its own) becomes profile.skill_bands alone, for this transaction."""
+    conn.execute(
+        "insert into grade (tenant_id, code, name, ord) values (%s,%s,'Test band',9999) on conflict do nothing",
+        (t, BAND),
+    )
     conn.execute(
         "update config set value = %s where tenant_id = %s and key = 'profile.skill_bands'",
         (Jsonb([BAND]), t),
@@ -57,6 +61,10 @@ def a_staff(conn, t, email=None, roles=()):
             "insert into pii.staff (tenant_id, staff_id, name, email) values (%s,%s,'Placeholder Staff',%s)",
             (t, staff, email),
         )
+    if roles:
+        conn.execute(
+            "select internal.people_vocabulary(%s)", (t,)
+        )  # the test school has no role rows until this runs
     for r in roles:
         conn.execute(
             "insert into staff_role_grant (tenant_id, staff_id, role_code, valid_from, granted_by)"
