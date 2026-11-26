@@ -58,7 +58,7 @@ changed, so a redeploy is not needed for this). The migration only adds and is s
   by ADR 0111) is still refused on a K1 clay lesson whatever this setting says. Code, not seed: a ticket.
 - Rejected: changing the K1 lessons' `subject_code` on live (data edit by hand, lost on the next timetable load).
 
-## Review, 26 Nov: FAIL — decision (not yet implemented; replaces the parts of Decisions 1 and 3 it names)
+## Review, 26 Nov: FAIL — decision (in migration, seed and test; replaces the parts of Decisions 1 and 3 it names)
 A head's groups also say which subject it teaches (`tt_heads.subjects_of`, `heads_in`), K2 included.
 - **Drop** rhymes+`Music`, music+`Maths`, clay+`English`, and the `other` head (+`Block Room`): each makes a head teach a
   new subject. Keep art+`Art & Craft`, rhymes+`Rhymes`, music+`Rhymes`, general_awareness+`Sci & Geo`,
@@ -66,4 +66,4 @@ A head's groups also say which subject it teaches (`tt_heads.subjects_of`, `head
 - Result (read on live, 26 Nov): F001 (26 Nov), 1202 (27 Nov), 0630 (30 Nov) can be attached; 0665 (30 Nov, 1 Dec),
   F003 (30 Nov), 0783 (1 Dec), F002 (2 Dec) wait for a ticket: a head offers a group without teaching it.
 - K1 `min_adults` stays 2 until Nimish confirms 1; the rest of K2's rule is copied.
-- The migration raises if an existing ACT-K1-F00x ends with no skill link.
+- The migration raises if an existing ACT-K1-F00x ends with no skill link. A machine link does not count: it is never evidence.

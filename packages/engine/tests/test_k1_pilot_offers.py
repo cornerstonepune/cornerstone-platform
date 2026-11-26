@@ -9,6 +9,7 @@ import json
 import os
 from pathlib import Path
 
+import psycopg
 import pytest
 
 from engine.core import db, subject_map
@@ -26,23 +27,19 @@ SEED = {
 
 # live's timetable.heads before the release: the seed's, less what ADR 0113 adds
 ADDED = {
-    "art": ["Art & Craft"], "rhymes": ["Music", "Rhymes"], "music": ["Maths", "Rhymes"], "clay": ["English"],
+    "art": ["Art & Craft"], "rhymes": ["Rhymes"], "music": ["Rhymes"],
     "general_awareness": ["Sci & Geo"], "memory_drawing": ["Sci & Geo"],
 }  # fmt: skip
-# the signed-off K1 choices (Nimish, 26 Nov): a lesson's head and the activity chosen for it
+# the signed-off K1 choices offered without a head coming to teach a new subject (ADR 0113): lesson head, text, activity
 CHOICES = [
     ("music", "Music (Guest) Rhymes. P2 The Sun And The Moon", "ACT-K1-F001"),
     ("rhymes", "Rhymes. P1 The Sun And The Moon", "ACT-K1-F001"),
     ("art", "Extracurricular Art Painting Branch", "ACT-K1-1202"),
-    ("rhymes", "Rhymes. P1 French rhyme", "ACT-K1-0665"),
-    ("clay", "Extracurricular Clay Academic 2 English Writing - combination lines", "ACT-K1-F003"),
-    ("music", "Extracurricular Music & Dance Academic 2 Math Trace and write no. 6", "ACT-K1-F002"),
     (
         "memory_drawing",
         "Extracurricular Memory Drawing Academic 1 General Awareness Wild/Domestic",
         "ACT-K1-0630",
     ),
-    ("other", "Extracurricular Block Room Smelling Bottles", "ACT-K1-0783"),
 ]
 SKILLS = {
     "ACT-K1-F001": "LIT.SPK.05", "ACT-K1-F002": "MOT.PRW.05", "ACT-K1-F003": "MOT.PRW.04",
@@ -54,7 +51,6 @@ def _before() -> list[dict]:
     return [
         {**h, "groups": [g for g in h["groups"] if g not in ADDED.get(h["code"], [])]}
         for h in SEED["timetable.heads"]
-        if h["code"] != "other"
     ]
 
 
@@ -97,6 +93,10 @@ def test_the_migration_lands_the_seed_files_settings_and_keeps_every_earlier_gro
     for h in _before():  # nothing a K2 or Grade 1 to 4 lesson was offered is taken away
         assert set(h["groups"]) <= set(got[h["code"]]["groups"]), h["code"]
     assert _value(conn, "observed.weights") == SEED["observed.weights"]
+    k1 = conn.execute(
+        "select min_adults from grade where tenant_id = %s and code = 'K1'", (tenant(conn),)
+    ).fetchone()
+    assert k1["min_adults"] == 2  # 1 only once Nimish says so (ADR 0113)
     conn.execute(MIGRATION.read_text())  # a second run changes nothing
     assert {h["code"]: h for h in _value(conn, "timetable.heads")} == got
 
@@ -131,6 +131,14 @@ def test_the_six_new_k1_activities_reach_their_chosen_skill_as_the_schools(conn)
     assert {(r["activity_code"], r["skill_code"], r["source"]) for r in got} == {
         (a, s, "school") for a, s in SKILLS.items()
     }
+
+
+def test_the_migration_refuses_to_leave_a_new_k1_activity_without_a_school_skill(conn):
+    conn.execute(
+        "delete from activity_skill where tenant_id = %s and activity_code = 'ACT-K1-F001'", (tenant(conn),)
+    )
+    with pytest.raises(psycopg.errors.RaiseException, match="ACT-K1-F001"):
+        conn.execute(MIGRATION.read_text().replace("'LIT.SPK.05'", "'NO.SUCH.01'"))
 
 
 def test_a_k1_lesson_mark_is_evidence_and_builds_the_childs_observed_state(conn):
