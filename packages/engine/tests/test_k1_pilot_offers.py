@@ -19,7 +19,7 @@ from tests.rows import tenant
 
 pytestmark = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DATABASE_URL (see .env.example)")
 ROOT = Path(__file__).resolve().parents[3]
-MIGRATION = ROOT / "supabase" / "migrations" / "20270218090000_k1_pilot_offers.sql"
+MIGRATION = ROOT / "supabase" / "migrations" / "20270220090000_k1_pilot_offers.sql"
 SEED = {
     c["key"]: c["value"]
     for c in json.loads((ROOT / "supabase" / "seed" / "config.json").read_text())["config"]

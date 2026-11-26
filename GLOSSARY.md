@@ -16,6 +16,10 @@ _Domain terms, one line each. Agents use these words exactly in code, tickets an
 | band | grade band G1–G4 | |
 | case / taxonomy case | the kind of question a template asks, derived by code | anything typed by a person |
 | learning objective | the curriculum's atom; links activities to skills | skill |
+| profile group | one of the 24 groups of the capability profile (`CS-PROFILE`, e.g. "Number and measure"), under 8 capabilities; each carries the words capable / kind / unafraid | capability (the 8 parents) |
+| skill group | the one profile group a registry skill is evidence of, as Nimish approved it (`skill_profile_group`, ADR 0115) | an objective's own group |
+| on default | a G1–G4 objective whose profile group is still its subject default because no skill of it has an approved skill group (origin `default` in `objective_profile_group`) | a group a person chose |
+| profile approver | the role (`profile_approver`) that decides skill groups; granted to Nimish alone | coordinator (cannot decide this kind) |
 | activity | a lesson activity under an objective (strand / head) | |
 | blueprint | the slots a paper asks for | sheet template |
 | item / question | one question in the bank | |

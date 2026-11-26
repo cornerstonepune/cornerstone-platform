@@ -47,7 +47,7 @@ school skill writes no `evidence_event`; `observed.weights` had only K2; K1's `g
 ## How it reaches live
 `timetable.heads` and `observed.weights` are `seed_once`: `engine load --settings` writes them once and never again,
 so changing `config.json` alone would never reach live. As ADR 0111 did, a migration
-(`20270218090000_k1_pilot_offers.sql`) says it for loaded databases; `config.json` says the same for new ones. Release:
+(`20270220090000_k1_pilot_offers.sql`) says it for loaded databases; `config.json` says the same for new ones. Release:
 merge → `bin/push-migrations` (or `migrate live`) applies the migration; nothing else needs running (no engine code
 changed, so a redeploy is not needed for this). The migration only adds and is safe to run twice.
 It raises if an existing ACT-K1-F00x ends with no skill link (a machine link does not count: it is never evidence).
