@@ -1,6 +1,6 @@
 # 0115 — G1–G4 profile groups come from each skill's approved group; Nimish alone approves
 
-Date: 2026-11-26. Status: accepted (Nimish, 26 Nov 2026). Supersedes the unmerged copy on `plan/mapping-explorer`
+Date: 2026-11-26. Status: accepted (Nimish, 26 Nov 2026). Supersedes ADR 0114 `0114-profile-groups-reached-through-skills.md` (unmerged, on `plan/mapping-explorer`)
 (numbered 0113, then 0114; both numbers are taken on other branches).
 Goal: none — the mapping tickets are not written yet; proved when `engine curriculum profile-check` shows the word kind above 0 and the unmapped counts falling as proposals are approved.
 

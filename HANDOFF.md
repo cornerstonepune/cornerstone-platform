@@ -6,7 +6,7 @@ _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 **Milestone:** profile mapping G1–G4 (ADR 0115) · **Branch:** plan/profile-groups
 
 ## State
-- Migration `20270218090000_skill_profile_group.sql` finished: table `skill_profile_group`, view `objective_profile_group`,
+- Migration `20270219090000_skill_profile_group.sql` finished: table `skill_profile_group`, view `objective_profile_group`,
   proposal kind `skill_group`, role `profile_approver` (may_grant founder; added to `internal.people_vocabulary` so new
   schools get it). `people.decides.skill_groups = ["profile_approver"]`. Proved on a fresh DB (`bin/testdb fresh` into
   database `pg_profile` on 54329): applies, re-runs clean, view returns 30 rows all origin `default` on the seed.
