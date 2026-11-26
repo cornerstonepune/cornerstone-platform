@@ -40,3 +40,32 @@ Result on 26 Nov: 2,593 live objectives, 2,753 objective→skill links, 244 skil
 ## State: page written, NOT checked, NOT published
 Source: `mapping-explorer/mapping-explorer.html` (d3 7.8.5 mind map, word x grade grid, findings computed in JS, filterable/sortable table, row detail, Copy as CSV) + `build.py`.
 To finish: run the query above, save the `d` object as `mapping-explorer/raw.json` (keep it out of git), `python3 build.py` -> `data.json` + `preview.html` (data inlined). Open preview.html once in the browser pane (one look: mind map labels/links, grid, table filters), fix what it shows, then publish `mapping-explorer.html` with the Artifact tool, `files: {"data.json": ...}`, icon "map". Put the URL here and in HANDOFF.
+
+## Nimish, 26 Nov (later): find every issue of this kind and correct it through the loop
+Ask (dictated): "identify all these kind of issues and run a complete loop so that for each one there is a prompt that
+helps the system identify the issues and correct them. Ensure kind is also linked, so capable, kind and unafraid are mapped right."
+
+Issue classes found so far (each needs a deterministic check in code first; the counts come from the data, never from a model):
+1. Objective reaches no group: 527 (character 411, routine 116). These are the natural home for kind and unafraid.
+2. Group with no objectives: 16 of 24. Word with no objectives: kind (all 7 kind groups empty).
+3. Mapping that looks wrong: all SCI (177) + GP (110) -> "Changing my mind"; "How the world works" has 34.
+4. Grade with no objectives: K1 (the pilot grade); also PG, N, G5-G10.
+5. Objective with no skill: 447. Objective with no activity: 890.
+6. topic_code resolves to no topic name for every objective.
+
+Proposed shape (planner to confirm against the code and ADRs):
+- `engine` check per class: a pure function that lists offenders with a reason (assess/ or core/, no I/O in assess/).
+- Where fixing needs judgment (1-3, and maybe 5): a seeded, versioned prompt per purpose (e.g. `profile-map`), scored by
+  `engine eval <purpose>` against a small hand-checked gold set before it goes live. The model only proposes
+  group + reason; it never writes the mapping.
+- Proposals land in a review queue (check whether the library page's existing Proposals/decideProposal flow fits);
+  an approved proposal writes a new objective_statement row. Nothing is auto-applied.
+  Why not auto-correct: a wrong mapping changes every child's profile report that parents read.
+- One command re-runs every check and reports counts per class, so "fixed" is a number that went to 0.
+- Things a model can't fix: K1 objectives (needs the school's K1 curriculum) and missing topics (data). Those go to Nimish.
+
+Open questions for Nimish (ask before ticketing):
+a. Who approves proposed mappings: Nimish, the head of academics, or educators per subject?
+b. May an objective count toward more than one group? Today each counts toward at most one, but most groups carry two words.
+c. Is SCI/GP -> "Changing my mind" deliberate (ADR?) or a mistake?
+d. Where do K1 objectives come from?
