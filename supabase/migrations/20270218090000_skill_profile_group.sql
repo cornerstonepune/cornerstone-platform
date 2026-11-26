@@ -84,4 +84,42 @@ insert into access_table (schema_name, table_name, kind_code, key_column, key_ty
 on conflict (schema_name, table_name) do update set kind_code = excluded.kind_code, key_column = excluded.key_column,
   key_type = excluded.key_type, data_class = excluded.data_class, reason = excluded.reason;
 
+-- the decider (ADR 0115 answer 2): a role, not an email in git. Every school gets it from people_vocabulary, as it is
+-- below with one row more (profile_approver); run here for the schools there already. Nobody holds it until
+-- `engine staff grant <email> profile_approver` gives it to Nimish.
+create or replace function internal.people_vocabulary(p_tenant uuid) returns void
+language plpgsql security definer set search_path = public as $$
+begin
+  insert into role (tenant_id, code, label, scope, may_grant, one_per_class, ord)
+  select p_tenant, v.code, v.label, v.scope, array['head', 'coordinator'], v.one_per_class, v.ord
+  from (values
+    ('subject_educator',  'Subject educator',                 'class_subject', false, 0),
+    ('class_teacher',     'Class educator',                   'class',         true,  1),
+    ('mentor',            'Mentor',                           'child',         false, 2),
+    ('assistant',         'Assistant',                        'class',         false, 3),
+    ('coordinator',       'Coordinator',                      'campus',        false, 4),
+    ('deputy_coordinator','Deputy coordinator',               'campus',        false, 5),
+    ('curriculum_team',   'Curriculum team',                  'campus',        false, 6),
+    ('head',              'Head',                             'campus',        false, 7),
+    ('ops',               'Ops',                              'campus',        false, 8),
+    ('cover_educator',    'Cover educator',                   'class',         false, 9),
+    ('special_educator',  'Special educator or counsellor',   'child',         false, 10),
+    ('specialist',        'Specialist (PE, music, art)',      'class',         false, 11),
+    -- the one role on the sign-in list (config app.staff) that D-026 does not name
+    ('educator',          'Educator (as on the sign-in list)','campus',        false, 12),
+    -- MM-1 (CP-77): the co-founders, who change the money rules; held besides the role a person has
+    ('founder',           'Co-founder',                       'campus',        false, 13),
+    -- ADR 0115: approves each skill's capability-profile group (people.decides.skill_groups); granted to Nimish alone
+    ('profile_approver',  'Profile approver',                 'campus',        false, 14)
+  ) v (code, label, scope, one_per_class, ord)
+  on conflict (tenant_id, code) do nothing;
+  update role set access_group = 'everything' where tenant_id = p_tenant and code = 'founder' and access_group is null;  -- as the first migration set it on live
+  update role set may_grant = array['founder'] where tenant_id = p_tenant and code = 'profile_approver';  -- a founder grants it, not a coordinator
+  -- MM-0 (CP-76): the school is two campuses (it was one, named for the school)
+  insert into campus (tenant_id, name) values (p_tenant, 'Gurukul'), (p_tenant, 'Neev')
+  on conflict (tenant_id, name) do nothing;
+end $$;
+
+select internal.people_vocabulary(id) from tenant;
+
 select internal.apply_conventions();

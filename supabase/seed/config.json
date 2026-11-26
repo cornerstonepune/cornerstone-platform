@@ -44,6 +44,9 @@
         ],
         "week": [
           "educator"
+        ],
+        "skill_groups": [
+          "profile_approver"
         ]
       }
     },

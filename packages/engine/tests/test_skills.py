@@ -20,6 +20,7 @@ NAMES = [
     "learning-objective",
     "skill-link",
     "capability-link",
+    "skill-group",  # ADR 0115
     "behaviour",
     "activity",
     "rubric",
@@ -29,7 +30,7 @@ NAMES = [
 SKILLS = {p.name: skill_spec.read(p) for p in skill_spec.folders(ROOT)}
 
 
-def test_the_ten_skills_are_the_ten_standards():
+def test_the_skills_are_the_standards():
     assert sorted(SKILLS) == sorted(NAMES)
 
 

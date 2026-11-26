@@ -1,0 +1,4607 @@
+{
+ "note": "ADR 0115: DRAFT gold, written by the planner from each group's 'I can' line (26 Nov). Every case is marked_by 'draft'; `doubt` names what Nimish should check. Nimish corrects `choice` and sets marked_by to 'nimish'. `engine skill eval --record` refuses while any case is a draft.",
+ "cases": [
+  {
+   "id": "LIT.SPK.01-group",
+   "split": "tune",
+   "marked_by": "draft",
+   "input": {
+    "skill_code": "LIT.SPK.01",
+    "name": "Conversational speech: words to sentences",
+    "description": "Non-verbal communication and imitation of words; conversations using 4-6 words, then sentences; basic spoken grammar.",
+    "subject": "English Language & Literacy",
+    "grades": [
+     "G1",
+     "G2",
+     "G3",
+     "G4"
+    ]
+   },
+   "options": [
+    {
+     "code": "v2-communicating-together.speak-and-listen",
+     "name": "Speaking and listening",
+     "what": "I can say what I mean and listen to what others mean."
+    },
+    {
+     "code": "v2-communicating-together.work-in-a-team",
+     "name": "Working in a team",
+     "what": "I can do my part, take turns and help the team finish."
+    },
+    {
+     "code": "v2-communicating-together.write-and-show",
+     "name": "Writing and showing my work",
+     "what": "I can write and show my work so others can follow it."
+    },
+    {
+     "code": "v2-deep-knowledge.how-the-world-works",
+     "name": "How the world works",
+     "what": "I can say what I know about living things, materials, places and people, and how I know it."
+    },
+    {
+     "code": "v2-deep-knowledge.language-and-reading",
+     "name": "Language and reading",
+     "what": "I can read, write and speak the languages I learn, and understand what I read."
+    },
+    {
+     "code": "v2-deep-knowledge.number-and-measure",
+     "name": "Number and measure",
+     "what": "I can work with numbers, shapes and measures accurately."
+    },
+    {
+     "code": "v2-learning-and-agency.look-back-and-improve",
+     "name": "Looking back and improving",
+     "what": "I can say what went well, what did not, and what I will change next time."
+    },
+    {
+     "code": "v2-learning-and-agency.set-and-reach-goals",
+     "name": "Setting and reaching goals",
+     "what": "I can decide what I want to learn or finish, and keep at it until I get there."
+    },
+    {
+     "code": "v2-learning-and-agency.try-ask-keep-going",
+     "name": "Trying, asking and keeping going",
+     "what": "I can try something new, ask when I am stuck, and keep going after a wrong answer."
+    },
+    {
+     "code": "v2-making-and-solving.design-and-build",
+     "name": "Designing and building",
+     "what": "I can make something that solves a problem, test it, and improve it."
+    },
+    {
+     "code": "v2-making-and-solving.imagine-and-express",
+     "name": "Imagining and expressing",
+     "what": "I can make art, music, stories or movement that are my own."
+    },
+    {
+     "code": "v2-making-and-solving.investigate",
+     "name": "Investigating",
+     "what": "I can ask a question, test it fairly and say what I found."
+    },
+    {
+     "code": "v2-reasoning.change-my-mind",
+     "name": "Changing my mind",
+     "what": "I can change my mind when I meet a better reason, and say so."
+    },
+    {
+     "code": "v2-reasoning.patterns-and-numbers",
+     "name": "Patterns and numbers",
+     "what": "I can find a pattern, say its rule and use the rule."
+    },
+    {
+     "code": "v2-reasoning.weigh-evidence",
+     "name": "Weighing evidence",
+     "what": "I can tell what I know from what I guess, and give a reason."
+    },
+    {
+     "code": "v2-self-and-others.care-for-others",
+     "name": "Caring for others",
+     "what": "I can notice how others feel and help them, even when it costs me something."
+    },
+    {
+     "code": "v2-self-and-others.feelings-and-body",
+     "name": "My feelings and my body",
+     "what": "I can name how I feel, calm myself and look after my body."
+    },
+    {
+     "code": "v2-self-and-others.speak-up",
+     "name": "Speaking up",
+     "what": "I can say when I disagree or when something is not fair, politely and clearly."
+    },
+    {
+     "code": "v2-society-and-planet.care-for-nature",
+     "name": "Caring for nature",
+     "what": "I can look after living things, places and what we use."
+    },
+    {
+     "code": "v2-society-and-planet.choices-and-consequences",
+     "name": "Choices and consequences",
+     "what": "I can say what happens because of a choice, to people and to nature."
+    },
+    {
+     "code": "v2-society-and-planet.fair-and-together",
+     "name": "Fairness and living together",
+     "what": "I can say what is fair and take part in making our shared rules."
+    },
+    {
+     "code": "v2-technology-and-ai.check-before-trusting",
+     "name": "Checking before I trust",
+     "what": "I can check whether what a screen or an AI tells me is true, and who made it."
+    },
+    {
+     "code": "v2-technology-and-ai.safe-and-fair-online",
+     "name": "Staying safe and fair online",
+     "what": "I can keep myself and others safe, and respect other people's work."
+    },
+    {
+     "code": "v2-technology-and-ai.use-tools-well",
+     "name": "Using digital tools",
+     "what": "I can use a digital tool to learn, make or find something out."
+    }
+   ],
+   "choice": [
+    "v2-communicating-together.speak-and-listen"
+   ],
+   "why": "conversations in words and sentences are speaking and listening",
+   "doubt": ""
+  },
+  {
+   "id": "LIT.LIS.01-group",
+   "split": "held",
+   "marked_by": "draft",
+   "input": {
+    "skill_code": "LIT.LIS.01",
+    "name": "Listens & responds to name, instructions, questions",
+    "description": "Responds to own name; follows simple then 2-step instructions; listens and responds to directions and questions.",
+    "subject": "English Language & Literacy",
+    "grades": [
+     "G1",
+     "G2",
+     "G3",
+     "G4"
+    ]
+   },
+   "options": [
+    {
+     "code": "v2-communicating-together.speak-and-listen",
+     "name": "Speaking and listening",
+     "what": "I can say what I mean and listen to what others mean."
+    },
+    {
+     "code": "v2-communicating-together.work-in-a-team",
+     "name": "Working in a team",
+     "what": "I can do my part, take turns and help the team finish."
+    },
+    {
+     "code": "v2-communicating-together.write-and-show",
+     "name": "Writing and showing my work",
+     "what": "I can write and show my work so others can follow it."
+    },
+    {
+     "code": "v2-deep-knowledge.how-the-world-works",
+     "name": "How the world works",
+     "what": "I can say what I know about living things, materials, places and people, and how I know it."
+    },
+    {
+     "code": "v2-deep-knowledge.language-and-reading",
+     "name": "Language and reading",
+     "what": "I can read, write and speak the languages I learn, and understand what I read."
+    },
+    {
+     "code": "v2-deep-knowledge.number-and-measure",
+     "name": "Number and measure",
+     "what": "I can work with numbers, shapes and measures accurately."
+    },
+    {
+     "code": "v2-learning-and-agency.look-back-and-improve",
+     "name": "Looking back and improving",
+     "what": "I can say what went well, what did not, and what I will change next time."
+    },
+    {
+     "code": "v2-learning-and-agency.set-and-reach-goals",
+     "name": "Setting and reaching goals",
+     "what": "I can decide what I want to learn or finish, and keep at it until I get there."
+    },
+    {
+     "code": "v2-learning-and-agency.try-ask-keep-going",
+     "name": "Trying, asking and keeping going",
+     "what": "I can try something new, ask when I am stuck, and keep going after a wrong answer."
+    },
+    {
+     "code": "v2-making-and-solving.design-and-build",
+     "name": "Designing and building",
+     "what": "I can make something that solves a problem, test it, and improve it."
+    },
+    {
+     "code": "v2-making-and-solving.imagine-and-express",
+     "name": "Imagining and expressing",
+     "what": "I can make art, music, stories or movement that are my own."
+    },
+    {
+     "code": "v2-making-and-solving.investigate",
+     "name": "Investigating",
+     "what": "I can ask a question, test it fairly and say what I found."
+    },
+    {
+     "code": "v2-reasoning.change-my-mind",
+     "name": "Changing my mind",
+     "what": "I can change my mind when I meet a better reason, and say so."
+    },
+    {
+     "code": "v2-reasoning.patterns-and-numbers",
+     "name": "Patterns and numbers",
+     "what": "I can find a pattern, say its rule and use the rule."
+    },
+    {
+     "code": "v2-reasoning.weigh-evidence",
+     "name": "Weighing evidence",
+     "what": "I can tell what I know from what I guess, and give a reason."
+    },
+    {
+     "code": "v2-self-and-others.care-for-others",
+     "name": "Caring for others",
+     "what": "I can notice how others feel and help them, even when it costs me something."
+    },
+    {
+     "code": "v2-self-and-others.feelings-and-body",
+     "name": "My feelings and my body",
+     "what": "I can name how I feel, calm myself and look after my body."
+    },
+    {
+     "code": "v2-self-and-others.speak-up",
+     "name": "Speaking up",
+     "what": "I can say when I disagree or when something is not fair, politely and clearly."
+    },
+    {
+     "code": "v2-society-and-planet.care-for-nature",
+     "name": "Caring for nature",
+     "what": "I can look after living things, places and what we use."
+    },
+    {
+     "code": "v2-society-and-planet.choices-and-consequences",
+     "name": "Choices and consequences",
+     "what": "I can say what happens because of a choice, to people and to nature."
+    },
+    {
+     "code": "v2-society-and-planet.fair-and-together",
+     "name": "Fairness and living together",
+     "what": "I can say what is fair and take part in making our shared rules."
+    },
+    {
+     "code": "v2-technology-and-ai.check-before-trusting",
+     "name": "Checking before I trust",
+     "what": "I can check whether what a screen or an AI tells me is true, and who made it."
+    },
+    {
+     "code": "v2-technology-and-ai.safe-and-fair-online",
+     "name": "Staying safe and fair online",
+     "what": "I can keep myself and others safe, and respect other people's work."
+    },
+    {
+     "code": "v2-technology-and-ai.use-tools-well",
+     "name": "Using digital tools",
+     "what": "I can use a digital tool to learn, make or find something out."
+    }
+   ],
+   "choice": [
+    "v2-communicating-together.speak-and-listen"
+   ],
+   "why": "listening and responding to instructions and questions is listening",
+   "doubt": ""
+  },
+  {
+   "id": "SEB.SOC.01-group",
+   "split": "tune",
+   "marked_by": "draft",
+   "input": {
+    "skill_code": "SEB.SOC.01",
+    "name": "Peer play: parallel to cooperative & teamwork",
+    "description": "Excited with other children; plays beside then includes others; group play; cooperative play and collaborative projects; teamwork in sport.",
+    "subject": "Social-Emotional & Behavioural",
+    "grades": [
+     "G1",
+     "G2",
+     "G3",
+     "G4"
+    ]
+   },
+   "options": [
+    {
+     "code": "v2-communicating-together.speak-and-listen",
+     "name": "Speaking and listening",
+     "what": "I can say what I mean and listen to what others mean."
+    },
+    {
+     "code": "v2-communicating-together.work-in-a-team",
+     "name": "Working in a team",
+     "what": "I can do my part, take turns and help the team finish."
+    },
+    {
+     "code": "v2-communicating-together.write-and-show",
+     "name": "Writing and showing my work",
+     "what": "I can write and show my work so others can follow it."
+    },
+    {
+     "code": "v2-deep-knowledge.how-the-world-works",
+     "name": "How the world works",
+     "what": "I can say what I know about living things, materials, places and people, and how I know it."
+    },
+    {
+     "code": "v2-deep-knowledge.language-and-reading",
+     "name": "Language and reading",
+     "what": "I can read, write and speak the languages I learn, and understand what I read."
+    },
+    {
+     "code": "v2-deep-knowledge.number-and-measure",
+     "name": "Number and measure",
+     "what": "I can work with numbers, shapes and measures accurately."
+    },
+    {
+     "code": "v2-learning-and-agency.look-back-and-improve",
+     "name": "Looking back and improving",
+     "what": "I can say what went well, what did not, and what I will change next time."
+    },
+    {
+     "code": "v2-learning-and-agency.set-and-reach-goals",
+     "name": "Setting and reaching goals",
+     "what": "I can decide what I want to learn or finish, and keep at it until I get there."
+    },
+    {
+     "code": "v2-learning-and-agency.try-ask-keep-going",
+     "name": "Trying, asking and keeping going",
+     "what": "I can try something new, ask when I am stuck, and keep going after a wrong answer."
+    },
+    {
+     "code": "v2-making-and-solving.design-and-build",
+     "name": "Designing and building",
+     "what": "I can make something that solves a problem, test it, and improve it."
+    },
+    {
+     "code": "v2-making-and-solving.imagine-and-express",
+     "name": "Imagining and expressing",
+     "what": "I can make art, music, stories or movement that are my own."
+    },
+    {
+     "code": "v2-making-and-solving.investigate",
+     "name": "Investigating",
+     "what": "I can ask a question, test it fairly and say what I found."
+    },
+    {
+     "code": "v2-reasoning.change-my-mind",
+     "name": "Changing my mind",
+     "what": "I can change my mind when I meet a better reason, and say so."
+    },
+    {
+     "code": "v2-reasoning.patterns-and-numbers",
+     "name": "Patterns and numbers",
+     "what": "I can find a pattern, say its rule and use the rule."
+    },
+    {
+     "code": "v2-reasoning.weigh-evidence",
+     "name": "Weighing evidence",
+     "what": "I can tell what I know from what I guess, and give a reason."
+    },
+    {
+     "code": "v2-self-and-others.care-for-others",
+     "name": "Caring for others",
+     "what": "I can notice how others feel and help them, even when it costs me something."
+    },
+    {
+     "code": "v2-self-and-others.feelings-and-body",
+     "name": "My feelings and my body",
+     "what": "I can name how I feel, calm myself and look after my body."
+    },
+    {
+     "code": "v2-self-and-others.speak-up",
+     "name": "Speaking up",
+     "what": "I can say when I disagree or when something is not fair, politely and clearly."
+    },
+    {
+     "code": "v2-society-and-planet.care-for-nature",
+     "name": "Caring for nature",
+     "what": "I can look after living things, places and what we use."
+    },
+    {
+     "code": "v2-society-and-planet.choices-and-consequences",
+     "name": "Choices and consequences",
+     "what": "I can say what happens because of a choice, to people and to nature."
+    },
+    {
+     "code": "v2-society-and-planet.fair-and-together",
+     "name": "Fairness and living together",
+     "what": "I can say what is fair and take part in making our shared rules."
+    },
+    {
+     "code": "v2-technology-and-ai.check-before-trusting",
+     "name": "Checking before I trust",
+     "what": "I can check whether what a screen or an AI tells me is true, and who made it."
+    },
+    {
+     "code": "v2-technology-and-ai.safe-and-fair-online",
+     "name": "Staying safe and fair online",
+     "what": "I can keep myself and others safe, and respect other people's work."
+    },
+    {
+     "code": "v2-technology-and-ai.use-tools-well",
+     "name": "Using digital tools",
+     "what": "I can use a digital tool to learn, make or find something out."
+    }
+   ],
+   "choice": [
+    "v2-communicating-together.work-in-a-team"
+   ],
+   "why": "cooperative play and teamwork is working in a team",
+   "doubt": ""
+  },
+  {
+   "id": "LIT.WRT.04-group",
+   "split": "held",
+   "marked_by": "draft",
+   "input": {
+    "skill_code": "LIT.WRT.04",
+    "name": "Non-fiction & functional writing",
+    "description": "Writes instructions, information texts/reports, letters, invitations, summaries, advertisements and play-scripts.",
+    "subject": "English Language & Literacy",
+    "grades": [
+     "G1",
+     "G2",
+     "G3",
+     "G4"
+    ]
+   },
+   "options": [
+    {
+     "code": "v2-communicating-together.speak-and-listen",
+     "name": "Speaking and listening",
+     "what": "I can say what I mean and listen to what others mean."
+    },
+    {
+     "code": "v2-communicating-together.work-in-a-team",
+     "name": "Working in a team",
+     "what": "I can do my part, take turns and help the team finish."
+    },
+    {
+     "code": "v2-communicating-together.write-and-show",
+     "name": "Writing and showing my work",
+     "what": "I can write and show my work so others can follow it."
+    },
+    {
+     "code": "v2-deep-knowledge.how-the-world-works",
+     "name": "How the world works",
+     "what": "I can say what I know about living things, materials, places and people, and how I know it."
+    },
+    {
+     "code": "v2-deep-knowledge.language-and-reading",
+     "name": "Language and reading",
+     "what": "I can read, write and speak the languages I learn, and understand what I read."
+    },
+    {
+     "code": "v2-deep-knowledge.number-and-measure",
+     "name": "Number and measure",
+     "what": "I can work with numbers, shapes and measures accurately."
+    },
+    {
+     "code": "v2-learning-and-agency.look-back-and-improve",
+     "name": "Looking back and improving",
+     "what": "I can say what went well, what did not, and what I will change next time."
+    },
+    {
+     "code": "v2-learning-and-agency.set-and-reach-goals",
+     "name": "Setting and reaching goals",
+     "what": "I can decide what I want to learn or finish, and keep at it until I get there."
+    },
+    {
+     "code": "v2-learning-and-agency.try-ask-keep-going",
+     "name": "Trying, asking and keeping going",
+     "what": "I can try something new, ask when I am stuck, and keep going after a wrong answer."
+    },
+    {
+     "code": "v2-making-and-solving.design-and-build",
+     "name": "Designing and building",
+     "what": "I can make something that solves a problem, test it, and improve it."
+    },
+    {
+     "code": "v2-making-and-solving.imagine-and-express",
+     "name": "Imagining and expressing",
+     "what": "I can make art, music, stories or movement that are my own."
+    },
+    {
+     "code": "v2-making-and-solving.investigate",
+     "name": "Investigating",
+     "what": "I can ask a question, test it fairly and say what I found."
+    },
+    {
+     "code": "v2-reasoning.change-my-mind",
+     "name": "Changing my mind",
+     "what": "I can change my mind when I meet a better reason, and say so."
+    },
+    {
+     "code": "v2-reasoning.patterns-and-numbers",
+     "name": "Patterns and numbers",
+     "what": "I can find a pattern, say its rule and use the rule."
+    },
+    {
+     "code": "v2-reasoning.weigh-evidence",
+     "name": "Weighing evidence",
+     "what": "I can tell what I know from what I guess, and give a reason."
+    },
+    {
+     "code": "v2-self-and-others.care-for-others",
+     "name": "Caring for others",
+     "what": "I can notice how others feel and help them, even when it costs me something."
+    },
+    {
+     "code": "v2-self-and-others.feelings-and-body",
+     "name": "My feelings and my body",
+     "what": "I can name how I feel, calm myself and look after my body."
+    },
+    {
+     "code": "v2-self-and-others.speak-up",
+     "name": "Speaking up",
+     "what": "I can say when I disagree or when something is not fair, politely and clearly."
+    },
+    {
+     "code": "v2-society-and-planet.care-for-nature",
+     "name": "Caring for nature",
+     "what": "I can look after living things, places and what we use."
+    },
+    {
+     "code": "v2-society-and-planet.choices-and-consequences",
+     "name": "Choices and consequences",
+     "what": "I can say what happens because of a choice, to people and to nature."
+    },
+    {
+     "code": "v2-society-and-planet.fair-and-together",
+     "name": "Fairness and living together",
+     "what": "I can say what is fair and take part in making our shared rules."
+    },
+    {
+     "code": "v2-technology-and-ai.check-before-trusting",
+     "name": "Checking before I trust",
+     "what": "I can check whether what a screen or an AI tells me is true, and who made it."
+    },
+    {
+     "code": "v2-technology-and-ai.safe-and-fair-online",
+     "name": "Staying safe and fair online",
+     "what": "I can keep myself and others safe, and respect other people's work."
+    },
+    {
+     "code": "v2-technology-and-ai.use-tools-well",
+     "name": "Using digital tools",
+     "what": "I can use a digital tool to learn, make or find something out."
+    }
+   ],
+   "choice": [
+    "v2-communicating-together.write-and-show"
+   ],
+   "why": "instructions, letters and reports are writing for others to follow",
+   "doubt": "could be language-and-reading"
+  },
+  {
+   "id": "SCI.LIFE.01-group",
+   "split": "tune",
+   "marked_by": "draft",
+   "input": {
+    "skill_code": "SCI.LIFE.01",
+    "name": "Animals: names, types & habitats",
+    "description": "Names animals and birds; wild/domestic/aquatic characteristics and habitats; habitats (desert, forest, ocean...).",
+    "subject": "Science & General Awareness",
+    "grades": [
+     "G1",
+     "G2",
+     "G3",
+     "G4"
+    ]
+   },
+   "options": [
+    {
+     "code": "v2-communicating-together.speak-and-listen",
+     "name": "Speaking and listening",
+     "what": "I can say what I mean and listen to what others mean."
+    },
+    {
+     "code": "v2-communicating-together.work-in-a-team",
+     "name": "Working in a team",
+     "what": "I can do my part, take turns and help the team finish."
+    },
+    {
+     "code": "v2-communicating-together.write-and-show",
+     "name": "Writing and showing my work",
+     "what": "I can write and show my work so others can follow it."
+    },
+    {
+     "code": "v2-deep-knowledge.how-the-world-works",
+     "name": "How the world works",
+     "what": "I can say what I know about living things, materials, places and people, and how I know it."
+    },
+    {
+     "code": "v2-deep-knowledge.language-and-reading",
+     "name": "Language and reading",
+     "what": "I can read, write and speak the languages I learn, and understand what I read."
+    },
+    {
+     "code": "v2-deep-knowledge.number-and-measure",
+     "name": "Number and measure",
+     "what": "I can work with numbers, shapes and measures accurately."
+    },
+    {
+     "code": "v2-learning-and-agency.look-back-and-improve",
+     "name": "Looking back and improving",
+     "what": "I can say what went well, what did not, and what I will change next time."
+    },
+    {
+     "code": "v2-learning-and-agency.set-and-reach-goals",
+     "name": "Setting and reaching goals",
+     "what": "I can decide what I want to learn or finish, and keep at it until I get there."
+    },
+    {
+     "code": "v2-learning-and-agency.try-ask-keep-going",
+     "name": "Trying, asking and keeping going",
+     "what": "I can try something new, ask when I am stuck, and keep going after a wrong answer."
+    },
+    {
+     "code": "v2-making-and-solving.design-and-build",
+     "name": "Designing and building",
+     "what": "I can make something that solves a problem, test it, and improve it."
+    },
+    {
+     "code": "v2-making-and-solving.imagine-and-express",
+     "name": "Imagining and expressing",
+     "what": "I can make art, music, stories or movement that are my own."
+    },
+    {
+     "code": "v2-making-and-solving.investigate",
+     "name": "Investigating",
+     "what": "I can ask a question, test it fairly and say what I found."
+    },
+    {
+     "code": "v2-reasoning.change-my-mind",
+     "name": "Changing my mind",
+     "what": "I can change my mind when I meet a better reason, and say so."
+    },
+    {
+     "code": "v2-reasoning.patterns-and-numbers",
+     "name": "Patterns and numbers",
+     "what": "I can find a pattern, say its rule and use the rule."
+    },
+    {
+     "code": "v2-reasoning.weigh-evidence",
+     "name": "Weighing evidence",
+     "what": "I can tell what I know from what I guess, and give a reason."
+    },
+    {
+     "code": "v2-self-and-others.care-for-others",
+     "name": "Caring for others",
+     "what": "I can notice how others feel and help them, even when it costs me something."
+    },
+    {
+     "code": "v2-self-and-others.feelings-and-body",
+     "name": "My feelings and my body",
+     "what": "I can name how I feel, calm myself and look after my body."
+    },
+    {
+     "code": "v2-self-and-others.speak-up",
+     "name": "Speaking up",
+     "what": "I can say when I disagree or when something is not fair, politely and clearly."
+    },
+    {
+     "code": "v2-society-and-planet.care-for-nature",
+     "name": "Caring for nature",
+     "what": "I can look after living things, places and what we use."
+    },
+    {
+     "code": "v2-society-and-planet.choices-and-consequences",
+     "name": "Choices and consequences",
+     "what": "I can say what happens because of a choice, to people and to nature."
+    },
+    {
+     "code": "v2-society-and-planet.fair-and-together",
+     "name": "Fairness and living together",
+     "what": "I can say what is fair and take part in making our shared rules."
+    },
+    {
+     "code": "v2-technology-and-ai.check-before-trusting",
+     "name": "Checking before I trust",
+     "what": "I can check whether what a screen or an AI tells me is true, and who made it."
+    },
+    {
+     "code": "v2-technology-and-ai.safe-and-fair-online",
+     "name": "Staying safe and fair online",
+     "what": "I can keep myself and others safe, and respect other people's work."
+    },
+    {
+     "code": "v2-technology-and-ai.use-tools-well",
+     "name": "Using digital tools",
+     "what": "I can use a digital tool to learn, make or find something out."
+    }
+   ],
+   "choice": [
+    "v2-deep-knowledge.how-the-world-works"
+   ],
+   "why": "naming animals and their habitats is knowing living things",
+   "doubt": ""
+  },
+  {
+   "id": "SST.GEO.02-group",
+   "split": "held",
+   "marked_by": "draft",
+   "input": {
+    "skill_code": "SST.GEO.02",
+    "name": "Maps: neighbourhood, India, continents & oceans",
+    "description": "Neighbourhood places; continents and oceans on the globe; states and union territories of India.",
+    "subject": "Social Studies",
+    "grades": [
+     "G1",
+     "G2",
+     "G3",
+     "G4"
+    ]
+   },
+   "options": [
+    {
+     "code": "v2-communicating-together.speak-and-listen",
+     "name": "Speaking and listening",
+     "what": "I can say what I mean and listen to what others mean."
+    },
+    {
+     "code": "v2-communicating-together.work-in-a-team",
+     "name": "Working in a team",
+     "what": "I can do my part, take turns and help the team finish."
+    },
+    {
+     "code": "v2-communicating-together.write-and-show",
+     "name": "Writing and showing my work",
+     "what": "I can write and show my work so others can follow it."
+    },
+    {
+     "code": "v2-deep-knowledge.how-the-world-works",
+     "name": "How the world works",
+     "what": "I can say what I know about living things, materials, places and people, and how I know it."
+    },
+    {
+     "code": "v2-deep-knowledge.language-and-reading",
+     "name": "Language and reading",
+     "what": "I can read, write and speak the languages I learn, and understand what I read."
+    },
+    {
+     "code": "v2-deep-knowledge.number-and-measure",
+     "name": "Number and measure",
+     "what": "I can work with numbers, shapes and measures accurately."
+    },
+    {
+     "code": "v2-learning-and-agency.look-back-and-improve",
+     "name": "Looking back and improving",
+     "what": "I can say what went well, what did not, and what I will change next time."
+    },
+    {
+     "code": "v2-learning-and-agency.set-and-reach-goals",
+     "name": "Setting and reaching goals",
+     "what": "I can decide what I want to learn or finish, and keep at it until I get there."
+    },
+    {
+     "code": "v2-learning-and-agency.try-ask-keep-going",
+     "name": "Trying, asking and keeping going",
+     "what": "I can try something new, ask when I am stuck, and keep going after a wrong answer."
+    },
+    {
+     "code": "v2-making-and-solving.design-and-build",
+     "name": "Designing and building",
+     "what": "I can make something that solves a problem, test it, and improve it."
+    },
+    {
+     "code": "v2-making-and-solving.imagine-and-express",
+     "name": "Imagining and expressing",
+     "what": "I can make art, music, stories or movement that are my own."
+    },
+    {
+     "code": "v2-making-and-solving.investigate",
+     "name": "Investigating",
+     "what": "I can ask a question, test it fairly and say what I found."
+    },
+    {
+     "code": "v2-reasoning.change-my-mind",
+     "name": "Changing my mind",
+     "what": "I can change my mind when I meet a better reason, and say so."
+    },
+    {
+     "code": "v2-reasoning.patterns-and-numbers",
+     "name": "Patterns and numbers",
+     "what": "I can find a pattern, say its rule and use the rule."
+    },
+    {
+     "code": "v2-reasoning.weigh-evidence",
+     "name": "Weighing evidence",
+     "what": "I can tell what I know from what I guess, and give a reason."
+    },
+    {
+     "code": "v2-self-and-others.care-for-others",
+     "name": "Caring for others",
+     "what": "I can notice how others feel and help them, even when it costs me something."
+    },
+    {
+     "code": "v2-self-and-others.feelings-and-body",
+     "name": "My feelings and my body",
+     "what": "I can name how I feel, calm myself and look after my body."
+    },
+    {
+     "code": "v2-self-and-others.speak-up",
+     "name": "Speaking up",
+     "what": "I can say when I disagree or when something is not fair, politely and clearly."
+    },
+    {
+     "code": "v2-society-and-planet.care-for-nature",
+     "name": "Caring for nature",
+     "what": "I can look after living things, places and what we use."
+    },
+    {
+     "code": "v2-society-and-planet.choices-and-consequences",
+     "name": "Choices and consequences",
+     "what": "I can say what happens because of a choice, to people and to nature."
+    },
+    {
+     "code": "v2-society-and-planet.fair-and-together",
+     "name": "Fairness and living together",
+     "what": "I can say what is fair and take part in making our shared rules."
+    },
+    {
+     "code": "v2-technology-and-ai.check-before-trusting",
+     "name": "Checking before I trust",
+     "what": "I can check whether what a screen or an AI tells me is true, and who made it."
+    },
+    {
+     "code": "v2-technology-and-ai.safe-and-fair-online",
+     "name": "Staying safe and fair online",
+     "what": "I can keep myself and others safe, and respect other people's work."
+    },
+    {
+     "code": "v2-technology-and-ai.use-tools-well",
+     "name": "Using digital tools",
+     "what": "I can use a digital tool to learn, make or find something out."
+    }
+   ],
+   "choice": [
+    "v2-deep-knowledge.how-the-world-works"
+   ],
+   "why": "maps, continents and oceans are knowing places",
+   "doubt": ""
+  },
+  {
+   "id": "LIT.COMP.01-group",
+   "split": "tune",
+   "marked_by": "draft",
+   "input": {
+    "skill_code": "LIT.COMP.01",
+    "name": "Literal comprehension & recall",
+    "description": "Answers factual questions about the text; passage comprehension; recalls information from the text.",
+    "subject": "English Language & Literacy",
+    "grades": [
+     "G1",
+     "G2",
+     "G3",
+     "G4"
+    ]
+   },
+   "options": [
+    {
+     "code": "v2-communicating-together.speak-and-listen",
+     "name": "Speaking and listening",
+     "what": "I can say what I mean and listen to what others mean."
+    },
+    {
+     "code": "v2-communicating-together.work-in-a-team",
+     "name": "Working in a team",
+     "what": "I can do my part, take turns and help the team finish."
+    },
+    {
+     "code": "v2-communicating-together.write-and-show",
+     "name": "Writing and showing my work",
+     "what": "I can write and show my work so others can follow it."
+    },
+    {
+     "code": "v2-deep-knowledge.how-the-world-works",
+     "name": "How the world works",
+     "what": "I can say what I know about living things, materials, places and people, and how I know it."
+    },
+    {
+     "code": "v2-deep-knowledge.language-and-reading",
+     "name": "Language and reading",
+     "what": "I can read, write and speak the languages I learn, and understand what I read."
+    },
+    {
+     "code": "v2-deep-knowledge.number-and-measure",
+     "name": "Number and measure",
+     "what": "I can work with numbers, shapes and measures accurately."
+    },
+    {
+     "code": "v2-learning-and-agency.look-back-and-improve",
+     "name": "Looking back and improving",
+     "what": "I can say what went well, what did not, and what I will change next time."
+    },
+    {
+     "code": "v2-learning-and-agency.set-and-reach-goals",
+     "name": "Setting and reaching goals",
+     "what": "I can decide what I want to learn or finish, and keep at it until I get there."
+    },
+    {
+     "code": "v2-learning-and-agency.try-ask-keep-going",
+     "name": "Trying, asking and keeping going",
+     "what": "I can try something new, ask when I am stuck, and keep going after a wrong answer."
+    },
+    {
+     "code": "v2-making-and-solving.design-and-build",
+     "name": "Designing and building",
+     "what": "I can make something that solves a problem, test it, and improve it."
+    },
+    {
+     "code": "v2-making-and-solving.imagine-and-express",
+     "name": "Imagining and expressing",
+     "what": "I can make art, music, stories or movement that are my own."
+    },
+    {
+     "code": "v2-making-and-solving.investigate",
+     "name": "Investigating",
+     "what": "I can ask a question, test it fairly and say what I found."
+    },
+    {
+     "code": "v2-reasoning.change-my-mind",
+     "name": "Changing my mind",
+     "what": "I can change my mind when I meet a better reason, and say so."
+    },
+    {
+     "code": "v2-reasoning.patterns-and-numbers",
+     "name": "Patterns and numbers",
+     "what": "I can find a pattern, say its rule and use the rule."
+    },
+    {
+     "code": "v2-reasoning.weigh-evidence",
+     "name": "Weighing evidence",
+     "what": "I can tell what I know from what I guess, and give a reason."
+    },
+    {
+     "code": "v2-self-and-others.care-for-others",
+     "name": "Caring for others",
+     "what": "I can notice how others feel and help them, even when it costs me something."
+    },
+    {
+     "code": "v2-self-and-others.feelings-and-body",
+     "name": "My feelings and my body",
+     "what": "I can name how I feel, calm myself and look after my body."
+    },
+    {
+     "code": "v2-self-and-others.speak-up",
+     "name": "Speaking up",
+     "what": "I can say when I disagree or when something is not fair, politely and clearly."
+    },
+    {
+     "code": "v2-society-and-planet.care-for-nature",
+     "name": "Caring for nature",
+     "what": "I can look after living things, places and what we use."
+    },
+    {
+     "code": "v2-society-and-planet.choices-and-consequences",
+     "name": "Choices and consequences",
+     "what": "I can say what happens because of a choice, to people and to nature."
+    },
+    {
+     "code": "v2-society-and-planet.fair-and-together",
+     "name": "Fairness and living together",
+     "what": "I can say what is fair and take part in making our shared rules."
+    },
+    {
+     "code": "v2-technology-and-ai.check-before-trusting",
+     "name": "Checking before I trust",
+     "what": "I can check whether what a screen or an AI tells me is true, and who made it."
+    },
+    {
+     "code": "v2-technology-and-ai.safe-and-fair-online",
+     "name": "Staying safe and fair online",
+     "what": "I can keep myself and others safe, and respect other people's work."
+    },
+    {
+     "code": "v2-technology-and-ai.use-tools-well",
+     "name": "Using digital tools",
+     "what": "I can use a digital tool to learn, make or find something out."
+    }
+   ],
+   "choice": [
+    "v2-deep-knowledge.language-and-reading"
+   ],
+   "why": "answering questions about a text is understanding what I read",
+   "doubt": ""
+  },
+  {
+   "id": "HIN.RD.01-group",
+   "split": "held",
+   "marked_by": "draft",
+   "input": {
+    "skill_code": "HIN.RD.01",
+    "name": "शब्द पठन एवं पठन प्रवाह (word reading & fluency)",
+    "description": "Reads 2-3 letter words, then words with matra/conjuncts, unfamiliar words, with growing fluency.",
+    "subject": "Hindi",
+    "grades": [
+     "G1",
+     "G2",
+     "G3",
+     "G4"
+    ]
+   },
+   "options": [
+    {
+     "code": "v2-communicating-together.speak-and-listen",
+     "name": "Speaking and listening",
+     "what": "I can say what I mean and listen to what others mean."
+    },
+    {
+     "code": "v2-communicating-together.work-in-a-team",
+     "name": "Working in a team",
+     "what": "I can do my part, take turns and help the team finish."
+    },
+    {
+     "code": "v2-communicating-together.write-and-show",
+     "name": "Writing and showing my work",
+     "what": "I can write and show my work so others can follow it."
+    },
+    {
+     "code": "v2-deep-knowledge.how-the-world-works",
+     "name": "How the world works",
+     "what": "I can say what I know about living things, materials, places and people, and how I know it."
+    },
+    {
+     "code": "v2-deep-knowledge.language-and-reading",
+     "name": "Language and reading",
+     "what": "I can read, write and speak the languages I learn, and understand what I read."
+    },
+    {
+     "code": "v2-deep-knowledge.number-and-measure",
+     "name": "Number and measure",
+     "what": "I can work with numbers, shapes and measures accurately."
+    },
+    {
+     "code": "v2-learning-and-agency.look-back-and-improve",
+     "name": "Looking back and improving",
+     "what": "I can say what went well, what did not, and what I will change next time."
+    },
+    {
+     "code": "v2-learning-and-agency.set-and-reach-goals",
+     "name": "Setting and reaching goals",
+     "what": "I can decide what I want to learn or finish, and keep at it until I get there."
+    },
+    {
+     "code": "v2-learning-and-agency.try-ask-keep-going",
+     "name": "Trying, asking and keeping going",
+     "what": "I can try something new, ask when I am stuck, and keep going after a wrong answer."
+    },
+    {
+     "code": "v2-making-and-solving.design-and-build",
+     "name": "Designing and building",
+     "what": "I can make something that solves a problem, test it, and improve it."
+    },
+    {
+     "code": "v2-making-and-solving.imagine-and-express",
+     "name": "Imagining and expressing",
+     "what": "I can make art, music, stories or movement that are my own."
+    },
+    {
+     "code": "v2-making-and-solving.investigate",
+     "name": "Investigating",
+     "what": "I can ask a question, test it fairly and say what I found."
+    },
+    {
+     "code": "v2-reasoning.change-my-mind",
+     "name": "Changing my mind",
+     "what": "I can change my mind when I meet a better reason, and say so."
+    },
+    {
+     "code": "v2-reasoning.patterns-and-numbers",
+     "name": "Patterns and numbers",
+     "what": "I can find a pattern, say its rule and use the rule."
+    },
+    {
+     "code": "v2-reasoning.weigh-evidence",
+     "name": "Weighing evidence",
+     "what": "I can tell what I know from what I guess, and give a reason."
+    },
+    {
+     "code": "v2-self-and-others.care-for-others",
+     "name": "Caring for others",
+     "what": "I can notice how others feel and help them, even when it costs me something."
+    },
+    {
+     "code": "v2-self-and-others.feelings-and-body",
+     "name": "My feelings and my body",
+     "what": "I can name how I feel, calm myself and look after my body."
+    },
+    {
+     "code": "v2-self-and-others.speak-up",
+     "name": "Speaking up",
+     "what": "I can say when I disagree or when something is not fair, politely and clearly."
+    },
+    {
+     "code": "v2-society-and-planet.care-for-nature",
+     "name": "Caring for nature",
+     "what": "I can look after living things, places and what we use."
+    },
+    {
+     "code": "v2-society-and-planet.choices-and-consequences",
+     "name": "Choices and consequences",
+     "what": "I can say what happens because of a choice, to people and to nature."
+    },
+    {
+     "code": "v2-society-and-planet.fair-and-together",
+     "name": "Fairness and living together",
+     "what": "I can say what is fair and take part in making our shared rules."
+    },
+    {
+     "code": "v2-technology-and-ai.check-before-trusting",
+     "name": "Checking before I trust",
+     "what": "I can check whether what a screen or an AI tells me is true, and who made it."
+    },
+    {
+     "code": "v2-technology-and-ai.safe-and-fair-online",
+     "name": "Staying safe and fair online",
+     "what": "I can keep myself and others safe, and respect other people's work."
+    },
+    {
+     "code": "v2-technology-and-ai.use-tools-well",
+     "name": "Using digital tools",
+     "what": "I can use a digital tool to learn, make or find something out."
+    }
+   ],
+   "choice": [
+    "v2-deep-knowledge.language-and-reading"
+   ],
+   "why": "reading Hindi words fluently is reading a language I learn",
+   "doubt": ""
+  },
+  {
+   "id": "NUM.OPS.01-group",
+   "split": "tune",
+   "marked_by": "draft",
+   "input": {
+    "skill_code": "NUM.OPS.01",
+    "name": "Addition",
+    "description": "Addition through number line, quantities and counters; 2-digit then 3-digit addition with regrouping; regrouping and reordering.",
+    "subject": "Numeracy & Logic",
+    "grades": [
+     "G1",
+     "G2",
+     "G3",
+     "G4"
+    ]
+   },
+   "options": [
+    {
+     "code": "v2-communicating-together.speak-and-listen",
+     "name": "Speaking and listening",
+     "what": "I can say what I mean and listen to what others mean."
+    },
+    {
+     "code": "v2-communicating-together.work-in-a-team",
+     "name": "Working in a team",
+     "what": "I can do my part, take turns and help the team finish."
+    },
+    {
+     "code": "v2-communicating-together.write-and-show",
+     "name": "Writing and showing my work",
+     "what": "I can write and show my work so others can follow it."
+    },
+    {
+     "code": "v2-deep-knowledge.how-the-world-works",
+     "name": "How the world works",
+     "what": "I can say what I know about living things, materials, places and people, and how I know it."
+    },
+    {
+     "code": "v2-deep-knowledge.language-and-reading",
+     "name": "Language and reading",
+     "what": "I can read, write and speak the languages I learn, and understand what I read."
+    },
+    {
+     "code": "v2-deep-knowledge.number-and-measure",
+     "name": "Number and measure",
+     "what": "I can work with numbers, shapes and measures accurately."
+    },
+    {
+     "code": "v2-learning-and-agency.look-back-and-improve",
+     "name": "Looking back and improving",
+     "what": "I can say what went well, what did not, and what I will change next time."
+    },
+    {
+     "code": "v2-learning-and-agency.set-and-reach-goals",
+     "name": "Setting and reaching goals",
+     "what": "I can decide what I want to learn or finish, and keep at it until I get there."
+    },
+    {
+     "code": "v2-learning-and-agency.try-ask-keep-going",
+     "name": "Trying, asking and keeping going",
+     "what": "I can try something new, ask when I am stuck, and keep going after a wrong answer."
+    },
+    {
+     "code": "v2-making-and-solving.design-and-build",
+     "name": "Designing and building",
+     "what": "I can make something that solves a problem, test it, and improve it."
+    },
+    {
+     "code": "v2-making-and-solving.imagine-and-express",
+     "name": "Imagining and expressing",
+     "what": "I can make art, music, stories or movement that are my own."
+    },
+    {
+     "code": "v2-making-and-solving.investigate",
+     "name": "Investigating",
+     "what": "I can ask a question, test it fairly and say what I found."
+    },
+    {
+     "code": "v2-reasoning.change-my-mind",
+     "name": "Changing my mind",
+     "what": "I can change my mind when I meet a better reason, and say so."
+    },
+    {
+     "code": "v2-reasoning.patterns-and-numbers",
+     "name": "Patterns and numbers",
+     "what": "I can find a pattern, say its rule and use the rule."
+    },
+    {
+     "code": "v2-reasoning.weigh-evidence",
+     "name": "Weighing evidence",
+     "what": "I can tell what I know from what I guess, and give a reason."
+    },
+    {
+     "code": "v2-self-and-others.care-for-others",
+     "name": "Caring for others",
+     "what": "I can notice how others feel and help them, even when it costs me something."
+    },
+    {
+     "code": "v2-self-and-others.feelings-and-body",
+     "name": "My feelings and my body",
+     "what": "I can name how I feel, calm myself and look after my body."
+    },
+    {
+     "code": "v2-self-and-others.speak-up",
+     "name": "Speaking up",
+     "what": "I can say when I disagree or when something is not fair, politely and clearly."
+    },
+    {
+     "code": "v2-society-and-planet.care-for-nature",
+     "name": "Caring for nature",
+     "what": "I can look after living things, places and what we use."
+    },
+    {
+     "code": "v2-society-and-planet.choices-and-consequences",
+     "name": "Choices and consequences",
+     "what": "I can say what happens because of a choice, to people and to nature."
+    },
+    {
+     "code": "v2-society-and-planet.fair-and-together",
+     "name": "Fairness and living together",
+     "what": "I can say what is fair and take part in making our shared rules."
+    },
+    {
+     "code": "v2-technology-and-ai.check-before-trusting",
+     "name": "Checking before I trust",
+     "what": "I can check whether what a screen or an AI tells me is true, and who made it."
+    },
+    {
+     "code": "v2-technology-and-ai.safe-and-fair-online",
+     "name": "Staying safe and fair online",
+     "what": "I can keep myself and others safe, and respect other people's work."
+    },
+    {
+     "code": "v2-technology-and-ai.use-tools-well",
+     "name": "Using digital tools",
+     "what": "I can use a digital tool to learn, make or find something out."
+    }
+   ],
+   "choice": [
+    "v2-deep-knowledge.number-and-measure"
+   ],
+   "why": "addition is working with numbers accurately",
+   "doubt": ""
+  },
+  {
+   "id": "NUM.MEAS.03-group",
+   "split": "held",
+   "marked_by": "draft",
+   "input": {
+    "skill_code": "NUM.MEAS.03",
+    "name": "Measuring length, mass & capacity",
+    "description": "Length through non-standard units; standard units (cm) with a ruler; length, weight, capacity and time.",
+    "subject": "Numeracy & Logic",
+    "grades": [
+     "G1",
+     "G2",
+     "G3",
+     "G4"
+    ]
+   },
+   "options": [
+    {
+     "code": "v2-communicating-together.speak-and-listen",
+     "name": "Speaking and listening",
+     "what": "I can say what I mean and listen to what others mean."
+    },
+    {
+     "code": "v2-communicating-together.work-in-a-team",
+     "name": "Working in a team",
+     "what": "I can do my part, take turns and help the team finish."
+    },
+    {
+     "code": "v2-communicating-together.write-and-show",
+     "name": "Writing and showing my work",
+     "what": "I can write and show my work so others can follow it."
+    },
+    {
+     "code": "v2-deep-knowledge.how-the-world-works",
+     "name": "How the world works",
+     "what": "I can say what I know about living things, materials, places and people, and how I know it."
+    },
+    {
+     "code": "v2-deep-knowledge.language-and-reading",
+     "name": "Language and reading",
+     "what": "I can read, write and speak the languages I learn, and understand what I read."
+    },
+    {
+     "code": "v2-deep-knowledge.number-and-measure",
+     "name": "Number and measure",
+     "what": "I can work with numbers, shapes and measures accurately."
+    },
+    {
+     "code": "v2-learning-and-agency.look-back-and-improve",
+     "name": "Looking back and improving",
+     "what": "I can say what went well, what did not, and what I will change next time."
+    },
+    {
+     "code": "v2-learning-and-agency.set-and-reach-goals",
+     "name": "Setting and reaching goals",
+     "what": "I can decide what I want to learn or finish, and keep at it until I get there."
+    },
+    {
+     "code": "v2-learning-and-agency.try-ask-keep-going",
+     "name": "Trying, asking and keeping going",
+     "what": "I can try something new, ask when I am stuck, and keep going after a wrong answer."
+    },
+    {
+     "code": "v2-making-and-solving.design-and-build",
+     "name": "Designing and building",
+     "what": "I can make something that solves a problem, test it, and improve it."
+    },
+    {
+     "code": "v2-making-and-solving.imagine-and-express",
+     "name": "Imagining and expressing",
+     "what": "I can make art, music, stories or movement that are my own."
+    },
+    {
+     "code": "v2-making-and-solving.investigate",
+     "name": "Investigating",
+     "what": "I can ask a question, test it fairly and say what I found."
+    },
+    {
+     "code": "v2-reasoning.change-my-mind",
+     "name": "Changing my mind",
+     "what": "I can change my mind when I meet a better reason, and say so."
+    },
+    {
+     "code": "v2-reasoning.patterns-and-numbers",
+     "name": "Patterns and numbers",
+     "what": "I can find a pattern, say its rule and use the rule."
+    },
+    {
+     "code": "v2-reasoning.weigh-evidence",
+     "name": "Weighing evidence",
+     "what": "I can tell what I know from what I guess, and give a reason."
+    },
+    {
+     "code": "v2-self-and-others.care-for-others",
+     "name": "Caring for others",
+     "what": "I can notice how others feel and help them, even when it costs me something."
+    },
+    {
+     "code": "v2-self-and-others.feelings-and-body",
+     "name": "My feelings and my body",
+     "what": "I can name how I feel, calm myself and look after my body."
+    },
+    {
+     "code": "v2-self-and-others.speak-up",
+     "name": "Speaking up",
+     "what": "I can say when I disagree or when something is not fair, politely and clearly."
+    },
+    {
+     "code": "v2-society-and-planet.care-for-nature",
+     "name": "Caring for nature",
+     "what": "I can look after living things, places and what we use."
+    },
+    {
+     "code": "v2-society-and-planet.choices-and-consequences",
+     "name": "Choices and consequences",
+     "what": "I can say what happens because of a choice, to people and to nature."
+    },
+    {
+     "code": "v2-society-and-planet.fair-and-together",
+     "name": "Fairness and living together",
+     "what": "I can say what is fair and take part in making our shared rules."
+    },
+    {
+     "code": "v2-technology-and-ai.check-before-trusting",
+     "name": "Checking before I trust",
+     "what": "I can check whether what a screen or an AI tells me is true, and who made it."
+    },
+    {
+     "code": "v2-technology-and-ai.safe-and-fair-online",
+     "name": "Staying safe and fair online",
+     "what": "I can keep myself and others safe, and respect other people's work."
+    },
+    {
+     "code": "v2-technology-and-ai.use-tools-well",
+     "name": "Using digital tools",
+     "what": "I can use a digital tool to learn, make or find something out."
+    }
+   ],
+   "choice": [
+    "v2-deep-knowledge.number-and-measure"
+   ],
+   "why": "measuring length, mass and capacity is working with measures",
+   "doubt": ""
+  },
+  {
+   "id": "ICT.CT.03-group",
+   "split": "tune",
+   "marked_by": "draft",
+   "input": {
+    "skill_code": "ICT.CT.03",
+    "name": "Debugging",
+    "description": "Concept of debugging: identify and correct mistakes.",
+    "subject": "Computing",
+    "grades": [
+     "G1",
+     "G3",
+     "G4"
+    ]
+   },
+   "options": [
+    {
+     "code": "v2-communicating-together.speak-and-listen",
+     "name": "Speaking and listening",
+     "what": "I can say what I mean and listen to what others mean."
+    },
+    {
+     "code": "v2-communicating-together.work-in-a-team",
+     "name": "Working in a team",
+     "what": "I can do my part, take turns and help the team finish."
+    },
+    {
+     "code": "v2-communicating-together.write-and-show",
+     "name": "Writing and showing my work",
+     "what": "I can write and show my work so others can follow it."
+    },
+    {
+     "code": "v2-deep-knowledge.how-the-world-works",
+     "name": "How the world works",
+     "what": "I can say what I know about living things, materials, places and people, and how I know it."
+    },
+    {
+     "code": "v2-deep-knowledge.language-and-reading",
+     "name": "Language and reading",
+     "what": "I can read, write and speak the languages I learn, and understand what I read."
+    },
+    {
+     "code": "v2-deep-knowledge.number-and-measure",
+     "name": "Number and measure",
+     "what": "I can work with numbers, shapes and measures accurately."
+    },
+    {
+     "code": "v2-learning-and-agency.look-back-and-improve",
+     "name": "Looking back and improving",
+     "what": "I can say what went well, what did not, and what I will change next time."
+    },
+    {
+     "code": "v2-learning-and-agency.set-and-reach-goals",
+     "name": "Setting and reaching goals",
+     "what": "I can decide what I want to learn or finish, and keep at it until I get there."
+    },
+    {
+     "code": "v2-learning-and-agency.try-ask-keep-going",
+     "name": "Trying, asking and keeping going",
+     "what": "I can try something new, ask when I am stuck, and keep going after a wrong answer."
+    },
+    {
+     "code": "v2-making-and-solving.design-and-build",
+     "name": "Designing and building",
+     "what": "I can make something that solves a problem, test it, and improve it."
+    },
+    {
+     "code": "v2-making-and-solving.imagine-and-express",
+     "name": "Imagining and expressing",
+     "what": "I can make art, music, stories or movement that are my own."
+    },
+    {
+     "code": "v2-making-and-solving.investigate",
+     "name": "Investigating",
+     "what": "I can ask a question, test it fairly and say what I found."
+    },
+    {
+     "code": "v2-reasoning.change-my-mind",
+     "name": "Changing my mind",
+     "what": "I can change my mind when I meet a better reason, and say so."
+    },
+    {
+     "code": "v2-reasoning.patterns-and-numbers",
+     "name": "Patterns and numbers",
+     "what": "I can find a pattern, say its rule and use the rule."
+    },
+    {
+     "code": "v2-reasoning.weigh-evidence",
+     "name": "Weighing evidence",
+     "what": "I can tell what I know from what I guess, and give a reason."
+    },
+    {
+     "code": "v2-self-and-others.care-for-others",
+     "name": "Caring for others",
+     "what": "I can notice how others feel and help them, even when it costs me something."
+    },
+    {
+     "code": "v2-self-and-others.feelings-and-body",
+     "name": "My feelings and my body",
+     "what": "I can name how I feel, calm myself and look after my body."
+    },
+    {
+     "code": "v2-self-and-others.speak-up",
+     "name": "Speaking up",
+     "what": "I can say when I disagree or when something is not fair, politely and clearly."
+    },
+    {
+     "code": "v2-society-and-planet.care-for-nature",
+     "name": "Caring for nature",
+     "what": "I can look after living things, places and what we use."
+    },
+    {
+     "code": "v2-society-and-planet.choices-and-consequences",
+     "name": "Choices and consequences",
+     "what": "I can say what happens because of a choice, to people and to nature."
+    },
+    {
+     "code": "v2-society-and-planet.fair-and-together",
+     "name": "Fairness and living together",
+     "what": "I can say what is fair and take part in making our shared rules."
+    },
+    {
+     "code": "v2-technology-and-ai.check-before-trusting",
+     "name": "Checking before I trust",
+     "what": "I can check whether what a screen or an AI tells me is true, and who made it."
+    },
+    {
+     "code": "v2-technology-and-ai.safe-and-fair-online",
+     "name": "Staying safe and fair online",
+     "what": "I can keep myself and others safe, and respect other people's work."
+    },
+    {
+     "code": "v2-technology-and-ai.use-tools-well",
+     "name": "Using digital tools",
+     "what": "I can use a digital tool to learn, make or find something out."
+    }
+   ],
+   "choice": [
+    "v2-learning-and-agency.look-back-and-improve"
+   ],
+   "why": "debugging is finding what did not work and changing it",
+   "doubt": "could be change-my-mind or design-and-build"
+  },
+  {
+   "id": "SEB.ATT.01-group",
+   "split": "held",
+   "marked_by": "draft",
+   "input": {
+    "skill_code": "SEB.ATT.01",
+    "name": "Concentration & focus",
+    "description": "Ability to stay focused during fine motor tasks (e.g., detailed games).",
+    "subject": "Social-Emotional & Behavioural",
+    "grades": [
+     "G1",
+     "G2",
+     "G3",
+     "G4"
+    ]
+   },
+   "options": [
+    {
+     "code": "v2-communicating-together.speak-and-listen",
+     "name": "Speaking and listening",
+     "what": "I can say what I mean and listen to what others mean."
+    },
+    {
+     "code": "v2-communicating-together.work-in-a-team",
+     "name": "Working in a team",
+     "what": "I can do my part, take turns and help the team finish."
+    },
+    {
+     "code": "v2-communicating-together.write-and-show",
+     "name": "Writing and showing my work",
+     "what": "I can write and show my work so others can follow it."
+    },
+    {
+     "code": "v2-deep-knowledge.how-the-world-works",
+     "name": "How the world works",
+     "what": "I can say what I know about living things, materials, places and people, and how I know it."
+    },
+    {
+     "code": "v2-deep-knowledge.language-and-reading",
+     "name": "Language and reading",
+     "what": "I can read, write and speak the languages I learn, and understand what I read."
+    },
+    {
+     "code": "v2-deep-knowledge.number-and-measure",
+     "name": "Number and measure",
+     "what": "I can work with numbers, shapes and measures accurately."
+    },
+    {
+     "code": "v2-learning-and-agency.look-back-and-improve",
+     "name": "Looking back and improving",
+     "what": "I can say what went well, what did not, and what I will change next time."
+    },
+    {
+     "code": "v2-learning-and-agency.set-and-reach-goals",
+     "name": "Setting and reaching goals",
+     "what": "I can decide what I want to learn or finish, and keep at it until I get there."
+    },
+    {
+     "code": "v2-learning-and-agency.try-ask-keep-going",
+     "name": "Trying, asking and keeping going",
+     "what": "I can try something new, ask when I am stuck, and keep going after a wrong answer."
+    },
+    {
+     "code": "v2-making-and-solving.design-and-build",
+     "name": "Designing and building",
+     "what": "I can make something that solves a problem, test it, and improve it."
+    },
+    {
+     "code": "v2-making-and-solving.imagine-and-express",
+     "name": "Imagining and expressing",
+     "what": "I can make art, music, stories or movement that are my own."
+    },
+    {
+     "code": "v2-making-and-solving.investigate",
+     "name": "Investigating",
+     "what": "I can ask a question, test it fairly and say what I found."
+    },
+    {
+     "code": "v2-reasoning.change-my-mind",
+     "name": "Changing my mind",
+     "what": "I can change my mind when I meet a better reason, and say so."
+    },
+    {
+     "code": "v2-reasoning.patterns-and-numbers",
+     "name": "Patterns and numbers",
+     "what": "I can find a pattern, say its rule and use the rule."
+    },
+    {
+     "code": "v2-reasoning.weigh-evidence",
+     "name": "Weighing evidence",
+     "what": "I can tell what I know from what I guess, and give a reason."
+    },
+    {
+     "code": "v2-self-and-others.care-for-others",
+     "name": "Caring for others",
+     "what": "I can notice how others feel and help them, even when it costs me something."
+    },
+    {
+     "code": "v2-self-and-others.feelings-and-body",
+     "name": "My feelings and my body",
+     "what": "I can name how I feel, calm myself and look after my body."
+    },
+    {
+     "code": "v2-self-and-others.speak-up",
+     "name": "Speaking up",
+     "what": "I can say when I disagree or when something is not fair, politely and clearly."
+    },
+    {
+     "code": "v2-society-and-planet.care-for-nature",
+     "name": "Caring for nature",
+     "what": "I can look after living things, places and what we use."
+    },
+    {
+     "code": "v2-society-and-planet.choices-and-consequences",
+     "name": "Choices and consequences",
+     "what": "I can say what happens because of a choice, to people and to nature."
+    },
+    {
+     "code": "v2-society-and-planet.fair-and-together",
+     "name": "Fairness and living together",
+     "what": "I can say what is fair and take part in making our shared rules."
+    },
+    {
+     "code": "v2-technology-and-ai.check-before-trusting",
+     "name": "Checking before I trust",
+     "what": "I can check whether what a screen or an AI tells me is true, and who made it."
+    },
+    {
+     "code": "v2-technology-and-ai.safe-and-fair-online",
+     "name": "Staying safe and fair online",
+     "what": "I can keep myself and others safe, and respect other people's work."
+    },
+    {
+     "code": "v2-technology-and-ai.use-tools-well",
+     "name": "Using digital tools",
+     "what": "I can use a digital tool to learn, make or find something out."
+    }
+   ],
+   "choice": [
+    "v2-learning-and-agency.set-and-reach-goals"
+   ],
+   "why": "staying focused on a task is keeping at it until I get there",
+   "doubt": "no registry skill names goals; nearest"
+  },
+  {
+   "id": "SEB.ATT.02-group",
+   "split": "tune",
+   "marked_by": "draft",
+   "input": {
+    "skill_code": "SEB.ATT.02",
+    "name": "Effort & participation in sessions",
+    "description": "Active participation in science, technology and sports sessions; willingness to try.",
+    "subject": "Social-Emotional & Behavioural",
+    "grades": [
+     "G1",
+     "G2",
+     "G3",
+     "G4"
+    ]
+   },
+   "options": [
+    {
+     "code": "v2-communicating-together.speak-and-listen",
+     "name": "Speaking and listening",
+     "what": "I can say what I mean and listen to what others mean."
+    },
+    {
+     "code": "v2-communicating-together.work-in-a-team",
+     "name": "Working in a team",
+     "what": "I can do my part, take turns and help the team finish."
+    },
+    {
+     "code": "v2-communicating-together.write-and-show",
+     "name": "Writing and showing my work",
+     "what": "I can write and show my work so others can follow it."
+    },
+    {
+     "code": "v2-deep-knowledge.how-the-world-works",
+     "name": "How the world works",
+     "what": "I can say what I know about living things, materials, places and people, and how I know it."
+    },
+    {
+     "code": "v2-deep-knowledge.language-and-reading",
+     "name": "Language and reading",
+     "what": "I can read, write and speak the languages I learn, and understand what I read."
+    },
+    {
+     "code": "v2-deep-knowledge.number-and-measure",
+     "name": "Number and measure",
+     "what": "I can work with numbers, shapes and measures accurately."
+    },
+    {
+     "code": "v2-learning-and-agency.look-back-and-improve",
+     "name": "Looking back and improving",
+     "what": "I can say what went well, what did not, and what I will change next time."
+    },
+    {
+     "code": "v2-learning-and-agency.set-and-reach-goals",
+     "name": "Setting and reaching goals",
+     "what": "I can decide what I want to learn or finish, and keep at it until I get there."
+    },
+    {
+     "code": "v2-learning-and-agency.try-ask-keep-going",
+     "name": "Trying, asking and keeping going",
+     "what": "I can try something new, ask when I am stuck, and keep going after a wrong answer."
+    },
+    {
+     "code": "v2-making-and-solving.design-and-build",
+     "name": "Designing and building",
+     "what": "I can make something that solves a problem, test it, and improve it."
+    },
+    {
+     "code": "v2-making-and-solving.imagine-and-express",
+     "name": "Imagining and expressing",
+     "what": "I can make art, music, stories or movement that are my own."
+    },
+    {
+     "code": "v2-making-and-solving.investigate",
+     "name": "Investigating",
+     "what": "I can ask a question, test it fairly and say what I found."
+    },
+    {
+     "code": "v2-reasoning.change-my-mind",
+     "name": "Changing my mind",
+     "what": "I can change my mind when I meet a better reason, and say so."
+    },
+    {
+     "code": "v2-reasoning.patterns-and-numbers",
+     "name": "Patterns and numbers",
+     "what": "I can find a pattern, say its rule and use the rule."
+    },
+    {
+     "code": "v2-reasoning.weigh-evidence",
+     "name": "Weighing evidence",
+     "what": "I can tell what I know from what I guess, and give a reason."
+    },
+    {
+     "code": "v2-self-and-others.care-for-others",
+     "name": "Caring for others",
+     "what": "I can notice how others feel and help them, even when it costs me something."
+    },
+    {
+     "code": "v2-self-and-others.feelings-and-body",
+     "name": "My feelings and my body",
+     "what": "I can name how I feel, calm myself and look after my body."
+    },
+    {
+     "code": "v2-self-and-others.speak-up",
+     "name": "Speaking up",
+     "what": "I can say when I disagree or when something is not fair, politely and clearly."
+    },
+    {
+     "code": "v2-society-and-planet.care-for-nature",
+     "name": "Caring for nature",
+     "what": "I can look after living things, places and what we use."
+    },
+    {
+     "code": "v2-society-and-planet.choices-and-consequences",
+     "name": "Choices and consequences",
+     "what": "I can say what happens because of a choice, to people and to nature."
+    },
+    {
+     "code": "v2-society-and-planet.fair-and-together",
+     "name": "Fairness and living together",
+     "what": "I can say what is fair and take part in making our shared rules."
+    },
+    {
+     "code": "v2-technology-and-ai.check-before-trusting",
+     "name": "Checking before I trust",
+     "what": "I can check whether what a screen or an AI tells me is true, and who made it."
+    },
+    {
+     "code": "v2-technology-and-ai.safe-and-fair-online",
+     "name": "Staying safe and fair online",
+     "what": "I can keep myself and others safe, and respect other people's work."
+    },
+    {
+     "code": "v2-technology-and-ai.use-tools-well",
+     "name": "Using digital tools",
+     "what": "I can use a digital tool to learn, make or find something out."
+    }
+   ],
+   "choice": [
+    "v2-learning-and-agency.try-ask-keep-going"
+   ],
+   "why": "effort and willingness to take part is trying and keeping going",
+   "doubt": ""
+  },
+  {
+   "id": "ICT.PROG.02-group",
+   "split": "held",
+   "marked_by": "draft",
+   "input": {
+    "skill_code": "ICT.PROG.02",
+    "name": "Block coding (Scratch, loops, events)",
+    "description": "Coding and programming in Scratch; motion, loops, events.",
+    "subject": "Computing",
+    "grades": [
+     "G2",
+     "G3",
+     "G4"
+    ]
+   },
+   "options": [
+    {
+     "code": "v2-communicating-together.speak-and-listen",
+     "name": "Speaking and listening",
+     "what": "I can say what I mean and listen to what others mean."
+    },
+    {
+     "code": "v2-communicating-together.work-in-a-team",
+     "name": "Working in a team",
+     "what": "I can do my part, take turns and help the team finish."
+    },
+    {
+     "code": "v2-communicating-together.write-and-show",
+     "name": "Writing and showing my work",
+     "what": "I can write and show my work so others can follow it."
+    },
+    {
+     "code": "v2-deep-knowledge.how-the-world-works",
+     "name": "How the world works",
+     "what": "I can say what I know about living things, materials, places and people, and how I know it."
+    },
+    {
+     "code": "v2-deep-knowledge.language-and-reading",
+     "name": "Language and reading",
+     "what": "I can read, write and speak the languages I learn, and understand what I read."
+    },
+    {
+     "code": "v2-deep-knowledge.number-and-measure",
+     "name": "Number and measure",
+     "what": "I can work with numbers, shapes and measures accurately."
+    },
+    {
+     "code": "v2-learning-and-agency.look-back-and-improve",
+     "name": "Looking back and improving",
+     "what": "I can say what went well, what did not, and what I will change next time."
+    },
+    {
+     "code": "v2-learning-and-agency.set-and-reach-goals",
+     "name": "Setting and reaching goals",
+     "what": "I can decide what I want to learn or finish, and keep at it until I get there."
+    },
+    {
+     "code": "v2-learning-and-agency.try-ask-keep-going",
+     "name": "Trying, asking and keeping going",
+     "what": "I can try something new, ask when I am stuck, and keep going after a wrong answer."
+    },
+    {
+     "code": "v2-making-and-solving.design-and-build",
+     "name": "Designing and building",
+     "what": "I can make something that solves a problem, test it, and improve it."
+    },
+    {
+     "code": "v2-making-and-solving.imagine-and-express",
+     "name": "Imagining and expressing",
+     "what": "I can make art, music, stories or movement that are my own."
+    },
+    {
+     "code": "v2-making-and-solving.investigate",
+     "name": "Investigating",
+     "what": "I can ask a question, test it fairly and say what I found."
+    },
+    {
+     "code": "v2-reasoning.change-my-mind",
+     "name": "Changing my mind",
+     "what": "I can change my mind when I meet a better reason, and say so."
+    },
+    {
+     "code": "v2-reasoning.patterns-and-numbers",
+     "name": "Patterns and numbers",
+     "what": "I can find a pattern, say its rule and use the rule."
+    },
+    {
+     "code": "v2-reasoning.weigh-evidence",
+     "name": "Weighing evidence",
+     "what": "I can tell what I know from what I guess, and give a reason."
+    },
+    {
+     "code": "v2-self-and-others.care-for-others",
+     "name": "Caring for others",
+     "what": "I can notice how others feel and help them, even when it costs me something."
+    },
+    {
+     "code": "v2-self-and-others.feelings-and-body",
+     "name": "My feelings and my body",
+     "what": "I can name how I feel, calm myself and look after my body."
+    },
+    {
+     "code": "v2-self-and-others.speak-up",
+     "name": "Speaking up",
+     "what": "I can say when I disagree or when something is not fair, politely and clearly."
+    },
+    {
+     "code": "v2-society-and-planet.care-for-nature",
+     "name": "Caring for nature",
+     "what": "I can look after living things, places and what we use."
+    },
+    {
+     "code": "v2-society-and-planet.choices-and-consequences",
+     "name": "Choices and consequences",
+     "what": "I can say what happens because of a choice, to people and to nature."
+    },
+    {
+     "code": "v2-society-and-planet.fair-and-together",
+     "name": "Fairness and living together",
+     "what": "I can say what is fair and take part in making our shared rules."
+    },
+    {
+     "code": "v2-technology-and-ai.check-before-trusting",
+     "name": "Checking before I trust",
+     "what": "I can check whether what a screen or an AI tells me is true, and who made it."
+    },
+    {
+     "code": "v2-technology-and-ai.safe-and-fair-online",
+     "name": "Staying safe and fair online",
+     "what": "I can keep myself and others safe, and respect other people's work."
+    },
+    {
+     "code": "v2-technology-and-ai.use-tools-well",
+     "name": "Using digital tools",
+     "what": "I can use a digital tool to learn, make or find something out."
+    }
+   ],
+   "choice": [
+    "v2-making-and-solving.design-and-build"
+   ],
+   "why": "block coding makes something, tests it and improves it",
+   "doubt": "could be use-tools-well"
+  },
+  {
+   "id": "HSC.STITCH.03-group",
+   "split": "tune",
+   "marked_by": "draft",
+   "input": {
+    "skill_code": "HSC.STITCH.03",
+    "name": "Stitching & weaving techniques",
+    "description": "Running, whip, cross, blanket, back stitch; paper and loom weaving; embroidery; mending.",
+    "subject": "Home Science",
+    "grades": [
+     "G1",
+     "G2",
+     "G3",
+     "G4"
+    ]
+   },
+   "options": [
+    {
+     "code": "v2-communicating-together.speak-and-listen",
+     "name": "Speaking and listening",
+     "what": "I can say what I mean and listen to what others mean."
+    },
+    {
+     "code": "v2-communicating-together.work-in-a-team",
+     "name": "Working in a team",
+     "what": "I can do my part, take turns and help the team finish."
+    },
+    {
+     "code": "v2-communicating-together.write-and-show",
+     "name": "Writing and showing my work",
+     "what": "I can write and show my work so others can follow it."
+    },
+    {
+     "code": "v2-deep-knowledge.how-the-world-works",
+     "name": "How the world works",
+     "what": "I can say what I know about living things, materials, places and people, and how I know it."
+    },
+    {
+     "code": "v2-deep-knowledge.language-and-reading",
+     "name": "Language and reading",
+     "what": "I can read, write and speak the languages I learn, and understand what I read."
+    },
+    {
+     "code": "v2-deep-knowledge.number-and-measure",
+     "name": "Number and measure",
+     "what": "I can work with numbers, shapes and measures accurately."
+    },
+    {
+     "code": "v2-learning-and-agency.look-back-and-improve",
+     "name": "Looking back and improving",
+     "what": "I can say what went well, what did not, and what I will change next time."
+    },
+    {
+     "code": "v2-learning-and-agency.set-and-reach-goals",
+     "name": "Setting and reaching goals",
+     "what": "I can decide what I want to learn or finish, and keep at it until I get there."
+    },
+    {
+     "code": "v2-learning-and-agency.try-ask-keep-going",
+     "name": "Trying, asking and keeping going",
+     "what": "I can try something new, ask when I am stuck, and keep going after a wrong answer."
+    },
+    {
+     "code": "v2-making-and-solving.design-and-build",
+     "name": "Designing and building",
+     "what": "I can make something that solves a problem, test it, and improve it."
+    },
+    {
+     "code": "v2-making-and-solving.imagine-and-express",
+     "name": "Imagining and expressing",
+     "what": "I can make art, music, stories or movement that are my own."
+    },
+    {
+     "code": "v2-making-and-solving.investigate",
+     "name": "Investigating",
+     "what": "I can ask a question, test it fairly and say what I found."
+    },
+    {
+     "code": "v2-reasoning.change-my-mind",
+     "name": "Changing my mind",
+     "what": "I can change my mind when I meet a better reason, and say so."
+    },
+    {
+     "code": "v2-reasoning.patterns-and-numbers",
+     "name": "Patterns and numbers",
+     "what": "I can find a pattern, say its rule and use the rule."
+    },
+    {
+     "code": "v2-reasoning.weigh-evidence",
+     "name": "Weighing evidence",
+     "what": "I can tell what I know from what I guess, and give a reason."
+    },
+    {
+     "code": "v2-self-and-others.care-for-others",
+     "name": "Caring for others",
+     "what": "I can notice how others feel and help them, even when it costs me something."
+    },
+    {
+     "code": "v2-self-and-others.feelings-and-body",
+     "name": "My feelings and my body",
+     "what": "I can name how I feel, calm myself and look after my body."
+    },
+    {
+     "code": "v2-self-and-others.speak-up",
+     "name": "Speaking up",
+     "what": "I can say when I disagree or when something is not fair, politely and clearly."
+    },
+    {
+     "code": "v2-society-and-planet.care-for-nature",
+     "name": "Caring for nature",
+     "what": "I can look after living things, places and what we use."
+    },
+    {
+     "code": "v2-society-and-planet.choices-and-consequences",
+     "name": "Choices and consequences",
+     "what": "I can say what happens because of a choice, to people and to nature."
+    },
+    {
+     "code": "v2-society-and-planet.fair-and-together",
+     "name": "Fairness and living together",
+     "what": "I can say what is fair and take part in making our shared rules."
+    },
+    {
+     "code": "v2-technology-and-ai.check-before-trusting",
+     "name": "Checking before I trust",
+     "what": "I can check whether what a screen or an AI tells me is true, and who made it."
+    },
+    {
+     "code": "v2-technology-and-ai.safe-and-fair-online",
+     "name": "Staying safe and fair online",
+     "what": "I can keep myself and others safe, and respect other people's work."
+    },
+    {
+     "code": "v2-technology-and-ai.use-tools-well",
+     "name": "Using digital tools",
+     "what": "I can use a digital tool to learn, make or find something out."
+    }
+   ],
+   "choice": [
+    "v2-making-and-solving.design-and-build"
+   ],
+   "why": "stitching and weaving make a thing with materials",
+   "doubt": "could be imagine-and-express"
+  },
+  {
+   "id": "ART.VIS.01-group",
+   "split": "held",
+   "marked_by": "draft",
+   "input": {
+    "skill_code": "ART.VIS.01",
+    "name": "Free drawing & mark-making",
+    "description": "Scribbles in sand; finger paints/foam on mirror; draws free-form with crayons.",
+    "subject": "Creative Arts",
+    "grades": [
+     "G1",
+     "G2",
+     "G3",
+     "G4"
+    ]
+   },
+   "options": [
+    {
+     "code": "v2-communicating-together.speak-and-listen",
+     "name": "Speaking and listening",
+     "what": "I can say what I mean and listen to what others mean."
+    },
+    {
+     "code": "v2-communicating-together.work-in-a-team",
+     "name": "Working in a team",
+     "what": "I can do my part, take turns and help the team finish."
+    },
+    {
+     "code": "v2-communicating-together.write-and-show",
+     "name": "Writing and showing my work",
+     "what": "I can write and show my work so others can follow it."
+    },
+    {
+     "code": "v2-deep-knowledge.how-the-world-works",
+     "name": "How the world works",
+     "what": "I can say what I know about living things, materials, places and people, and how I know it."
+    },
+    {
+     "code": "v2-deep-knowledge.language-and-reading",
+     "name": "Language and reading",
+     "what": "I can read, write and speak the languages I learn, and understand what I read."
+    },
+    {
+     "code": "v2-deep-knowledge.number-and-measure",
+     "name": "Number and measure",
+     "what": "I can work with numbers, shapes and measures accurately."
+    },
+    {
+     "code": "v2-learning-and-agency.look-back-and-improve",
+     "name": "Looking back and improving",
+     "what": "I can say what went well, what did not, and what I will change next time."
+    },
+    {
+     "code": "v2-learning-and-agency.set-and-reach-goals",
+     "name": "Setting and reaching goals",
+     "what": "I can decide what I want to learn or finish, and keep at it until I get there."
+    },
+    {
+     "code": "v2-learning-and-agency.try-ask-keep-going",
+     "name": "Trying, asking and keeping going",
+     "what": "I can try something new, ask when I am stuck, and keep going after a wrong answer."
+    },
+    {
+     "code": "v2-making-and-solving.design-and-build",
+     "name": "Designing and building",
+     "what": "I can make something that solves a problem, test it, and improve it."
+    },
+    {
+     "code": "v2-making-and-solving.imagine-and-express",
+     "name": "Imagining and expressing",
+     "what": "I can make art, music, stories or movement that are my own."
+    },
+    {
+     "code": "v2-making-and-solving.investigate",
+     "name": "Investigating",
+     "what": "I can ask a question, test it fairly and say what I found."
+    },
+    {
+     "code": "v2-reasoning.change-my-mind",
+     "name": "Changing my mind",
+     "what": "I can change my mind when I meet a better reason, and say so."
+    },
+    {
+     "code": "v2-reasoning.patterns-and-numbers",
+     "name": "Patterns and numbers",
+     "what": "I can find a pattern, say its rule and use the rule."
+    },
+    {
+     "code": "v2-reasoning.weigh-evidence",
+     "name": "Weighing evidence",
+     "what": "I can tell what I know from what I guess, and give a reason."
+    },
+    {
+     "code": "v2-self-and-others.care-for-others",
+     "name": "Caring for others",
+     "what": "I can notice how others feel and help them, even when it costs me something."
+    },
+    {
+     "code": "v2-self-and-others.feelings-and-body",
+     "name": "My feelings and my body",
+     "what": "I can name how I feel, calm myself and look after my body."
+    },
+    {
+     "code": "v2-self-and-others.speak-up",
+     "name": "Speaking up",
+     "what": "I can say when I disagree or when something is not fair, politely and clearly."
+    },
+    {
+     "code": "v2-society-and-planet.care-for-nature",
+     "name": "Caring for nature",
+     "what": "I can look after living things, places and what we use."
+    },
+    {
+     "code": "v2-society-and-planet.choices-and-consequences",
+     "name": "Choices and consequences",
+     "what": "I can say what happens because of a choice, to people and to nature."
+    },
+    {
+     "code": "v2-society-and-planet.fair-and-together",
+     "name": "Fairness and living together",
+     "what": "I can say what is fair and take part in making our shared rules."
+    },
+    {
+     "code": "v2-technology-and-ai.check-before-trusting",
+     "name": "Checking before I trust",
+     "what": "I can check whether what a screen or an AI tells me is true, and who made it."
+    },
+    {
+     "code": "v2-technology-and-ai.safe-and-fair-online",
+     "name": "Staying safe and fair online",
+     "what": "I can keep myself and others safe, and respect other people's work."
+    },
+    {
+     "code": "v2-technology-and-ai.use-tools-well",
+     "name": "Using digital tools",
+     "what": "I can use a digital tool to learn, make or find something out."
+    }
+   ],
+   "choice": [
+    "v2-making-and-solving.imagine-and-express"
+   ],
+   "why": "free drawing is making art that is my own",
+   "doubt": ""
+  },
+  {
+   "id": "LIT.SPK.08-group",
+   "split": "tune",
+   "marked_by": "draft",
+   "input": {
+    "skill_code": "LIT.SPK.08",
+    "name": "Drama: role play, acting out stories, skits",
+    "description": "Engages in role play; acts out a story; aware of skit as an art form using expression, dialogue, dance and singing.",
+    "subject": "English Language & Literacy",
+    "grades": [
+     "G3",
+     "G4"
+    ]
+   },
+   "options": [
+    {
+     "code": "v2-communicating-together.speak-and-listen",
+     "name": "Speaking and listening",
+     "what": "I can say what I mean and listen to what others mean."
+    },
+    {
+     "code": "v2-communicating-together.work-in-a-team",
+     "name": "Working in a team",
+     "what": "I can do my part, take turns and help the team finish."
+    },
+    {
+     "code": "v2-communicating-together.write-and-show",
+     "name": "Writing and showing my work",
+     "what": "I can write and show my work so others can follow it."
+    },
+    {
+     "code": "v2-deep-knowledge.how-the-world-works",
+     "name": "How the world works",
+     "what": "I can say what I know about living things, materials, places and people, and how I know it."
+    },
+    {
+     "code": "v2-deep-knowledge.language-and-reading",
+     "name": "Language and reading",
+     "what": "I can read, write and speak the languages I learn, and understand what I read."
+    },
+    {
+     "code": "v2-deep-knowledge.number-and-measure",
+     "name": "Number and measure",
+     "what": "I can work with numbers, shapes and measures accurately."
+    },
+    {
+     "code": "v2-learning-and-agency.look-back-and-improve",
+     "name": "Looking back and improving",
+     "what": "I can say what went well, what did not, and what I will change next time."
+    },
+    {
+     "code": "v2-learning-and-agency.set-and-reach-goals",
+     "name": "Setting and reaching goals",
+     "what": "I can decide what I want to learn or finish, and keep at it until I get there."
+    },
+    {
+     "code": "v2-learning-and-agency.try-ask-keep-going",
+     "name": "Trying, asking and keeping going",
+     "what": "I can try something new, ask when I am stuck, and keep going after a wrong answer."
+    },
+    {
+     "code": "v2-making-and-solving.design-and-build",
+     "name": "Designing and building",
+     "what": "I can make something that solves a problem, test it, and improve it."
+    },
+    {
+     "code": "v2-making-and-solving.imagine-and-express",
+     "name": "Imagining and expressing",
+     "what": "I can make art, music, stories or movement that are my own."
+    },
+    {
+     "code": "v2-making-and-solving.investigate",
+     "name": "Investigating",
+     "what": "I can ask a question, test it fairly and say what I found."
+    },
+    {
+     "code": "v2-reasoning.change-my-mind",
+     "name": "Changing my mind",
+     "what": "I can change my mind when I meet a better reason, and say so."
+    },
+    {
+     "code": "v2-reasoning.patterns-and-numbers",
+     "name": "Patterns and numbers",
+     "what": "I can find a pattern, say its rule and use the rule."
+    },
+    {
+     "code": "v2-reasoning.weigh-evidence",
+     "name": "Weighing evidence",
+     "what": "I can tell what I know from what I guess, and give a reason."
+    },
+    {
+     "code": "v2-self-and-others.care-for-others",
+     "name": "Caring for others",
+     "what": "I can notice how others feel and help them, even when it costs me something."
+    },
+    {
+     "code": "v2-self-and-others.feelings-and-body",
+     "name": "My feelings and my body",
+     "what": "I can name how I feel, calm myself and look after my body."
+    },
+    {
+     "code": "v2-self-and-others.speak-up",
+     "name": "Speaking up",
+     "what": "I can say when I disagree or when something is not fair, politely and clearly."
+    },
+    {
+     "code": "v2-society-and-planet.care-for-nature",
+     "name": "Caring for nature",
+     "what": "I can look after living things, places and what we use."
+    },
+    {
+     "code": "v2-society-and-planet.choices-and-consequences",
+     "name": "Choices and consequences",
+     "what": "I can say what happens because of a choice, to people and to nature."
+    },
+    {
+     "code": "v2-society-and-planet.fair-and-together",
+     "name": "Fairness and living together",
+     "what": "I can say what is fair and take part in making our shared rules."
+    },
+    {
+     "code": "v2-technology-and-ai.check-before-trusting",
+     "name": "Checking before I trust",
+     "what": "I can check whether what a screen or an AI tells me is true, and who made it."
+    },
+    {
+     "code": "v2-technology-and-ai.safe-and-fair-online",
+     "name": "Staying safe and fair online",
+     "what": "I can keep myself and others safe, and respect other people's work."
+    },
+    {
+     "code": "v2-technology-and-ai.use-tools-well",
+     "name": "Using digital tools",
+     "what": "I can use a digital tool to learn, make or find something out."
+    }
+   ],
+   "choice": [
+    "v2-making-and-solving.imagine-and-express"
+   ],
+   "why": "role play and acting out stories is drama of my own",
+   "doubt": "could be speak-and-listen"
+  },
+  {
+   "id": "SCI.INQ.01-group",
+   "split": "held",
+   "marked_by": "draft",
+   "input": {
+    "skill_code": "SCI.INQ.01",
+    "name": "Predict, test, analyse & record",
+    "description": "Aware of predictions and results; predicts and analyses experiments and records them in the record format.",
+    "subject": "Science & General Awareness",
+    "grades": [
+     "G1",
+     "G2",
+     "G3",
+     "G4"
+    ]
+   },
+   "options": [
+    {
+     "code": "v2-communicating-together.speak-and-listen",
+     "name": "Speaking and listening",
+     "what": "I can say what I mean and listen to what others mean."
+    },
+    {
+     "code": "v2-communicating-together.work-in-a-team",
+     "name": "Working in a team",
+     "what": "I can do my part, take turns and help the team finish."
+    },
+    {
+     "code": "v2-communicating-together.write-and-show",
+     "name": "Writing and showing my work",
+     "what": "I can write and show my work so others can follow it."
+    },
+    {
+     "code": "v2-deep-knowledge.how-the-world-works",
+     "name": "How the world works",
+     "what": "I can say what I know about living things, materials, places and people, and how I know it."
+    },
+    {
+     "code": "v2-deep-knowledge.language-and-reading",
+     "name": "Language and reading",
+     "what": "I can read, write and speak the languages I learn, and understand what I read."
+    },
+    {
+     "code": "v2-deep-knowledge.number-and-measure",
+     "name": "Number and measure",
+     "what": "I can work with numbers, shapes and measures accurately."
+    },
+    {
+     "code": "v2-learning-and-agency.look-back-and-improve",
+     "name": "Looking back and improving",
+     "what": "I can say what went well, what did not, and what I will change next time."
+    },
+    {
+     "code": "v2-learning-and-agency.set-and-reach-goals",
+     "name": "Setting and reaching goals",
+     "what": "I can decide what I want to learn or finish, and keep at it until I get there."
+    },
+    {
+     "code": "v2-learning-and-agency.try-ask-keep-going",
+     "name": "Trying, asking and keeping going",
+     "what": "I can try something new, ask when I am stuck, and keep going after a wrong answer."
+    },
+    {
+     "code": "v2-making-and-solving.design-and-build",
+     "name": "Designing and building",
+     "what": "I can make something that solves a problem, test it, and improve it."
+    },
+    {
+     "code": "v2-making-and-solving.imagine-and-express",
+     "name": "Imagining and expressing",
+     "what": "I can make art, music, stories or movement that are my own."
+    },
+    {
+     "code": "v2-making-and-solving.investigate",
+     "name": "Investigating",
+     "what": "I can ask a question, test it fairly and say what I found."
+    },
+    {
+     "code": "v2-reasoning.change-my-mind",
+     "name": "Changing my mind",
+     "what": "I can change my mind when I meet a better reason, and say so."
+    },
+    {
+     "code": "v2-reasoning.patterns-and-numbers",
+     "name": "Patterns and numbers",
+     "what": "I can find a pattern, say its rule and use the rule."
+    },
+    {
+     "code": "v2-reasoning.weigh-evidence",
+     "name": "Weighing evidence",
+     "what": "I can tell what I know from what I guess, and give a reason."
+    },
+    {
+     "code": "v2-self-and-others.care-for-others",
+     "name": "Caring for others",
+     "what": "I can notice how others feel and help them, even when it costs me something."
+    },
+    {
+     "code": "v2-self-and-others.feelings-and-body",
+     "name": "My feelings and my body",
+     "what": "I can name how I feel, calm myself and look after my body."
+    },
+    {
+     "code": "v2-self-and-others.speak-up",
+     "name": "Speaking up",
+     "what": "I can say when I disagree or when something is not fair, politely and clearly."
+    },
+    {
+     "code": "v2-society-and-planet.care-for-nature",
+     "name": "Caring for nature",
+     "what": "I can look after living things, places and what we use."
+    },
+    {
+     "code": "v2-society-and-planet.choices-and-consequences",
+     "name": "Choices and consequences",
+     "what": "I can say what happens because of a choice, to people and to nature."
+    },
+    {
+     "code": "v2-society-and-planet.fair-and-together",
+     "name": "Fairness and living together",
+     "what": "I can say what is fair and take part in making our shared rules."
+    },
+    {
+     "code": "v2-technology-and-ai.check-before-trusting",
+     "name": "Checking before I trust",
+     "what": "I can check whether what a screen or an AI tells me is true, and who made it."
+    },
+    {
+     "code": "v2-technology-and-ai.safe-and-fair-online",
+     "name": "Staying safe and fair online",
+     "what": "I can keep myself and others safe, and respect other people's work."
+    },
+    {
+     "code": "v2-technology-and-ai.use-tools-well",
+     "name": "Using digital tools",
+     "what": "I can use a digital tool to learn, make or find something out."
+    }
+   ],
+   "choice": [
+    "v2-making-and-solving.investigate"
+   ],
+   "why": "predicting, testing and recording is testing a question fairly",
+   "doubt": ""
+  },
+  {
+   "id": "NUM.PRB.03-group",
+   "split": "tune",
+   "marked_by": "draft",
+   "input": {
+    "skill_code": "NUM.PRB.03",
+    "name": "Mathematical reasoning & explaining thinking",
+    "description": "Estimates and checks answers; chooses operations; explains thinking with mathematical vocabulary; find-the-mistake.",
+    "subject": "Numeracy & Logic",
+    "grades": [
+     "G1",
+     "G2",
+     "G3",
+     "G4"
+    ]
+   },
+   "options": [
+    {
+     "code": "v2-communicating-together.speak-and-listen",
+     "name": "Speaking and listening",
+     "what": "I can say what I mean and listen to what others mean."
+    },
+    {
+     "code": "v2-communicating-together.work-in-a-team",
+     "name": "Working in a team",
+     "what": "I can do my part, take turns and help the team finish."
+    },
+    {
+     "code": "v2-communicating-together.write-and-show",
+     "name": "Writing and showing my work",
+     "what": "I can write and show my work so others can follow it."
+    },
+    {
+     "code": "v2-deep-knowledge.how-the-world-works",
+     "name": "How the world works",
+     "what": "I can say what I know about living things, materials, places and people, and how I know it."
+    },
+    {
+     "code": "v2-deep-knowledge.language-and-reading",
+     "name": "Language and reading",
+     "what": "I can read, write and speak the languages I learn, and understand what I read."
+    },
+    {
+     "code": "v2-deep-knowledge.number-and-measure",
+     "name": "Number and measure",
+     "what": "I can work with numbers, shapes and measures accurately."
+    },
+    {
+     "code": "v2-learning-and-agency.look-back-and-improve",
+     "name": "Looking back and improving",
+     "what": "I can say what went well, what did not, and what I will change next time."
+    },
+    {
+     "code": "v2-learning-and-agency.set-and-reach-goals",
+     "name": "Setting and reaching goals",
+     "what": "I can decide what I want to learn or finish, and keep at it until I get there."
+    },
+    {
+     "code": "v2-learning-and-agency.try-ask-keep-going",
+     "name": "Trying, asking and keeping going",
+     "what": "I can try something new, ask when I am stuck, and keep going after a wrong answer."
+    },
+    {
+     "code": "v2-making-and-solving.design-and-build",
+     "name": "Designing and building",
+     "what": "I can make something that solves a problem, test it, and improve it."
+    },
+    {
+     "code": "v2-making-and-solving.imagine-and-express",
+     "name": "Imagining and expressing",
+     "what": "I can make art, music, stories or movement that are my own."
+    },
+    {
+     "code": "v2-making-and-solving.investigate",
+     "name": "Investigating",
+     "what": "I can ask a question, test it fairly and say what I found."
+    },
+    {
+     "code": "v2-reasoning.change-my-mind",
+     "name": "Changing my mind",
+     "what": "I can change my mind when I meet a better reason, and say so."
+    },
+    {
+     "code": "v2-reasoning.patterns-and-numbers",
+     "name": "Patterns and numbers",
+     "what": "I can find a pattern, say its rule and use the rule."
+    },
+    {
+     "code": "v2-reasoning.weigh-evidence",
+     "name": "Weighing evidence",
+     "what": "I can tell what I know from what I guess, and give a reason."
+    },
+    {
+     "code": "v2-self-and-others.care-for-others",
+     "name": "Caring for others",
+     "what": "I can notice how others feel and help them, even when it costs me something."
+    },
+    {
+     "code": "v2-self-and-others.feelings-and-body",
+     "name": "My feelings and my body",
+     "what": "I can name how I feel, calm myself and look after my body."
+    },
+    {
+     "code": "v2-self-and-others.speak-up",
+     "name": "Speaking up",
+     "what": "I can say when I disagree or when something is not fair, politely and clearly."
+    },
+    {
+     "code": "v2-society-and-planet.care-for-nature",
+     "name": "Caring for nature",
+     "what": "I can look after living things, places and what we use."
+    },
+    {
+     "code": "v2-society-and-planet.choices-and-consequences",
+     "name": "Choices and consequences",
+     "what": "I can say what happens because of a choice, to people and to nature."
+    },
+    {
+     "code": "v2-society-and-planet.fair-and-together",
+     "name": "Fairness and living together",
+     "what": "I can say what is fair and take part in making our shared rules."
+    },
+    {
+     "code": "v2-technology-and-ai.check-before-trusting",
+     "name": "Checking before I trust",
+     "what": "I can check whether what a screen or an AI tells me is true, and who made it."
+    },
+    {
+     "code": "v2-technology-and-ai.safe-and-fair-online",
+     "name": "Staying safe and fair online",
+     "what": "I can keep myself and others safe, and respect other people's work."
+    },
+    {
+     "code": "v2-technology-and-ai.use-tools-well",
+     "name": "Using digital tools",
+     "what": "I can use a digital tool to learn, make or find something out."
+    }
+   ],
+   "choice": [
+    "v2-reasoning.change-my-mind"
+   ],
+   "why": "estimating and checking an answer is changing my mind on a better reason",
+   "doubt": "no registry skill names changing one's mind; could be weigh-evidence"
+  },
+  {
+   "id": "NUM.PAT.02-group",
+   "split": "held",
+   "marked_by": "draft",
+   "input": {
+    "skill_code": "NUM.PAT.02",
+    "name": "Patterns & sequencing",
+    "description": "Sequences in a straight line; patterns with two in a sequence; patterns and logical sequencing; number patterns and rules.",
+    "subject": "Numeracy & Logic",
+    "grades": [
+     "G1",
+     "G2",
+     "G3",
+     "G4"
+    ]
+   },
+   "options": [
+    {
+     "code": "v2-communicating-together.speak-and-listen",
+     "name": "Speaking and listening",
+     "what": "I can say what I mean and listen to what others mean."
+    },
+    {
+     "code": "v2-communicating-together.work-in-a-team",
+     "name": "Working in a team",
+     "what": "I can do my part, take turns and help the team finish."
+    },
+    {
+     "code": "v2-communicating-together.write-and-show",
+     "name": "Writing and showing my work",
+     "what": "I can write and show my work so others can follow it."
+    },
+    {
+     "code": "v2-deep-knowledge.how-the-world-works",
+     "name": "How the world works",
+     "what": "I can say what I know about living things, materials, places and people, and how I know it."
+    },
+    {
+     "code": "v2-deep-knowledge.language-and-reading",
+     "name": "Language and reading",
+     "what": "I can read, write and speak the languages I learn, and understand what I read."
+    },
+    {
+     "code": "v2-deep-knowledge.number-and-measure",
+     "name": "Number and measure",
+     "what": "I can work with numbers, shapes and measures accurately."
+    },
+    {
+     "code": "v2-learning-and-agency.look-back-and-improve",
+     "name": "Looking back and improving",
+     "what": "I can say what went well, what did not, and what I will change next time."
+    },
+    {
+     "code": "v2-learning-and-agency.set-and-reach-goals",
+     "name": "Setting and reaching goals",
+     "what": "I can decide what I want to learn or finish, and keep at it until I get there."
+    },
+    {
+     "code": "v2-learning-and-agency.try-ask-keep-going",
+     "name": "Trying, asking and keeping going",
+     "what": "I can try something new, ask when I am stuck, and keep going after a wrong answer."
+    },
+    {
+     "code": "v2-making-and-solving.design-and-build",
+     "name": "Designing and building",
+     "what": "I can make something that solves a problem, test it, and improve it."
+    },
+    {
+     "code": "v2-making-and-solving.imagine-and-express",
+     "name": "Imagining and expressing",
+     "what": "I can make art, music, stories or movement that are my own."
+    },
+    {
+     "code": "v2-making-and-solving.investigate",
+     "name": "Investigating",
+     "what": "I can ask a question, test it fairly and say what I found."
+    },
+    {
+     "code": "v2-reasoning.change-my-mind",
+     "name": "Changing my mind",
+     "what": "I can change my mind when I meet a better reason, and say so."
+    },
+    {
+     "code": "v2-reasoning.patterns-and-numbers",
+     "name": "Patterns and numbers",
+     "what": "I can find a pattern, say its rule and use the rule."
+    },
+    {
+     "code": "v2-reasoning.weigh-evidence",
+     "name": "Weighing evidence",
+     "what": "I can tell what I know from what I guess, and give a reason."
+    },
+    {
+     "code": "v2-self-and-others.care-for-others",
+     "name": "Caring for others",
+     "what": "I can notice how others feel and help them, even when it costs me something."
+    },
+    {
+     "code": "v2-self-and-others.feelings-and-body",
+     "name": "My feelings and my body",
+     "what": "I can name how I feel, calm myself and look after my body."
+    },
+    {
+     "code": "v2-self-and-others.speak-up",
+     "name": "Speaking up",
+     "what": "I can say when I disagree or when something is not fair, politely and clearly."
+    },
+    {
+     "code": "v2-society-and-planet.care-for-nature",
+     "name": "Caring for nature",
+     "what": "I can look after living things, places and what we use."
+    },
+    {
+     "code": "v2-society-and-planet.choices-and-consequences",
+     "name": "Choices and consequences",
+     "what": "I can say what happens because of a choice, to people and to nature."
+    },
+    {
+     "code": "v2-society-and-planet.fair-and-together",
+     "name": "Fairness and living together",
+     "what": "I can say what is fair and take part in making our shared rules."
+    },
+    {
+     "code": "v2-technology-and-ai.check-before-trusting",
+     "name": "Checking before I trust",
+     "what": "I can check whether what a screen or an AI tells me is true, and who made it."
+    },
+    {
+     "code": "v2-technology-and-ai.safe-and-fair-online",
+     "name": "Staying safe and fair online",
+     "what": "I can keep myself and others safe, and respect other people's work."
+    },
+    {
+     "code": "v2-technology-and-ai.use-tools-well",
+     "name": "Using digital tools",
+     "what": "I can use a digital tool to learn, make or find something out."
+    }
+   ],
+   "choice": [
+    "v2-reasoning.patterns-and-numbers"
+   ],
+   "why": "patterns and sequencing is finding a pattern and its rule",
+   "doubt": ""
+  },
+  {
+   "id": "NUM.DATA.02-group",
+   "split": "tune",
+   "marked_by": "draft",
+   "input": {
+    "skill_code": "NUM.DATA.02",
+    "name": "Probability & chance",
+    "description": "Certain/likely/unlikely/impossible events; describing outcomes.",
+    "subject": "Numeracy & Logic",
+    "grades": [
+     "G1",
+     "G2",
+     "G3",
+     "G4"
+    ]
+   },
+   "options": [
+    {
+     "code": "v2-communicating-together.speak-and-listen",
+     "name": "Speaking and listening",
+     "what": "I can say what I mean and listen to what others mean."
+    },
+    {
+     "code": "v2-communicating-together.work-in-a-team",
+     "name": "Working in a team",
+     "what": "I can do my part, take turns and help the team finish."
+    },
+    {
+     "code": "v2-communicating-together.write-and-show",
+     "name": "Writing and showing my work",
+     "what": "I can write and show my work so others can follow it."
+    },
+    {
+     "code": "v2-deep-knowledge.how-the-world-works",
+     "name": "How the world works",
+     "what": "I can say what I know about living things, materials, places and people, and how I know it."
+    },
+    {
+     "code": "v2-deep-knowledge.language-and-reading",
+     "name": "Language and reading",
+     "what": "I can read, write and speak the languages I learn, and understand what I read."
+    },
+    {
+     "code": "v2-deep-knowledge.number-and-measure",
+     "name": "Number and measure",
+     "what": "I can work with numbers, shapes and measures accurately."
+    },
+    {
+     "code": "v2-learning-and-agency.look-back-and-improve",
+     "name": "Looking back and improving",
+     "what": "I can say what went well, what did not, and what I will change next time."
+    },
+    {
+     "code": "v2-learning-and-agency.set-and-reach-goals",
+     "name": "Setting and reaching goals",
+     "what": "I can decide what I want to learn or finish, and keep at it until I get there."
+    },
+    {
+     "code": "v2-learning-and-agency.try-ask-keep-going",
+     "name": "Trying, asking and keeping going",
+     "what": "I can try something new, ask when I am stuck, and keep going after a wrong answer."
+    },
+    {
+     "code": "v2-making-and-solving.design-and-build",
+     "name": "Designing and building",
+     "what": "I can make something that solves a problem, test it, and improve it."
+    },
+    {
+     "code": "v2-making-and-solving.imagine-and-express",
+     "name": "Imagining and expressing",
+     "what": "I can make art, music, stories or movement that are my own."
+    },
+    {
+     "code": "v2-making-and-solving.investigate",
+     "name": "Investigating",
+     "what": "I can ask a question, test it fairly and say what I found."
+    },
+    {
+     "code": "v2-reasoning.change-my-mind",
+     "name": "Changing my mind",
+     "what": "I can change my mind when I meet a better reason, and say so."
+    },
+    {
+     "code": "v2-reasoning.patterns-and-numbers",
+     "name": "Patterns and numbers",
+     "what": "I can find a pattern, say its rule and use the rule."
+    },
+    {
+     "code": "v2-reasoning.weigh-evidence",
+     "name": "Weighing evidence",
+     "what": "I can tell what I know from what I guess, and give a reason."
+    },
+    {
+     "code": "v2-self-and-others.care-for-others",
+     "name": "Caring for others",
+     "what": "I can notice how others feel and help them, even when it costs me something."
+    },
+    {
+     "code": "v2-self-and-others.feelings-and-body",
+     "name": "My feelings and my body",
+     "what": "I can name how I feel, calm myself and look after my body."
+    },
+    {
+     "code": "v2-self-and-others.speak-up",
+     "name": "Speaking up",
+     "what": "I can say when I disagree or when something is not fair, politely and clearly."
+    },
+    {
+     "code": "v2-society-and-planet.care-for-nature",
+     "name": "Caring for nature",
+     "what": "I can look after living things, places and what we use."
+    },
+    {
+     "code": "v2-society-and-planet.choices-and-consequences",
+     "name": "Choices and consequences",
+     "what": "I can say what happens because of a choice, to people and to nature."
+    },
+    {
+     "code": "v2-society-and-planet.fair-and-together",
+     "name": "Fairness and living together",
+     "what": "I can say what is fair and take part in making our shared rules."
+    },
+    {
+     "code": "v2-technology-and-ai.check-before-trusting",
+     "name": "Checking before I trust",
+     "what": "I can check whether what a screen or an AI tells me is true, and who made it."
+    },
+    {
+     "code": "v2-technology-and-ai.safe-and-fair-online",
+     "name": "Staying safe and fair online",
+     "what": "I can keep myself and others safe, and respect other people's work."
+    },
+    {
+     "code": "v2-technology-and-ai.use-tools-well",
+     "name": "Using digital tools",
+     "what": "I can use a digital tool to learn, make or find something out."
+    }
+   ],
+   "choice": [
+    "v2-reasoning.weigh-evidence"
+   ],
+   "why": "certain, likely and impossible is telling what I know from what I guess",
+   "doubt": "could be number-and-measure"
+  },
+  {
+   "id": "SCI.BODY.04-group",
+   "split": "held",
+   "marked_by": "draft",
+   "input": {
+    "skill_code": "SCI.BODY.04",
+    "name": "Safety & first aid",
+    "description": "Understands safety measures; aware of first-aid use.",
+    "subject": "Science & General Awareness",
+    "grades": [
+     "G1",
+     "G3",
+     "G4"
+    ]
+   },
+   "options": [
+    {
+     "code": "v2-communicating-together.speak-and-listen",
+     "name": "Speaking and listening",
+     "what": "I can say what I mean and listen to what others mean."
+    },
+    {
+     "code": "v2-communicating-together.work-in-a-team",
+     "name": "Working in a team",
+     "what": "I can do my part, take turns and help the team finish."
+    },
+    {
+     "code": "v2-communicating-together.write-and-show",
+     "name": "Writing and showing my work",
+     "what": "I can write and show my work so others can follow it."
+    },
+    {
+     "code": "v2-deep-knowledge.how-the-world-works",
+     "name": "How the world works",
+     "what": "I can say what I know about living things, materials, places and people, and how I know it."
+    },
+    {
+     "code": "v2-deep-knowledge.language-and-reading",
+     "name": "Language and reading",
+     "what": "I can read, write and speak the languages I learn, and understand what I read."
+    },
+    {
+     "code": "v2-deep-knowledge.number-and-measure",
+     "name": "Number and measure",
+     "what": "I can work with numbers, shapes and measures accurately."
+    },
+    {
+     "code": "v2-learning-and-agency.look-back-and-improve",
+     "name": "Looking back and improving",
+     "what": "I can say what went well, what did not, and what I will change next time."
+    },
+    {
+     "code": "v2-learning-and-agency.set-and-reach-goals",
+     "name": "Setting and reaching goals",
+     "what": "I can decide what I want to learn or finish, and keep at it until I get there."
+    },
+    {
+     "code": "v2-learning-and-agency.try-ask-keep-going",
+     "name": "Trying, asking and keeping going",
+     "what": "I can try something new, ask when I am stuck, and keep going after a wrong answer."
+    },
+    {
+     "code": "v2-making-and-solving.design-and-build",
+     "name": "Designing and building",
+     "what": "I can make something that solves a problem, test it, and improve it."
+    },
+    {
+     "code": "v2-making-and-solving.imagine-and-express",
+     "name": "Imagining and expressing",
+     "what": "I can make art, music, stories or movement that are my own."
+    },
+    {
+     "code": "v2-making-and-solving.investigate",
+     "name": "Investigating",
+     "what": "I can ask a question, test it fairly and say what I found."
+    },
+    {
+     "code": "v2-reasoning.change-my-mind",
+     "name": "Changing my mind",
+     "what": "I can change my mind when I meet a better reason, and say so."
+    },
+    {
+     "code": "v2-reasoning.patterns-and-numbers",
+     "name": "Patterns and numbers",
+     "what": "I can find a pattern, say its rule and use the rule."
+    },
+    {
+     "code": "v2-reasoning.weigh-evidence",
+     "name": "Weighing evidence",
+     "what": "I can tell what I know from what I guess, and give a reason."
+    },
+    {
+     "code": "v2-self-and-others.care-for-others",
+     "name": "Caring for others",
+     "what": "I can notice how others feel and help them, even when it costs me something."
+    },
+    {
+     "code": "v2-self-and-others.feelings-and-body",
+     "name": "My feelings and my body",
+     "what": "I can name how I feel, calm myself and look after my body."
+    },
+    {
+     "code": "v2-self-and-others.speak-up",
+     "name": "Speaking up",
+     "what": "I can say when I disagree or when something is not fair, politely and clearly."
+    },
+    {
+     "code": "v2-society-and-planet.care-for-nature",
+     "name": "Caring for nature",
+     "what": "I can look after living things, places and what we use."
+    },
+    {
+     "code": "v2-society-and-planet.choices-and-consequences",
+     "name": "Choices and consequences",
+     "what": "I can say what happens because of a choice, to people and to nature."
+    },
+    {
+     "code": "v2-society-and-planet.fair-and-together",
+     "name": "Fairness and living together",
+     "what": "I can say what is fair and take part in making our shared rules."
+    },
+    {
+     "code": "v2-technology-and-ai.check-before-trusting",
+     "name": "Checking before I trust",
+     "what": "I can check whether what a screen or an AI tells me is true, and who made it."
+    },
+    {
+     "code": "v2-technology-and-ai.safe-and-fair-online",
+     "name": "Staying safe and fair online",
+     "what": "I can keep myself and others safe, and respect other people's work."
+    },
+    {
+     "code": "v2-technology-and-ai.use-tools-well",
+     "name": "Using digital tools",
+     "what": "I can use a digital tool to learn, make or find something out."
+    }
+   ],
+   "choice": [
+    "v2-self-and-others.care-for-others"
+   ],
+   "why": "safety and first aid is helping others",
+   "doubt": "could be feelings-and-body"
+  },
+  {
+   "id": "SCI.BODY.03-group",
+   "split": "tune",
+   "marked_by": "draft",
+   "input": {
+    "skill_code": "SCI.BODY.03",
+    "name": "Healthy eating & diet",
+    "description": "Healthy vs junk concept; fruits and vegetables and their purpose in our diet; balanced diet.",
+    "subject": "Science & General Awareness",
+    "grades": [
+     "G1",
+     "G2",
+     "G3",
+     "G4"
+    ]
+   },
+   "options": [
+    {
+     "code": "v2-communicating-together.speak-and-listen",
+     "name": "Speaking and listening",
+     "what": "I can say what I mean and listen to what others mean."
+    },
+    {
+     "code": "v2-communicating-together.work-in-a-team",
+     "name": "Working in a team",
+     "what": "I can do my part, take turns and help the team finish."
+    },
+    {
+     "code": "v2-communicating-together.write-and-show",
+     "name": "Writing and showing my work",
+     "what": "I can write and show my work so others can follow it."
+    },
+    {
+     "code": "v2-deep-knowledge.how-the-world-works",
+     "name": "How the world works",
+     "what": "I can say what I know about living things, materials, places and people, and how I know it."
+    },
+    {
+     "code": "v2-deep-knowledge.language-and-reading",
+     "name": "Language and reading",
+     "what": "I can read, write and speak the languages I learn, and understand what I read."
+    },
+    {
+     "code": "v2-deep-knowledge.number-and-measure",
+     "name": "Number and measure",
+     "what": "I can work with numbers, shapes and measures accurately."
+    },
+    {
+     "code": "v2-learning-and-agency.look-back-and-improve",
+     "name": "Looking back and improving",
+     "what": "I can say what went well, what did not, and what I will change next time."
+    },
+    {
+     "code": "v2-learning-and-agency.set-and-reach-goals",
+     "name": "Setting and reaching goals",
+     "what": "I can decide what I want to learn or finish, and keep at it until I get there."
+    },
+    {
+     "code": "v2-learning-and-agency.try-ask-keep-going",
+     "name": "Trying, asking and keeping going",
+     "what": "I can try something new, ask when I am stuck, and keep going after a wrong answer."
+    },
+    {
+     "code": "v2-making-and-solving.design-and-build",
+     "name": "Designing and building",
+     "what": "I can make something that solves a problem, test it, and improve it."
+    },
+    {
+     "code": "v2-making-and-solving.imagine-and-express",
+     "name": "Imagining and expressing",
+     "what": "I can make art, music, stories or movement that are my own."
+    },
+    {
+     "code": "v2-making-and-solving.investigate",
+     "name": "Investigating",
+     "what": "I can ask a question, test it fairly and say what I found."
+    },
+    {
+     "code": "v2-reasoning.change-my-mind",
+     "name": "Changing my mind",
+     "what": "I can change my mind when I meet a better reason, and say so."
+    },
+    {
+     "code": "v2-reasoning.patterns-and-numbers",
+     "name": "Patterns and numbers",
+     "what": "I can find a pattern, say its rule and use the rule."
+    },
+    {
+     "code": "v2-reasoning.weigh-evidence",
+     "name": "Weighing evidence",
+     "what": "I can tell what I know from what I guess, and give a reason."
+    },
+    {
+     "code": "v2-self-and-others.care-for-others",
+     "name": "Caring for others",
+     "what": "I can notice how others feel and help them, even when it costs me something."
+    },
+    {
+     "code": "v2-self-and-others.feelings-and-body",
+     "name": "My feelings and my body",
+     "what": "I can name how I feel, calm myself and look after my body."
+    },
+    {
+     "code": "v2-self-and-others.speak-up",
+     "name": "Speaking up",
+     "what": "I can say when I disagree or when something is not fair, politely and clearly."
+    },
+    {
+     "code": "v2-society-and-planet.care-for-nature",
+     "name": "Caring for nature",
+     "what": "I can look after living things, places and what we use."
+    },
+    {
+     "code": "v2-society-and-planet.choices-and-consequences",
+     "name": "Choices and consequences",
+     "what": "I can say what happens because of a choice, to people and to nature."
+    },
+    {
+     "code": "v2-society-and-planet.fair-and-together",
+     "name": "Fairness and living together",
+     "what": "I can say what is fair and take part in making our shared rules."
+    },
+    {
+     "code": "v2-technology-and-ai.check-before-trusting",
+     "name": "Checking before I trust",
+     "what": "I can check whether what a screen or an AI tells me is true, and who made it."
+    },
+    {
+     "code": "v2-technology-and-ai.safe-and-fair-online",
+     "name": "Staying safe and fair online",
+     "what": "I can keep myself and others safe, and respect other people's work."
+    },
+    {
+     "code": "v2-technology-and-ai.use-tools-well",
+     "name": "Using digital tools",
+     "what": "I can use a digital tool to learn, make or find something out."
+    }
+   ],
+   "choice": [
+    "v2-self-and-others.feelings-and-body"
+   ],
+   "why": "healthy eating is looking after my body",
+   "doubt": ""
+  },
+  {
+   "id": "MOT.FIT.03-group",
+   "split": "held",
+   "marked_by": "draft",
+   "input": {
+    "skill_code": "MOT.FIT.03",
+    "name": "Strength and endurance",
+    "description": "Ability to sustain physical activities (e.g., football, running).",
+    "subject": "Motor & Physical",
+    "grades": [
+     "G1",
+     "G2",
+     "G3",
+     "G4"
+    ]
+   },
+   "options": [
+    {
+     "code": "v2-communicating-together.speak-and-listen",
+     "name": "Speaking and listening",
+     "what": "I can say what I mean and listen to what others mean."
+    },
+    {
+     "code": "v2-communicating-together.work-in-a-team",
+     "name": "Working in a team",
+     "what": "I can do my part, take turns and help the team finish."
+    },
+    {
+     "code": "v2-communicating-together.write-and-show",
+     "name": "Writing and showing my work",
+     "what": "I can write and show my work so others can follow it."
+    },
+    {
+     "code": "v2-deep-knowledge.how-the-world-works",
+     "name": "How the world works",
+     "what": "I can say what I know about living things, materials, places and people, and how I know it."
+    },
+    {
+     "code": "v2-deep-knowledge.language-and-reading",
+     "name": "Language and reading",
+     "what": "I can read, write and speak the languages I learn, and understand what I read."
+    },
+    {
+     "code": "v2-deep-knowledge.number-and-measure",
+     "name": "Number and measure",
+     "what": "I can work with numbers, shapes and measures accurately."
+    },
+    {
+     "code": "v2-learning-and-agency.look-back-and-improve",
+     "name": "Looking back and improving",
+     "what": "I can say what went well, what did not, and what I will change next time."
+    },
+    {
+     "code": "v2-learning-and-agency.set-and-reach-goals",
+     "name": "Setting and reaching goals",
+     "what": "I can decide what I want to learn or finish, and keep at it until I get there."
+    },
+    {
+     "code": "v2-learning-and-agency.try-ask-keep-going",
+     "name": "Trying, asking and keeping going",
+     "what": "I can try something new, ask when I am stuck, and keep going after a wrong answer."
+    },
+    {
+     "code": "v2-making-and-solving.design-and-build",
+     "name": "Designing and building",
+     "what": "I can make something that solves a problem, test it, and improve it."
+    },
+    {
+     "code": "v2-making-and-solving.imagine-and-express",
+     "name": "Imagining and expressing",
+     "what": "I can make art, music, stories or movement that are my own."
+    },
+    {
+     "code": "v2-making-and-solving.investigate",
+     "name": "Investigating",
+     "what": "I can ask a question, test it fairly and say what I found."
+    },
+    {
+     "code": "v2-reasoning.change-my-mind",
+     "name": "Changing my mind",
+     "what": "I can change my mind when I meet a better reason, and say so."
+    },
+    {
+     "code": "v2-reasoning.patterns-and-numbers",
+     "name": "Patterns and numbers",
+     "what": "I can find a pattern, say its rule and use the rule."
+    },
+    {
+     "code": "v2-reasoning.weigh-evidence",
+     "name": "Weighing evidence",
+     "what": "I can tell what I know from what I guess, and give a reason."
+    },
+    {
+     "code": "v2-self-and-others.care-for-others",
+     "name": "Caring for others",
+     "what": "I can notice how others feel and help them, even when it costs me something."
+    },
+    {
+     "code": "v2-self-and-others.feelings-and-body",
+     "name": "My feelings and my body",
+     "what": "I can name how I feel, calm myself and look after my body."
+    },
+    {
+     "code": "v2-self-and-others.speak-up",
+     "name": "Speaking up",
+     "what": "I can say when I disagree or when something is not fair, politely and clearly."
+    },
+    {
+     "code": "v2-society-and-planet.care-for-nature",
+     "name": "Caring for nature",
+     "what": "I can look after living things, places and what we use."
+    },
+    {
+     "code": "v2-society-and-planet.choices-and-consequences",
+     "name": "Choices and consequences",
+     "what": "I can say what happens because of a choice, to people and to nature."
+    },
+    {
+     "code": "v2-society-and-planet.fair-and-together",
+     "name": "Fairness and living together",
+     "what": "I can say what is fair and take part in making our shared rules."
+    },
+    {
+     "code": "v2-technology-and-ai.check-before-trusting",
+     "name": "Checking before I trust",
+     "what": "I can check whether what a screen or an AI tells me is true, and who made it."
+    },
+    {
+     "code": "v2-technology-and-ai.safe-and-fair-online",
+     "name": "Staying safe and fair online",
+     "what": "I can keep myself and others safe, and respect other people's work."
+    },
+    {
+     "code": "v2-technology-and-ai.use-tools-well",
+     "name": "Using digital tools",
+     "what": "I can use a digital tool to learn, make or find something out."
+    }
+   ],
+   "choice": [
+    "v2-self-and-others.feelings-and-body"
+   ],
+   "why": "strength and endurance is looking after my body",
+   "doubt": ""
+  },
+  {
+   "id": "SEB.SELF.01-group",
+   "split": "tune",
+   "marked_by": "draft",
+   "input": {
+    "skill_code": "SEB.SELF.01",
+    "name": "Self-awareness & expressing preferences",
+    "description": "Understands likes and dislikes; recognises self as an individual; expresses preferences, opinions and interests confidently.",
+    "subject": "Social-Emotional & Behavioural",
+    "grades": [
+     "G1",
+     "G2",
+     "G3",
+     "G4"
+    ]
+   },
+   "options": [
+    {
+     "code": "v2-communicating-together.speak-and-listen",
+     "name": "Speaking and listening",
+     "what": "I can say what I mean and listen to what others mean."
+    },
+    {
+     "code": "v2-communicating-together.work-in-a-team",
+     "name": "Working in a team",
+     "what": "I can do my part, take turns and help the team finish."
+    },
+    {
+     "code": "v2-communicating-together.write-and-show",
+     "name": "Writing and showing my work",
+     "what": "I can write and show my work so others can follow it."
+    },
+    {
+     "code": "v2-deep-knowledge.how-the-world-works",
+     "name": "How the world works",
+     "what": "I can say what I know about living things, materials, places and people, and how I know it."
+    },
+    {
+     "code": "v2-deep-knowledge.language-and-reading",
+     "name": "Language and reading",
+     "what": "I can read, write and speak the languages I learn, and understand what I read."
+    },
+    {
+     "code": "v2-deep-knowledge.number-and-measure",
+     "name": "Number and measure",
+     "what": "I can work with numbers, shapes and measures accurately."
+    },
+    {
+     "code": "v2-learning-and-agency.look-back-and-improve",
+     "name": "Looking back and improving",
+     "what": "I can say what went well, what did not, and what I will change next time."
+    },
+    {
+     "code": "v2-learning-and-agency.set-and-reach-goals",
+     "name": "Setting and reaching goals",
+     "what": "I can decide what I want to learn or finish, and keep at it until I get there."
+    },
+    {
+     "code": "v2-learning-and-agency.try-ask-keep-going",
+     "name": "Trying, asking and keeping going",
+     "what": "I can try something new, ask when I am stuck, and keep going after a wrong answer."
+    },
+    {
+     "code": "v2-making-and-solving.design-and-build",
+     "name": "Designing and building",
+     "what": "I can make something that solves a problem, test it, and improve it."
+    },
+    {
+     "code": "v2-making-and-solving.imagine-and-express",
+     "name": "Imagining and expressing",
+     "what": "I can make art, music, stories or movement that are my own."
+    },
+    {
+     "code": "v2-making-and-solving.investigate",
+     "name": "Investigating",
+     "what": "I can ask a question, test it fairly and say what I found."
+    },
+    {
+     "code": "v2-reasoning.change-my-mind",
+     "name": "Changing my mind",
+     "what": "I can change my mind when I meet a better reason, and say so."
+    },
+    {
+     "code": "v2-reasoning.patterns-and-numbers",
+     "name": "Patterns and numbers",
+     "what": "I can find a pattern, say its rule and use the rule."
+    },
+    {
+     "code": "v2-reasoning.weigh-evidence",
+     "name": "Weighing evidence",
+     "what": "I can tell what I know from what I guess, and give a reason."
+    },
+    {
+     "code": "v2-self-and-others.care-for-others",
+     "name": "Caring for others",
+     "what": "I can notice how others feel and help them, even when it costs me something."
+    },
+    {
+     "code": "v2-self-and-others.feelings-and-body",
+     "name": "My feelings and my body",
+     "what": "I can name how I feel, calm myself and look after my body."
+    },
+    {
+     "code": "v2-self-and-others.speak-up",
+     "name": "Speaking up",
+     "what": "I can say when I disagree or when something is not fair, politely and clearly."
+    },
+    {
+     "code": "v2-society-and-planet.care-for-nature",
+     "name": "Caring for nature",
+     "what": "I can look after living things, places and what we use."
+    },
+    {
+     "code": "v2-society-and-planet.choices-and-consequences",
+     "name": "Choices and consequences",
+     "what": "I can say what happens because of a choice, to people and to nature."
+    },
+    {
+     "code": "v2-society-and-planet.fair-and-together",
+     "name": "Fairness and living together",
+     "what": "I can say what is fair and take part in making our shared rules."
+    },
+    {
+     "code": "v2-technology-and-ai.check-before-trusting",
+     "name": "Checking before I trust",
+     "what": "I can check whether what a screen or an AI tells me is true, and who made it."
+    },
+    {
+     "code": "v2-technology-and-ai.safe-and-fair-online",
+     "name": "Staying safe and fair online",
+     "what": "I can keep myself and others safe, and respect other people's work."
+    },
+    {
+     "code": "v2-technology-and-ai.use-tools-well",
+     "name": "Using digital tools",
+     "what": "I can use a digital tool to learn, make or find something out."
+    }
+   ],
+   "choice": [
+    "v2-self-and-others.speak-up"
+   ],
+   "why": "expressing likes and preferences is saying what I think, politely",
+   "doubt": "nearest; could be feelings-and-body"
+  },
+  {
+   "id": "SCI.LIFE.05-group",
+   "split": "held",
+   "marked_by": "draft",
+   "input": {
+    "skill_code": "SCI.LIFE.05",
+    "name": "Caring for the environment: compost, reuse, recycle",
+    "description": "Compost and its purpose; composting, reuse, recycle, upcycle to protect the environment.",
+    "subject": "Science & General Awareness",
+    "grades": [
+     "G1",
+     "G3",
+     "G4"
+    ]
+   },
+   "options": [
+    {
+     "code": "v2-communicating-together.speak-and-listen",
+     "name": "Speaking and listening",
+     "what": "I can say what I mean and listen to what others mean."
+    },
+    {
+     "code": "v2-communicating-together.work-in-a-team",
+     "name": "Working in a team",
+     "what": "I can do my part, take turns and help the team finish."
+    },
+    {
+     "code": "v2-communicating-together.write-and-show",
+     "name": "Writing and showing my work",
+     "what": "I can write and show my work so others can follow it."
+    },
+    {
+     "code": "v2-deep-knowledge.how-the-world-works",
+     "name": "How the world works",
+     "what": "I can say what I know about living things, materials, places and people, and how I know it."
+    },
+    {
+     "code": "v2-deep-knowledge.language-and-reading",
+     "name": "Language and reading",
+     "what": "I can read, write and speak the languages I learn, and understand what I read."
+    },
+    {
+     "code": "v2-deep-knowledge.number-and-measure",
+     "name": "Number and measure",
+     "what": "I can work with numbers, shapes and measures accurately."
+    },
+    {
+     "code": "v2-learning-and-agency.look-back-and-improve",
+     "name": "Looking back and improving",
+     "what": "I can say what went well, what did not, and what I will change next time."
+    },
+    {
+     "code": "v2-learning-and-agency.set-and-reach-goals",
+     "name": "Setting and reaching goals",
+     "what": "I can decide what I want to learn or finish, and keep at it until I get there."
+    },
+    {
+     "code": "v2-learning-and-agency.try-ask-keep-going",
+     "name": "Trying, asking and keeping going",
+     "what": "I can try something new, ask when I am stuck, and keep going after a wrong answer."
+    },
+    {
+     "code": "v2-making-and-solving.design-and-build",
+     "name": "Designing and building",
+     "what": "I can make something that solves a problem, test it, and improve it."
+    },
+    {
+     "code": "v2-making-and-solving.imagine-and-express",
+     "name": "Imagining and expressing",
+     "what": "I can make art, music, stories or movement that are my own."
+    },
+    {
+     "code": "v2-making-and-solving.investigate",
+     "name": "Investigating",
+     "what": "I can ask a question, test it fairly and say what I found."
+    },
+    {
+     "code": "v2-reasoning.change-my-mind",
+     "name": "Changing my mind",
+     "what": "I can change my mind when I meet a better reason, and say so."
+    },
+    {
+     "code": "v2-reasoning.patterns-and-numbers",
+     "name": "Patterns and numbers",
+     "what": "I can find a pattern, say its rule and use the rule."
+    },
+    {
+     "code": "v2-reasoning.weigh-evidence",
+     "name": "Weighing evidence",
+     "what": "I can tell what I know from what I guess, and give a reason."
+    },
+    {
+     "code": "v2-self-and-others.care-for-others",
+     "name": "Caring for others",
+     "what": "I can notice how others feel and help them, even when it costs me something."
+    },
+    {
+     "code": "v2-self-and-others.feelings-and-body",
+     "name": "My feelings and my body",
+     "what": "I can name how I feel, calm myself and look after my body."
+    },
+    {
+     "code": "v2-self-and-others.speak-up",
+     "name": "Speaking up",
+     "what": "I can say when I disagree or when something is not fair, politely and clearly."
+    },
+    {
+     "code": "v2-society-and-planet.care-for-nature",
+     "name": "Caring for nature",
+     "what": "I can look after living things, places and what we use."
+    },
+    {
+     "code": "v2-society-and-planet.choices-and-consequences",
+     "name": "Choices and consequences",
+     "what": "I can say what happens because of a choice, to people and to nature."
+    },
+    {
+     "code": "v2-society-and-planet.fair-and-together",
+     "name": "Fairness and living together",
+     "what": "I can say what is fair and take part in making our shared rules."
+    },
+    {
+     "code": "v2-technology-and-ai.check-before-trusting",
+     "name": "Checking before I trust",
+     "what": "I can check whether what a screen or an AI tells me is true, and who made it."
+    },
+    {
+     "code": "v2-technology-and-ai.safe-and-fair-online",
+     "name": "Staying safe and fair online",
+     "what": "I can keep myself and others safe, and respect other people's work."
+    },
+    {
+     "code": "v2-technology-and-ai.use-tools-well",
+     "name": "Using digital tools",
+     "what": "I can use a digital tool to learn, make or find something out."
+    }
+   ],
+   "choice": [
+    "v2-society-and-planet.care-for-nature"
+   ],
+   "why": "compost, reuse and recycle is looking after what we use",
+   "doubt": ""
+  },
+  {
+   "id": "SST.GEO.01-group",
+   "split": "tune",
+   "marked_by": "draft",
+   "input": {
+    "skill_code": "SST.GEO.01",
+    "name": "Geography concept, earth surface & landforms",
+    "description": "Geography as study of places/people-environment; earth surface land and water; land and water forms.",
+    "subject": "Social Studies",
+    "grades": [
+     "G1",
+     "G2",
+     "G3",
+     "G4"
+    ]
+   },
+   "options": [
+    {
+     "code": "v2-communicating-together.speak-and-listen",
+     "name": "Speaking and listening",
+     "what": "I can say what I mean and listen to what others mean."
+    },
+    {
+     "code": "v2-communicating-together.work-in-a-team",
+     "name": "Working in a team",
+     "what": "I can do my part, take turns and help the team finish."
+    },
+    {
+     "code": "v2-communicating-together.write-and-show",
+     "name": "Writing and showing my work",
+     "what": "I can write and show my work so others can follow it."
+    },
+    {
+     "code": "v2-deep-knowledge.how-the-world-works",
+     "name": "How the world works",
+     "what": "I can say what I know about living things, materials, places and people, and how I know it."
+    },
+    {
+     "code": "v2-deep-knowledge.language-and-reading",
+     "name": "Language and reading",
+     "what": "I can read, write and speak the languages I learn, and understand what I read."
+    },
+    {
+     "code": "v2-deep-knowledge.number-and-measure",
+     "name": "Number and measure",
+     "what": "I can work with numbers, shapes and measures accurately."
+    },
+    {
+     "code": "v2-learning-and-agency.look-back-and-improve",
+     "name": "Looking back and improving",
+     "what": "I can say what went well, what did not, and what I will change next time."
+    },
+    {
+     "code": "v2-learning-and-agency.set-and-reach-goals",
+     "name": "Setting and reaching goals",
+     "what": "I can decide what I want to learn or finish, and keep at it until I get there."
+    },
+    {
+     "code": "v2-learning-and-agency.try-ask-keep-going",
+     "name": "Trying, asking and keeping going",
+     "what": "I can try something new, ask when I am stuck, and keep going after a wrong answer."
+    },
+    {
+     "code": "v2-making-and-solving.design-and-build",
+     "name": "Designing and building",
+     "what": "I can make something that solves a problem, test it, and improve it."
+    },
+    {
+     "code": "v2-making-and-solving.imagine-and-express",
+     "name": "Imagining and expressing",
+     "what": "I can make art, music, stories or movement that are my own."
+    },
+    {
+     "code": "v2-making-and-solving.investigate",
+     "name": "Investigating",
+     "what": "I can ask a question, test it fairly and say what I found."
+    },
+    {
+     "code": "v2-reasoning.change-my-mind",
+     "name": "Changing my mind",
+     "what": "I can change my mind when I meet a better reason, and say so."
+    },
+    {
+     "code": "v2-reasoning.patterns-and-numbers",
+     "name": "Patterns and numbers",
+     "what": "I can find a pattern, say its rule and use the rule."
+    },
+    {
+     "code": "v2-reasoning.weigh-evidence",
+     "name": "Weighing evidence",
+     "what": "I can tell what I know from what I guess, and give a reason."
+    },
+    {
+     "code": "v2-self-and-others.care-for-others",
+     "name": "Caring for others",
+     "what": "I can notice how others feel and help them, even when it costs me something."
+    },
+    {
+     "code": "v2-self-and-others.feelings-and-body",
+     "name": "My feelings and my body",
+     "what": "I can name how I feel, calm myself and look after my body."
+    },
+    {
+     "code": "v2-self-and-others.speak-up",
+     "name": "Speaking up",
+     "what": "I can say when I disagree or when something is not fair, politely and clearly."
+    },
+    {
+     "code": "v2-society-and-planet.care-for-nature",
+     "name": "Caring for nature",
+     "what": "I can look after living things, places and what we use."
+    },
+    {
+     "code": "v2-society-and-planet.choices-and-consequences",
+     "name": "Choices and consequences",
+     "what": "I can say what happens because of a choice, to people and to nature."
+    },
+    {
+     "code": "v2-society-and-planet.fair-and-together",
+     "name": "Fairness and living together",
+     "what": "I can say what is fair and take part in making our shared rules."
+    },
+    {
+     "code": "v2-technology-and-ai.check-before-trusting",
+     "name": "Checking before I trust",
+     "what": "I can check whether what a screen or an AI tells me is true, and who made it."
+    },
+    {
+     "code": "v2-technology-and-ai.safe-and-fair-online",
+     "name": "Staying safe and fair online",
+     "what": "I can keep myself and others safe, and respect other people's work."
+    },
+    {
+     "code": "v2-technology-and-ai.use-tools-well",
+     "name": "Using digital tools",
+     "what": "I can use a digital tool to learn, make or find something out."
+    }
+   ],
+   "choice": [
+    "v2-society-and-planet.choices-and-consequences"
+   ],
+   "why": "how people and their environment change each other is what happens because of a choice",
+   "doubt": "nearest; could be how-the-world-works"
+  },
+  {
+   "id": "SEB.LEAD.01-group",
+   "split": "held",
+   "marked_by": "draft",
+   "input": {
+    "skill_code": "SEB.LEAD.01",
+    "name": "Responsibility & leadership in class roles",
+    "description": "Takes responsibility in home period, assembly and class jobs (primary 'Leadership & Responsibility' trait).",
+    "subject": "Social-Emotional & Behavioural",
+    "grades": [
+     "G1",
+     "G2",
+     "G3",
+     "G4"
+    ]
+   },
+   "options": [
+    {
+     "code": "v2-communicating-together.speak-and-listen",
+     "name": "Speaking and listening",
+     "what": "I can say what I mean and listen to what others mean."
+    },
+    {
+     "code": "v2-communicating-together.work-in-a-team",
+     "name": "Working in a team",
+     "what": "I can do my part, take turns and help the team finish."
+    },
+    {
+     "code": "v2-communicating-together.write-and-show",
+     "name": "Writing and showing my work",
+     "what": "I can write and show my work so others can follow it."
+    },
+    {
+     "code": "v2-deep-knowledge.how-the-world-works",
+     "name": "How the world works",
+     "what": "I can say what I know about living things, materials, places and people, and how I know it."
+    },
+    {
+     "code": "v2-deep-knowledge.language-and-reading",
+     "name": "Language and reading",
+     "what": "I can read, write and speak the languages I learn, and understand what I read."
+    },
+    {
+     "code": "v2-deep-knowledge.number-and-measure",
+     "name": "Number and measure",
+     "what": "I can work with numbers, shapes and measures accurately."
+    },
+    {
+     "code": "v2-learning-and-agency.look-back-and-improve",
+     "name": "Looking back and improving",
+     "what": "I can say what went well, what did not, and what I will change next time."
+    },
+    {
+     "code": "v2-learning-and-agency.set-and-reach-goals",
+     "name": "Setting and reaching goals",
+     "what": "I can decide what I want to learn or finish, and keep at it until I get there."
+    },
+    {
+     "code": "v2-learning-and-agency.try-ask-keep-going",
+     "name": "Trying, asking and keeping going",
+     "what": "I can try something new, ask when I am stuck, and keep going after a wrong answer."
+    },
+    {
+     "code": "v2-making-and-solving.design-and-build",
+     "name": "Designing and building",
+     "what": "I can make something that solves a problem, test it, and improve it."
+    },
+    {
+     "code": "v2-making-and-solving.imagine-and-express",
+     "name": "Imagining and expressing",
+     "what": "I can make art, music, stories or movement that are my own."
+    },
+    {
+     "code": "v2-making-and-solving.investigate",
+     "name": "Investigating",
+     "what": "I can ask a question, test it fairly and say what I found."
+    },
+    {
+     "code": "v2-reasoning.change-my-mind",
+     "name": "Changing my mind",
+     "what": "I can change my mind when I meet a better reason, and say so."
+    },
+    {
+     "code": "v2-reasoning.patterns-and-numbers",
+     "name": "Patterns and numbers",
+     "what": "I can find a pattern, say its rule and use the rule."
+    },
+    {
+     "code": "v2-reasoning.weigh-evidence",
+     "name": "Weighing evidence",
+     "what": "I can tell what I know from what I guess, and give a reason."
+    },
+    {
+     "code": "v2-self-and-others.care-for-others",
+     "name": "Caring for others",
+     "what": "I can notice how others feel and help them, even when it costs me something."
+    },
+    {
+     "code": "v2-self-and-others.feelings-and-body",
+     "name": "My feelings and my body",
+     "what": "I can name how I feel, calm myself and look after my body."
+    },
+    {
+     "code": "v2-self-and-others.speak-up",
+     "name": "Speaking up",
+     "what": "I can say when I disagree or when something is not fair, politely and clearly."
+    },
+    {
+     "code": "v2-society-and-planet.care-for-nature",
+     "name": "Caring for nature",
+     "what": "I can look after living things, places and what we use."
+    },
+    {
+     "code": "v2-society-and-planet.choices-and-consequences",
+     "name": "Choices and consequences",
+     "what": "I can say what happens because of a choice, to people and to nature."
+    },
+    {
+     "code": "v2-society-and-planet.fair-and-together",
+     "name": "Fairness and living together",
+     "what": "I can say what is fair and take part in making our shared rules."
+    },
+    {
+     "code": "v2-technology-and-ai.check-before-trusting",
+     "name": "Checking before I trust",
+     "what": "I can check whether what a screen or an AI tells me is true, and who made it."
+    },
+    {
+     "code": "v2-technology-and-ai.safe-and-fair-online",
+     "name": "Staying safe and fair online",
+     "what": "I can keep myself and others safe, and respect other people's work."
+    },
+    {
+     "code": "v2-technology-and-ai.use-tools-well",
+     "name": "Using digital tools",
+     "what": "I can use a digital tool to learn, make or find something out."
+    }
+   ],
+   "choice": [
+    "v2-society-and-planet.fair-and-together"
+   ],
+   "why": "class jobs and responsibility is taking part in our shared rules",
+   "doubt": "could be set-and-reach-goals"
+  },
+  {
+   "id": "PLS.ROUT.02-group",
+   "split": "tune",
+   "marked_by": "draft",
+   "input": {
+    "skill_code": "PLS.ROUT.02",
+    "name": "Greeting educators & friends",
+    "description": "Greets educators and friends.",
+    "subject": "Practical Life & Self-care",
+    "grades": [
+     "G1",
+     "G2",
+     "G3",
+     "G4"
+    ]
+   },
+   "options": [
+    {
+     "code": "v2-communicating-together.speak-and-listen",
+     "name": "Speaking and listening",
+     "what": "I can say what I mean and listen to what others mean."
+    },
+    {
+     "code": "v2-communicating-together.work-in-a-team",
+     "name": "Working in a team",
+     "what": "I can do my part, take turns and help the team finish."
+    },
+    {
+     "code": "v2-communicating-together.write-and-show",
+     "name": "Writing and showing my work",
+     "what": "I can write and show my work so others can follow it."
+    },
+    {
+     "code": "v2-deep-knowledge.how-the-world-works",
+     "name": "How the world works",
+     "what": "I can say what I know about living things, materials, places and people, and how I know it."
+    },
+    {
+     "code": "v2-deep-knowledge.language-and-reading",
+     "name": "Language and reading",
+     "what": "I can read, write and speak the languages I learn, and understand what I read."
+    },
+    {
+     "code": "v2-deep-knowledge.number-and-measure",
+     "name": "Number and measure",
+     "what": "I can work with numbers, shapes and measures accurately."
+    },
+    {
+     "code": "v2-learning-and-agency.look-back-and-improve",
+     "name": "Looking back and improving",
+     "what": "I can say what went well, what did not, and what I will change next time."
+    },
+    {
+     "code": "v2-learning-and-agency.set-and-reach-goals",
+     "name": "Setting and reaching goals",
+     "what": "I can decide what I want to learn or finish, and keep at it until I get there."
+    },
+    {
+     "code": "v2-learning-and-agency.try-ask-keep-going",
+     "name": "Trying, asking and keeping going",
+     "what": "I can try something new, ask when I am stuck, and keep going after a wrong answer."
+    },
+    {
+     "code": "v2-making-and-solving.design-and-build",
+     "name": "Designing and building",
+     "what": "I can make something that solves a problem, test it, and improve it."
+    },
+    {
+     "code": "v2-making-and-solving.imagine-and-express",
+     "name": "Imagining and expressing",
+     "what": "I can make art, music, stories or movement that are my own."
+    },
+    {
+     "code": "v2-making-and-solving.investigate",
+     "name": "Investigating",
+     "what": "I can ask a question, test it fairly and say what I found."
+    },
+    {
+     "code": "v2-reasoning.change-my-mind",
+     "name": "Changing my mind",
+     "what": "I can change my mind when I meet a better reason, and say so."
+    },
+    {
+     "code": "v2-reasoning.patterns-and-numbers",
+     "name": "Patterns and numbers",
+     "what": "I can find a pattern, say its rule and use the rule."
+    },
+    {
+     "code": "v2-reasoning.weigh-evidence",
+     "name": "Weighing evidence",
+     "what": "I can tell what I know from what I guess, and give a reason."
+    },
+    {
+     "code": "v2-self-and-others.care-for-others",
+     "name": "Caring for others",
+     "what": "I can notice how others feel and help them, even when it costs me something."
+    },
+    {
+     "code": "v2-self-and-others.feelings-and-body",
+     "name": "My feelings and my body",
+     "what": "I can name how I feel, calm myself and look after my body."
+    },
+    {
+     "code": "v2-self-and-others.speak-up",
+     "name": "Speaking up",
+     "what": "I can say when I disagree or when something is not fair, politely and clearly."
+    },
+    {
+     "code": "v2-society-and-planet.care-for-nature",
+     "name": "Caring for nature",
+     "what": "I can look after living things, places and what we use."
+    },
+    {
+     "code": "v2-society-and-planet.choices-and-consequences",
+     "name": "Choices and consequences",
+     "what": "I can say what happens because of a choice, to people and to nature."
+    },
+    {
+     "code": "v2-society-and-planet.fair-and-together",
+     "name": "Fairness and living together",
+     "what": "I can say what is fair and take part in making our shared rules."
+    },
+    {
+     "code": "v2-technology-and-ai.check-before-trusting",
+     "name": "Checking before I trust",
+     "what": "I can check whether what a screen or an AI tells me is true, and who made it."
+    },
+    {
+     "code": "v2-technology-and-ai.safe-and-fair-online",
+     "name": "Staying safe and fair online",
+     "what": "I can keep myself and others safe, and respect other people's work."
+    },
+    {
+     "code": "v2-technology-and-ai.use-tools-well",
+     "name": "Using digital tools",
+     "what": "I can use a digital tool to learn, make or find something out."
+    }
+   ],
+   "choice": [
+    "v2-society-and-planet.fair-and-together"
+   ],
+   "why": "greeting educators and friends is living together",
+   "doubt": "could be care-for-others"
+  },
+  {
+   "id": "ICT.SKL.01-group",
+   "split": "held",
+   "marked_by": "draft",
+   "input": {
+    "skill_code": "ICT.SKL.01",
+    "name": "Computer parts, hardware & digital awareness",
+    "description": "Digital vs hard copy; identifying parts of a computer; hardware vs software.",
+    "subject": "Computing",
+    "grades": [
+     "G1",
+     "G2",
+     "G3",
+     "G4"
+    ]
+   },
+   "options": [
+    {
+     "code": "v2-communicating-together.speak-and-listen",
+     "name": "Speaking and listening",
+     "what": "I can say what I mean and listen to what others mean."
+    },
+    {
+     "code": "v2-communicating-together.work-in-a-team",
+     "name": "Working in a team",
+     "what": "I can do my part, take turns and help the team finish."
+    },
+    {
+     "code": "v2-communicating-together.write-and-show",
+     "name": "Writing and showing my work",
+     "what": "I can write and show my work so others can follow it."
+    },
+    {
+     "code": "v2-deep-knowledge.how-the-world-works",
+     "name": "How the world works",
+     "what": "I can say what I know about living things, materials, places and people, and how I know it."
+    },
+    {
+     "code": "v2-deep-knowledge.language-and-reading",
+     "name": "Language and reading",
+     "what": "I can read, write and speak the languages I learn, and understand what I read."
+    },
+    {
+     "code": "v2-deep-knowledge.number-and-measure",
+     "name": "Number and measure",
+     "what": "I can work with numbers, shapes and measures accurately."
+    },
+    {
+     "code": "v2-learning-and-agency.look-back-and-improve",
+     "name": "Looking back and improving",
+     "what": "I can say what went well, what did not, and what I will change next time."
+    },
+    {
+     "code": "v2-learning-and-agency.set-and-reach-goals",
+     "name": "Setting and reaching goals",
+     "what": "I can decide what I want to learn or finish, and keep at it until I get there."
+    },
+    {
+     "code": "v2-learning-and-agency.try-ask-keep-going",
+     "name": "Trying, asking and keeping going",
+     "what": "I can try something new, ask when I am stuck, and keep going after a wrong answer."
+    },
+    {
+     "code": "v2-making-and-solving.design-and-build",
+     "name": "Designing and building",
+     "what": "I can make something that solves a problem, test it, and improve it."
+    },
+    {
+     "code": "v2-making-and-solving.imagine-and-express",
+     "name": "Imagining and expressing",
+     "what": "I can make art, music, stories or movement that are my own."
+    },
+    {
+     "code": "v2-making-and-solving.investigate",
+     "name": "Investigating",
+     "what": "I can ask a question, test it fairly and say what I found."
+    },
+    {
+     "code": "v2-reasoning.change-my-mind",
+     "name": "Changing my mind",
+     "what": "I can change my mind when I meet a better reason, and say so."
+    },
+    {
+     "code": "v2-reasoning.patterns-and-numbers",
+     "name": "Patterns and numbers",
+     "what": "I can find a pattern, say its rule and use the rule."
+    },
+    {
+     "code": "v2-reasoning.weigh-evidence",
+     "name": "Weighing evidence",
+     "what": "I can tell what I know from what I guess, and give a reason."
+    },
+    {
+     "code": "v2-self-and-others.care-for-others",
+     "name": "Caring for others",
+     "what": "I can notice how others feel and help them, even when it costs me something."
+    },
+    {
+     "code": "v2-self-and-others.feelings-and-body",
+     "name": "My feelings and my body",
+     "what": "I can name how I feel, calm myself and look after my body."
+    },
+    {
+     "code": "v2-self-and-others.speak-up",
+     "name": "Speaking up",
+     "what": "I can say when I disagree or when something is not fair, politely and clearly."
+    },
+    {
+     "code": "v2-society-and-planet.care-for-nature",
+     "name": "Caring for nature",
+     "what": "I can look after living things, places and what we use."
+    },
+    {
+     "code": "v2-society-and-planet.choices-and-consequences",
+     "name": "Choices and consequences",
+     "what": "I can say what happens because of a choice, to people and to nature."
+    },
+    {
+     "code": "v2-society-and-planet.fair-and-together",
+     "name": "Fairness and living together",
+     "what": "I can say what is fair and take part in making our shared rules."
+    },
+    {
+     "code": "v2-technology-and-ai.check-before-trusting",
+     "name": "Checking before I trust",
+     "what": "I can check whether what a screen or an AI tells me is true, and who made it."
+    },
+    {
+     "code": "v2-technology-and-ai.safe-and-fair-online",
+     "name": "Staying safe and fair online",
+     "what": "I can keep myself and others safe, and respect other people's work."
+    },
+    {
+     "code": "v2-technology-and-ai.use-tools-well",
+     "name": "Using digital tools",
+     "what": "I can use a digital tool to learn, make or find something out."
+    }
+   ],
+   "choice": [
+    "v2-technology-and-ai.check-before-trusting"
+   ],
+   "why": "digital versus hard copy and what a computer is, is knowing where a screen's answer comes from",
+   "doubt": "nearest; could be use-tools-well"
+  },
+  {
+   "id": "ICT.SKL.04-group",
+   "split": "tune",
+   "marked_by": "draft",
+   "input": {
+    "skill_code": "ICT.SKL.04",
+    "name": "Networks, internet & online safety",
+    "description": "Devices and connections; web, browsers, safety; purpose of networks.",
+    "subject": "Computing",
+    "grades": [
+     "G1",
+     "G2",
+     "G3",
+     "G4"
+    ]
+   },
+   "options": [
+    {
+     "code": "v2-communicating-together.speak-and-listen",
+     "name": "Speaking and listening",
+     "what": "I can say what I mean and listen to what others mean."
+    },
+    {
+     "code": "v2-communicating-together.work-in-a-team",
+     "name": "Working in a team",
+     "what": "I can do my part, take turns and help the team finish."
+    },
+    {
+     "code": "v2-communicating-together.write-and-show",
+     "name": "Writing and showing my work",
+     "what": "I can write and show my work so others can follow it."
+    },
+    {
+     "code": "v2-deep-knowledge.how-the-world-works",
+     "name": "How the world works",
+     "what": "I can say what I know about living things, materials, places and people, and how I know it."
+    },
+    {
+     "code": "v2-deep-knowledge.language-and-reading",
+     "name": "Language and reading",
+     "what": "I can read, write and speak the languages I learn, and understand what I read."
+    },
+    {
+     "code": "v2-deep-knowledge.number-and-measure",
+     "name": "Number and measure",
+     "what": "I can work with numbers, shapes and measures accurately."
+    },
+    {
+     "code": "v2-learning-and-agency.look-back-and-improve",
+     "name": "Looking back and improving",
+     "what": "I can say what went well, what did not, and what I will change next time."
+    },
+    {
+     "code": "v2-learning-and-agency.set-and-reach-goals",
+     "name": "Setting and reaching goals",
+     "what": "I can decide what I want to learn or finish, and keep at it until I get there."
+    },
+    {
+     "code": "v2-learning-and-agency.try-ask-keep-going",
+     "name": "Trying, asking and keeping going",
+     "what": "I can try something new, ask when I am stuck, and keep going after a wrong answer."
+    },
+    {
+     "code": "v2-making-and-solving.design-and-build",
+     "name": "Designing and building",
+     "what": "I can make something that solves a problem, test it, and improve it."
+    },
+    {
+     "code": "v2-making-and-solving.imagine-and-express",
+     "name": "Imagining and expressing",
+     "what": "I can make art, music, stories or movement that are my own."
+    },
+    {
+     "code": "v2-making-and-solving.investigate",
+     "name": "Investigating",
+     "what": "I can ask a question, test it fairly and say what I found."
+    },
+    {
+     "code": "v2-reasoning.change-my-mind",
+     "name": "Changing my mind",
+     "what": "I can change my mind when I meet a better reason, and say so."
+    },
+    {
+     "code": "v2-reasoning.patterns-and-numbers",
+     "name": "Patterns and numbers",
+     "what": "I can find a pattern, say its rule and use the rule."
+    },
+    {
+     "code": "v2-reasoning.weigh-evidence",
+     "name": "Weighing evidence",
+     "what": "I can tell what I know from what I guess, and give a reason."
+    },
+    {
+     "code": "v2-self-and-others.care-for-others",
+     "name": "Caring for others",
+     "what": "I can notice how others feel and help them, even when it costs me something."
+    },
+    {
+     "code": "v2-self-and-others.feelings-and-body",
+     "name": "My feelings and my body",
+     "what": "I can name how I feel, calm myself and look after my body."
+    },
+    {
+     "code": "v2-self-and-others.speak-up",
+     "name": "Speaking up",
+     "what": "I can say when I disagree or when something is not fair, politely and clearly."
+    },
+    {
+     "code": "v2-society-and-planet.care-for-nature",
+     "name": "Caring for nature",
+     "what": "I can look after living things, places and what we use."
+    },
+    {
+     "code": "v2-society-and-planet.choices-and-consequences",
+     "name": "Choices and consequences",
+     "what": "I can say what happens because of a choice, to people and to nature."
+    },
+    {
+     "code": "v2-society-and-planet.fair-and-together",
+     "name": "Fairness and living together",
+     "what": "I can say what is fair and take part in making our shared rules."
+    },
+    {
+     "code": "v2-technology-and-ai.check-before-trusting",
+     "name": "Checking before I trust",
+     "what": "I can check whether what a screen or an AI tells me is true, and who made it."
+    },
+    {
+     "code": "v2-technology-and-ai.safe-and-fair-online",
+     "name": "Staying safe and fair online",
+     "what": "I can keep myself and others safe, and respect other people's work."
+    },
+    {
+     "code": "v2-technology-and-ai.use-tools-well",
+     "name": "Using digital tools",
+     "what": "I can use a digital tool to learn, make or find something out."
+    }
+   ],
+   "choice": [
+    "v2-technology-and-ai.safe-and-fair-online"
+   ],
+   "why": "internet and online safety is keeping myself and others safe online",
+   "doubt": ""
+  },
+  {
+   "id": "ICT.SKL.03-group",
+   "split": "held",
+   "marked_by": "draft",
+   "input": {
+    "skill_code": "ICT.SKL.03",
+    "name": "Data handling with tables & spreadsheets",
+    "description": "Handling of tables and contents; presenting data in charts.",
+    "subject": "Computing",
+    "grades": [
+     "G1",
+     "G2",
+     "G3",
+     "G4"
+    ]
+   },
+   "options": [
+    {
+     "code": "v2-communicating-together.speak-and-listen",
+     "name": "Speaking and listening",
+     "what": "I can say what I mean and listen to what others mean."
+    },
+    {
+     "code": "v2-communicating-together.work-in-a-team",
+     "name": "Working in a team",
+     "what": "I can do my part, take turns and help the team finish."
+    },
+    {
+     "code": "v2-communicating-together.write-and-show",
+     "name": "Writing and showing my work",
+     "what": "I can write and show my work so others can follow it."
+    },
+    {
+     "code": "v2-deep-knowledge.how-the-world-works",
+     "name": "How the world works",
+     "what": "I can say what I know about living things, materials, places and people, and how I know it."
+    },
+    {
+     "code": "v2-deep-knowledge.language-and-reading",
+     "name": "Language and reading",
+     "what": "I can read, write and speak the languages I learn, and understand what I read."
+    },
+    {
+     "code": "v2-deep-knowledge.number-and-measure",
+     "name": "Number and measure",
+     "what": "I can work with numbers, shapes and measures accurately."
+    },
+    {
+     "code": "v2-learning-and-agency.look-back-and-improve",
+     "name": "Looking back and improving",
+     "what": "I can say what went well, what did not, and what I will change next time."
+    },
+    {
+     "code": "v2-learning-and-agency.set-and-reach-goals",
+     "name": "Setting and reaching goals",
+     "what": "I can decide what I want to learn or finish, and keep at it until I get there."
+    },
+    {
+     "code": "v2-learning-and-agency.try-ask-keep-going",
+     "name": "Trying, asking and keeping going",
+     "what": "I can try something new, ask when I am stuck, and keep going after a wrong answer."
+    },
+    {
+     "code": "v2-making-and-solving.design-and-build",
+     "name": "Designing and building",
+     "what": "I can make something that solves a problem, test it, and improve it."
+    },
+    {
+     "code": "v2-making-and-solving.imagine-and-express",
+     "name": "Imagining and expressing",
+     "what": "I can make art, music, stories or movement that are my own."
+    },
+    {
+     "code": "v2-making-and-solving.investigate",
+     "name": "Investigating",
+     "what": "I can ask a question, test it fairly and say what I found."
+    },
+    {
+     "code": "v2-reasoning.change-my-mind",
+     "name": "Changing my mind",
+     "what": "I can change my mind when I meet a better reason, and say so."
+    },
+    {
+     "code": "v2-reasoning.patterns-and-numbers",
+     "name": "Patterns and numbers",
+     "what": "I can find a pattern, say its rule and use the rule."
+    },
+    {
+     "code": "v2-reasoning.weigh-evidence",
+     "name": "Weighing evidence",
+     "what": "I can tell what I know from what I guess, and give a reason."
+    },
+    {
+     "code": "v2-self-and-others.care-for-others",
+     "name": "Caring for others",
+     "what": "I can notice how others feel and help them, even when it costs me something."
+    },
+    {
+     "code": "v2-self-and-others.feelings-and-body",
+     "name": "My feelings and my body",
+     "what": "I can name how I feel, calm myself and look after my body."
+    },
+    {
+     "code": "v2-self-and-others.speak-up",
+     "name": "Speaking up",
+     "what": "I can say when I disagree or when something is not fair, politely and clearly."
+    },
+    {
+     "code": "v2-society-and-planet.care-for-nature",
+     "name": "Caring for nature",
+     "what": "I can look after living things, places and what we use."
+    },
+    {
+     "code": "v2-society-and-planet.choices-and-consequences",
+     "name": "Choices and consequences",
+     "what": "I can say what happens because of a choice, to people and to nature."
+    },
+    {
+     "code": "v2-society-and-planet.fair-and-together",
+     "name": "Fairness and living together",
+     "what": "I can say what is fair and take part in making our shared rules."
+    },
+    {
+     "code": "v2-technology-and-ai.check-before-trusting",
+     "name": "Checking before I trust",
+     "what": "I can check whether what a screen or an AI tells me is true, and who made it."
+    },
+    {
+     "code": "v2-technology-and-ai.safe-and-fair-online",
+     "name": "Staying safe and fair online",
+     "what": "I can keep myself and others safe, and respect other people's work."
+    },
+    {
+     "code": "v2-technology-and-ai.use-tools-well",
+     "name": "Using digital tools",
+     "what": "I can use a digital tool to learn, make or find something out."
+    }
+   ],
+   "choice": [
+    "v2-technology-and-ai.use-tools-well"
+   ],
+   "why": "tables and spreadsheets are using a digital tool to find something out",
+   "doubt": ""
+  }
+ ]
+}

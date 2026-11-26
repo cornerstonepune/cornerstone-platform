@@ -2,32 +2,28 @@
 
 _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 
-**Updated:** 2026-11-26 (ADR goal line fixed) · **By:** Plan (loop plan, Opus) · **Model:** claude-opus-5-5
-**Milestone:** profile mapping G1–G4 (ADR 0115) · **Branch:** plan/profile-groups (pushed, no PR yet)
+**Updated:** 2026-11-26 (context full; plan PR not opened yet) · **By:** Plan (loop plan, Opus) · **Model:** claude-opus-5-5
+**Milestone:** profile mapping G1–G4 (ADR 0115) · **Branch:** plan/profile-groups
 
 ## State
-- ADR 0115 written: groups derive from each skill's approved group (table `skill_profile_group`, view `objective_profile_group`);
-  one-group index KEPT (assumption recorded in the ADR, against the brief's "drop it"); decider = role `profile_approver`
-  granted to Nimish only; no-skill objectives stay on default, skills suggested by existing `engine curriculum propose --kind lo_skill`.
-- On this branch, NOT yet run against a test DB: migration `20270218090000_skill_profile_group.sql` (table, view, proposal kind
-  `skill_group`, grants, access_table) and config row `profile.skill_bands`. No tickets or seed branches yet. Context ran out.
+- Migration `20270218090000_skill_profile_group.sql` finished: table `skill_profile_group`, view `objective_profile_group`,
+  proposal kind `skill_group`, role `profile_approver` (may_grant founder; added to `internal.people_vocabulary` so new
+  schools get it). `people.decides.skill_groups = ["profile_approver"]`. Proved on a fresh DB (`bin/testdb fresh` into
+  database `pg_profile` on 54329): applies, re-runs clean, view returns 30 rows all origin `default` on the seed.
+  `rules.json` and `db/schema.sql` regenerated. Engine core tests green on that DB.
+- Skill folder `supabase/seed/skills/skill-group/` (CHOOSE, v1, active:false), 5 bars `skill_bar.skill-group.*`.
+  Gold: 32 DRAFT cases covering all 24 groups (every kind group), each `marked_by: "draft"` with a `doubt` line.
+- GLOSSARY: profile group, skill group, on default, profile approver.
 
-## Next step (next plan session)
-1. Migration: add the `profile_approver` role insert (pattern: 20270207090000_founder_role.sql); config `people.decides` gains
-   `"skill_groups": ["profile_approver"]`. Run `bin/testdb fresh …` + engine core tests; add GLOSSARY terms (skill group,
-   on default); open the plan PR, `loop ci`, merge.
-2. Skill folder `supabase/seed/skills/skill-group/` (copy capability-link's shape; CHOOSE; active:false) + bars
-   `skill_bar.skill-group.*` in thresholds.json + draft gold (`marked_by: "draft"`, ≥1 case per group, all kind groups). Flag for Nimish.
-3. Tickets (one builder each), seeds `plan/t<N>`:
-   a. `engine curriculum profile-check` (w1_bank/profile_check.py, pattern cli_counts.py): skills used by G1–G4 with no approved group;
-      objectives reaching no group; on default needing a skill; on default with skills waiting; per group (skill/default split); per word, kind always shown; empty groups.
-   b. `learn.decide` kind skill_group: approve writes skill_profile_group, role check via `money_rules.roles_of`. c. web card + VERDICTS in
-      library proposals.tsx/actions.ts (S27 frozen: check wireframe first). d. `engine curriculum profile-propose` (pattern
-      chain_choose.capability_jobs; active prompt only). e. `engine skill eval --record` → scored.json + CI test: active skill needs a
-      passing score for its version and gold; refuses draft gold; `placement` grandfathered. f. chain_picture.py reads the view
-      (several groups). g. objective-chain.ts + S35 several groups (wireframe check).
-- workflows.json must list every new engine file before its ticket (tests/test_layout.py).
+## Needs Nimish
+- Mark the draft gold in `supabase/seed/skills/skill-group/gold.json` (fix `choice`, set `marked_by`), esp. the 12 with a `doubt`.
+- After merge and deploy: `engine staff grant <his email> profile_approver --by …` (nobody holds the role yet).
+
+## Next step
+1. Rerun engine core + lint on the fresh DB (last full run: 188 pass, 1 fail = rules.json drift, since regenerated;
+   test_skills + test_rules then 55 pass; the final full rerun's result was not read). Open the plan PR, `loop ci`, merge.
+2. Tickets a–g (see ADR 0115 §Consequence and the issue list) with seed branches `plan/t<N>`.
 
 ## Don't repeat
-- ADR numbers: 0113 and 0114 are taken twice on other branches; 0115 is this one. Don't touch PR #952 or plan/k1-pilot-offers.
-- Live counts_toward rows for G1–G4 are all source='machine' (checked 26 Nov), so keeping person rows in the view changes nothing today.
+- ADR numbers 0113/0114 are taken twice on other branches. Don't touch PR #952 or plan/k1-pilot-offers.
+- Use a separate test database (not `postgres`, which other sessions use): `create database pg_profile`, then `bin/testdb fresh`.
