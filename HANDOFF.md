@@ -2,8 +2,8 @@
 
 _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 
-**Updated:** 2026-11-25 · **By:** Plan (loop plan, Opus) · **Model:** claude-opus-5-5
-**Milestone:** M6 K1 pilot · **Branch:** plan/blank-birthday
+**Updated:** 2026-11-26 · **By:** Plan (Opus) · **Model:** claude-opus-5-5
+**Milestone:** M6 K1 pilot · **Branch:** plan/mapping-explorer
 
 ## State
 - Nimish, 25 Nov: a blank birthday cell on the class list enrols the child with birthday NULL (ADR 0112). Why: the Gurukul K1 list (21 children) has no birthdays.
@@ -11,6 +11,7 @@ _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 - #942 and #939 (#945) are merged on main.
 
 ## Next step
+0. Side ask from Nimish, 26 Nov, unfinished (context budget hit): the mapping explorer HTML (grades, objectives, skills, capable/kind/unafraid; mind map + filtered table). Data located and pull query written: docs/loop/notes/mapping-explorer.md. Nothing built yet.
 1. `loop run-ticket 946` → CI → reviewer → merge.
 2. Then the Gurukul K1 enrol: dry run first, Nimish runs --apply (list is outside git under ~/cornerstone/private/; never copy names).
 3. Queued small ticket: people.py "engine enrol k2" dry-run label and stale "enrol k2" docstrings (people.py:1, signer.py:3, roster.py:130, tests/rows.py). #946 deliberately leaves the label alone.
