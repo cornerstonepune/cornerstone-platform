@@ -162,6 +162,11 @@
       "value": ["hands-on", "investigation", "project", "group task", "practice", "discussion/circle", "performance", "game"]
     },
     {
+      "key": "profile.skill_bands",
+      "description": "ADR 0115 (Nimish, 26 Nov): the bands whose objectives count toward the capability-profile groups their skills reach (view objective_profile_group); an objective of another band, or one with no skill whose group is approved, keeps its own group (lo.capability_default). K1 and K2 are out until a decision adds them.",
+      "value": ["G1", "G2", "G3", "G4"]
+    },
+    {
       "key": "lo.capability_default",
       "description": "CP-54: the capability group code uses for an academic objective of a subject when it has no judgment to make (the capability-link skill's `domain_default`), and the answer a run falls back to, marked low confidence, when a model's pick is refused. Academic defaults to its domain (the brief, 16 Nov). `_` is any other subject. A change here is a change of rows.",
       "value": {

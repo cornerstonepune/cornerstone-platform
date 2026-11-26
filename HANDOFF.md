@@ -2,22 +2,32 @@
 
 _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 
-**Updated:** 2026-11-25 · **By:** Plan (loop plan, Opus) · **Model:** claude-opus-5-5
-**Milestone:** M6 K1 pilot · **Branch:** plan/blank-birthday
+**Updated:** 2026-11-26 · **By:** Plan (loop plan, Opus) · **Model:** claude-opus-5-5
+**Milestone:** profile mapping G1–G4 (ADR 0115) · **Branch:** plan/profile-groups (pushed, no PR yet)
 
 ## State
-- Nimish, 25 Nov: a blank birthday cell on the class list enrols the child with birthday NULL (ADR 0112). Why: the Gurukul K1 list (21 children) has no birthdays.
-- **#946** (size:small): blank birthday → NULL, written-but-bad still refuses, `_same_person` never mismatches on a blank, grade-neutral age words. Seed `plan/t946` pushed with failing visible tests (tests/test_enrol_blank_birthday.py + one wording line in test_people.py) and hidden tests (tests/holdout/test_enrol_blank_birthday_hidden.py). No seed/schema change: the shared test DB works.
-- #942 and #939 (#945) are merged on main.
+- ADR 0115 written: groups derive from each skill's approved group (table `skill_profile_group`, view `objective_profile_group`);
+  one-group index KEPT (assumption recorded in the ADR, against the brief's "drop it"); decider = role `profile_approver`
+  granted to Nimish only; no-skill objectives stay on default, skills suggested by existing `engine curriculum propose --kind lo_skill`.
+- On this branch, NOT yet run against a test DB: migration `20270218090000_skill_profile_group.sql` (table, view, proposal kind
+  `skill_group`, grants, access_table) and config row `profile.skill_bands`. No tickets or seed branches yet. Context ran out.
 
-## Next step
-1. `loop run-ticket 946` → CI → reviewer → merge.
-2. Then the Gurukul K1 enrol: dry run first, Nimish runs --apply (list is outside git under ~/cornerstone/private/; never copy names).
-3. Queued small ticket: people.py "engine enrol k2" dry-run label and stale "enrol k2" docstrings (people.py:1, signer.py:3, roster.py:130, tests/rows.py). #946 deliberately leaves the label alone.
-4. ADR 0108 ticket 4 (form mark → activity_observation + evidence_event, G6.4) via loop plan.
-- Open question for Nimish: holiday cells (e.g. "Block Room") make no plan lines today; keep or drop them?
+## Next step (next plan session)
+1. Migration: add the `profile_approver` role insert (pattern: 20270207090000_founder_role.sql); config `people.decides` gains
+   `"skill_groups": ["profile_approver"]`. Run `bin/testdb fresh …` + engine core tests; add GLOSSARY terms (skill group,
+   on default); open the plan PR, `loop ci`, merge.
+2. Skill folder `supabase/seed/skills/skill-group/` (copy capability-link's shape; CHOOSE; active:false) + bars
+   `skill_bar.skill-group.*` in thresholds.json + draft gold (`marked_by: "draft"`, ≥1 case per group, all kind groups). Flag for Nimish.
+3. Tickets (one builder each), seeds `plan/t<N>`:
+   a. `engine curriculum profile-check` (w1_bank/profile_check.py, pattern cli_counts.py): skills used by G1–G4 with no approved group;
+      objectives reaching no group; on default needing a skill; on default with skills waiting; per group (skill/default split); per word, kind always shown; empty groups.
+   b. `learn.decide` kind skill_group: approve writes skill_profile_group, role check via `money_rules.roles_of`. c. web card + VERDICTS in
+      library proposals.tsx/actions.ts (S27 frozen: check wireframe first). d. `engine curriculum profile-propose` (pattern
+      chain_choose.capability_jobs; active prompt only). e. `engine skill eval --record` → scored.json + CI test: active skill needs a
+      passing score for its version and gold; refuses draft gold; `placement` grandfathered. f. chain_picture.py reads the view
+      (several groups). g. objective-chain.ts + S35 several groups (wireframe check).
+- workflows.json must list every new engine file before its ticket (tests/test_layout.py).
 
 ## Don't repeat
-- A ticket that changes a seed needs a test DB built from its seed branch (bin/testdb fresh …/t<N>) and TEST_DATABASE_URL passed to loop build/finish.
-- Builders run `dontAsk`: one simple command per call, single-line `git commit -m`, no Blocked section left in their handoff.
-- Seed cut from another seed branch conflicts once that ticket squash-merges: cherry-pick onto main. After any merge to main: `gh pr update-branch` + `loop ci` before `gh pr merge`.
+- ADR numbers: 0113 and 0114 are taken twice on other branches; 0115 is this one. Don't touch PR #952 or plan/k1-pilot-offers.
+- Live counts_toward rows for G1–G4 are all source='machine' (checked 26 Nov), so keeping person rows in the view changes nothing today.
