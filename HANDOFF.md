@@ -2,8 +2,8 @@
 
 _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 
-**Updated:** 2026-11-26 (profile_rows.py fixed and proven; plan PR opened) · **By:** coordinator (loop run, Opus) · **Model:** claude-opus-5-5
-**Milestone:** M7 — G1–G4 profile groups (ADR 0115, 0116) · **Branch:** plan/profile-tickets (PR open)
+**Updated:** 2026-11-26 (context full; #956 green but merge refused; #954 needs a handoff line) · **By:** coordinator (loop run, Opus) · **Model:** claude-opus-5-5
+**Milestone:** M7 — G1–G4 profile groups (ADR 0115, 0116) · **Branch:** plan/profile-tickets (PR #956, CI green, NOT merged)
 
 ## State
 - On plan/profile-tickets: ADR 0116 (M7, the seven tickets, the skill_group proposal shape, undecided rule, approve =
@@ -15,8 +15,10 @@ _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 - No issues created, no seed branches yet. Wireframes S27/S35 not drawn yet.
 
 ## Next step
-1. Merge the plan PR of this branch once green (ADR 0116 + PROJECT.md M7 + profile_rows.py).
-2. Gold marks: PR #954 (plan/skill-group-gold-marks) records Nimish's "okay to all"; merge when green.
+1. #956 (this branch): CI green, but `gh pr merge 956 --squash` said requirements not met (cause unchecked: run
+   `gh pr view 956 --json mergeStateStatus,reviewDecision`). Fix that, merge.
+2. #954 (plan/skill-group-gold-marks, gold "okay to all"): loop-guard RED only for "HANDOFF.md was not updated". After
+   #956 merges: merge origin/main into it in a worktree (never switch the main checkout), touch HANDOFF.md, push, `loop ci 954`, merge.
 3. Issues + seeds `plan/t<N>`, in order a, b, d, e, f, per ADR 0116. Files: a `engine/w1_bank/profile_check.py`
    (`counts`, `lines`, command `curriculum profile-check`); b `engine/w1_bank/learn.py` (VERDICTS gains
    `skill_group: (approve, reject)`; role check via `money_rules.roles_of` vs `people.decides.skill_groups`);
