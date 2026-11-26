@@ -10,7 +10,7 @@ _Overwritten at the end of every session. Keep under 30 lines. Facts only._
   chat, seeded into `skill_profile_group`; readers use view `objective_profile_group`; one count command
   `engine curriculum profile-check`. No S27/S35 redraw, no approval screen.
 - PR #956 carries ADR 0116 (marked superseded), ADR 0117, PROJECT.md M7 G7.1–G7.4, `tests/profile_rows.py` (proven), and
-  the gold "okay to all" commit from #954 (cherry-picked; #954 closed as folded in).
+  the gold "okay to all" commit from #954 (cherry-picked; #954 still OPEN, close it after #956 merges).
 - profile_rows.py: `a_staff` runs `internal.people_vocabulary` before a grant; `scope_to_test_band` adds band T9 so seeded
   G1–G4 rows don't count in tests. Run tests with TEST_DATABASE_URL=…54329/pg_profile (`postgres` lacks ADR 0115).
 
