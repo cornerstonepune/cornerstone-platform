@@ -2,27 +2,31 @@
 
 _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 
-**Updated:** 2026-11-26 (context full; plan PR not opened yet) · **By:** Plan (loop plan, Opus) · **Model:** claude-opus-5-5
-**Milestone:** profile mapping G1–G4 (ADR 0115) · **Branch:** plan/profile-groups
+**Updated:** 2026-11-26 (#952 merged with main) · **By:** Plan (Opus) · **Model:** claude-opus-5-5
+**Lanes:** M6 K1 pilot (PR #952, plan/k1-pilot-offers) · profile mapping G1–G4 (ADR 0115, #953 merged)
 
 ## State
-- Migration `20270219090000_skill_profile_group.sql` finished: table `skill_profile_group`, view `objective_profile_group`,
-  proposal kind `skill_group`, role `profile_approver` (may_grant founder; added to `internal.people_vocabulary` so new
-  schools get it). `people.decides.skill_groups = ["profile_approver"]`. Proved on a fresh DB (`bin/testdb fresh` into
-  database `pg_profile` on 54329): applies, re-runs clean, view returns 30 rows all origin `default` on the seed.
-  `rules.json` and `db/schema.sql` regenerated. Engine core: 230 passed, 1 skipped; ruff clean (final run on `pg_profile`).
-- Skill folder `supabase/seed/skills/skill-group/` (CHOOSE, v1, active:false), 5 bars `skill_bar.skill-group.*`.
-  Gold: 32 DRAFT cases covering all 24 groups (every kind group), each `marked_by: "draft"` with a `doubt` line.
-- GLOSSARY: profile group, skill group, on default, profile approver.
+- K1: PR #952 NOT merged; nothing changed on live. `tests/test_k1_pilot_offers.py` on local DB `k1offers`: 9 passed;
+  migration blanked: 8 failed, 1 passed. Nimish decided all of ADR 0113 (skill links, K1 = K2 observed rule, 1 adult).
+- Profile mapping: #953 on main (migration `20270219090000_skill_profile_group.sql`, skill `skill-group` v1 inactive,
+  32 DRAFT gold cases, GLOSSARY terms). No tickets yet.
 
-## Needs Nimish
+## Next step (in order)
+1. CI green on #952 → loop:reviewer → `gh pr merge 952 --squash --delete-branch`; confirm `migrate live` + `deploy engine`.
+2. K1 attach (ADR 0114 on plan/handoff): `attach.py` in `~/Library/Application Support/Claude/side-session-notes/local_07a3d48e-bf4c-43ef-98fc-95c421cdfa35/`,
+   piped to `sudo docker exec -i deploy-engine-1 python -` on ubuntu@3.111.248.87; dry run expects 3 of 8 ok, then `--apply`.
+3. Check a rubric on the live site; tick G6.x only as live proves; merge #949 (BLOCKED, cause unchecked).
+4. Ticket G6.8: offer-only groups on a head (5 lessons, first on 30 Nov).
+5. Profile mapping: tickets a–g per ADR 0115 §Consequence, seed branches `plan/t<N>`.
+
+## Ask Nimish
 - Mark the draft gold in `supabase/seed/skills/skill-group/gold.json` (fix `choice`, set `marked_by`), esp. the 12 with a `doubt`.
-- After merge and deploy: `engine staff grant <his email> profile_approver --by …` (nobody holds the role yet).
-
-## Next step
-1. Open the plan PR from plan/profile-groups, `loop ci`, merge.
-2. Tickets a–g (see ADR 0115 §Consequence and the issue list) with seed branches `plan/t<N>`.
+- After deploy: `engine staff grant <his email> profile_approver --by …` (nobody holds the role yet).
 
 ## Don't repeat
-- ADR numbers 0113/0114 are taken twice on other branches. Don't touch PR #952 or plan/k1-pilot-offers.
-- Use a separate test database (not `postgres`, which other sessions use): `create database pg_profile`, then `bin/testdb fresh`.
+- An ADR Goal line naming a PROJECT.md goal must read `Goal: none — proved by …`, or test_promises takes the rest as a path.
+- Use a separate test database per session (`create database <name>`, then `bin/testdb fresh`); not `postgres`.
+- Main checkout may be on another session's branch with uncommitted work: use a worktree, never switch it.
+
+## Blocked / unverified
+- `nightly` on main failed 25 and 26 Nov. Never print child names; passwords/keys typed by Nimish only.
