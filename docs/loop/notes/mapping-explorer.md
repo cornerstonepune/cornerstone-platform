@@ -86,5 +86,27 @@ Coordinator's proposed fit with the repo rules (told to Nimish):
 4. The active prompt runs over the gaps (527 unmapped; SCI/GP as "second opinion") and PROPOSES group + reason. Never writes.
 5. Review queue; approval writes a new objective_statement row. One check command shows counts per class falling.
 Classes 4 (K1 empty) and 6 (topic names) are data, not model work. Class 5 (no skill) could be a second purpose later.
-A survey subagent (counts_toward writer, decideProposal fit, prompt/eval tables, ADRs) was started; its result did not
-reach a file — redo it in the next session (graphify first).
+### Survey result (helper subagent, code read by hand, nothing run against live data)
+- THE JOB ALREADY EXISTS: CHOOSE skill `capability-link` (`w1_bank/chain_choose.py`; `supabase/seed/skills/capability-link/`
+  has SKILL.md, contract.json, gold.json, gold_coordinators.json, planted_bad_gold.json, lists.json). Improve it, don't build a new one.
+  Code shortlists groups via the objective's registry skills (`chain_draft.capability`); `rules_choose.capability_first`
+  (skills/rules_choose.py L116) answers academic objectives by code while lists.json says `"academic":"default"`; else the
+  model picks and `capability_after` (L141) keeps it only if the reason names the verb and the group's words.
+- SCI/GP -> "Changing my mind" is DELIBERATE CONFIG, not a bug: `lo.capability_default` (supabase/seed/config.json L165),
+  one group per subject; reasoning in docs/notes/CP-54-cl-default.md L67. No ADR. (Answers open question c: by design, but crude.)
+- Why 527 character/routine are unmapped and kind is empty: NOT traced yet (probably empty shortlist or no subject default).
+- One group per objective is a SCHEMA rule: unique partial index `objective_statement_one_capability`
+  (migration 20270129090000_cp54_frameworks.sql L84). More than one group (question b) = migration + ADR.
+- Writes are update-in-place (delete machine row, insert `source='machine'`); `source='person'` rows are never overwritten
+  by the machine. Confidence/reason go only to the run record (`flow_run`), no column.
+- Review queue fits: `curriculum_proposal` table + `decideProposal` (library/actions.ts L61) -> `POST /bank/proposal/{id}/decide`
+  (`w1_bank/learn.py` L88). Needs a new `VERDICTS` kind (e.g. `profile_group`), a handler that replaces the
+  objective_statement row with `source='person'`, a Kind in `apps/web/lib/decides.ts`, a card in proposals.tsx.
+- Closest propose-for-review pattern: `curriculum_map` (propose + validate prompts, `w1_bank/map_agents.py`, `cli_map.py`).
+- Prompts: table `prompt` (purpose, version, text, model, json_schema, active, effort; one active per purpose);
+  seeds `supabase/seed/prompts/<purpose>.v<N>.txt`. `engine eval <purpose>` = cli.py L210; bars are `threshold` rows
+  `eval.<purpose>.<measure>`, `checks.evals.held` exits 1 below a bar. Activation command not found yet.
+- Counts home: `engine curriculum counts` (w1_bank/cli_counts.py) — add a per-issue-class section. n-of-n view stays in
+  `engine/checks/chain_layers.py`.
+- Who approves: only a coordinator edits curriculum today (curriculum_edit.py L56); "who decides each kind" is config.json L16-31.
+- No ADR covers the profile mapping; next free number 0113.
