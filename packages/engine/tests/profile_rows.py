@@ -20,7 +20,8 @@ SKILLS = ("ART.CLAY.01", "ART.CLAY.02", "ART.CRAFT.01")
 def scope_to_test_band(conn, t):
     """profile.skill_bands becomes the test's band alone, for this transaction."""
     conn.execute(
-        "update config set value = %s where tenant_id = %s and key = 'profile.skill_bands'", (Jsonb([BAND]), t)
+        "update config set value = %s where tenant_id = %s and key = 'profile.skill_bands'",
+        (Jsonb([BAND]), t),
     )
 
 
@@ -81,5 +82,10 @@ def proposal(conn, t, skill, group, options=None):
         "insert into curriculum_proposal (tenant_id, run_id, kind, subject_code, proposal, status, reason, proposer,"
         " machine) values (%s,%s,'skill_group',%s,%s,'needs_person','the skill''s words','skill.skill-group v1',"
         " 'proposer:skill.skill-group') returning id",
-        (t, uuid.uuid4(), skill, Jsonb({"group": group, "confidence": "high", "options": options or [group]})),
+        (
+            t,
+            uuid.uuid4(),
+            skill,
+            Jsonb({"group": group, "confidence": "high", "options": options or [group]}),
+        ),
     ).fetchone()["id"]
