@@ -177,9 +177,10 @@ _Every milestone is a vertical slice Nimish can click through. Goals are yes/no;
   - [x] G6.1 `engine timetable load-k1` reads a K1 week block into K1 periods, plan lines and lessons, the school's words verbatim — `tests/test_k1_week.py`
   - [x] G6.2 An empty or name-only cell loads as a lesson that is not planned yet (`session.planned = false`) — `tests/test_k1_planned.py`
   - [x] G6.3 `engine enrol` takes `--grade`, so the K1 class and its children can be made — `tests/test_enrol_grade.py`
-  - [ ] G6.4 A form mark on a K1 lesson yields `activity_observation` + `evidence_event` — ticket 4, not yet written
+  - [ ] G6.4 A form mark on a K1 lesson yields `activity_observation` + `evidence_event` and the child's K1 observed state (ADR 0113) — `tests/test_k1_pilot_offers.py::test_a_k1_lesson_mark_is_evidence_and_builds_the_childs_observed_state`
   - [ ] G6.5 F.N 10 W1 and W2 are loaded on live for the K1 class — `session` row count for K1 on live
   - [ ] G6.6 Every F.N 10 lesson has an activity with four level words: the 15 signed-off rows, ACT-K2-M0018 + ACT-K2-0449 shared with K1, six new K1 activities (ADR 0111) — `tests/test_fn10_words.py`, then the 15 rows' words read back on live after release
+  - [ ] G6.7 The 8 signed-off K1 activity choices are offered by `tt_heads.ensure_offered` (ADR 0113) — `tests/test_k1_pilot_offers.py::test_each_signed_off_k1_choice_is_offered`
 - **Depends on:** #939 (`enrol class --campus`: K1 is at Gurukul and Neev, ADR 0109, 0110); Nimish: the Children List CSV. No new wireframe (S3 covers marking).
 
 ## 6. Open questions (Plan resolves before the milestone they block)

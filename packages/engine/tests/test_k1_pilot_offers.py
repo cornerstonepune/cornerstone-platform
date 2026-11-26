@@ -19,7 +19,10 @@ from tests.rows import tenant
 pytestmark = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DATABASE_URL (see .env.example)")
 ROOT = Path(__file__).resolve().parents[3]
 MIGRATION = ROOT / "supabase" / "migrations" / "20270218090000_k1_pilot_offers.sql"
-SEED = {c["key"]: c["value"] for c in json.loads((ROOT / "supabase" / "seed" / "config.json").read_text())["config"]}
+SEED = {
+    c["key"]: c["value"]
+    for c in json.loads((ROOT / "supabase" / "seed" / "config.json").read_text())["config"]
+}
 
 # live's timetable.heads before the release: the seed's, less what ADR 0113 adds
 ADDED = {
@@ -34,7 +37,11 @@ CHOICES = [
     ("rhymes", "Rhymes. P1 French rhyme", "ACT-K1-0665"),
     ("clay", "Extracurricular Clay Academic 2 English Writing - combination lines", "ACT-K1-F003"),
     ("music", "Extracurricular Music & Dance Academic 2 Math Trace and write no. 6", "ACT-K1-F002"),
-    ("memory_drawing", "Extracurricular Memory Drawing Academic 1 General Awareness Wild/Domestic", "ACT-K1-0630"),
+    (
+        "memory_drawing",
+        "Extracurricular Memory Drawing Academic 1 General Awareness Wild/Domestic",
+        "ACT-K1-0630",
+    ),
     ("other", "Extracurricular Block Room Smelling Bottles", "ACT-K1-0783"),
 ]
 SKILLS = {
@@ -55,27 +62,33 @@ def _before() -> list[dict]:
 def conn():
     with db.connect() as c:
         t = tenant(c)
-        apply_seed.apply(c, t, True, part="activities")  # the six F.N 10 activities, as live has them (ADR 0111)
+        apply_seed.apply(
+            c, t, True, part="activities"
+        )  # the six F.N 10 activities, as live has them (ADR 0111)
         for key, value in (
             ("timetable.heads", _before()),
             ("observed.weights", {"K2": SEED["observed.weights"]["K2"]}),
         ):
-            c.execute("update config set value = %s where tenant_id = %s and key = %s", (json.dumps(value), t, key))
+            c.execute(
+                "update config set value = %s where tenant_id = %s and key = %s", (json.dumps(value), t, key)
+            )
         c.execute(
             "update grade set secure_level = null, secure_days = null, recheck_days = null, min_adults = 2"
             " where tenant_id = %s and code = 'K1'",
             (t,),
         )
-        c.execute("delete from activity_skill where tenant_id = %s and activity_code = any(%s)", (t, list(SKILLS)))
+        c.execute(
+            "delete from activity_skill where tenant_id = %s and activity_code = any(%s)", (t, list(SKILLS))
+        )
         c.execute(MIGRATION.read_text())
         yield c
         c.rollback()
 
 
 def _value(conn, key):
-    return conn.execute("select value from config where tenant_id = %s and key = %s", (tenant(conn), key)).fetchone()[
-        "value"
-    ]
+    return conn.execute(
+        "select value from config where tenant_id = %s and key = %s", (tenant(conn), key)
+    ).fetchone()["value"]
 
 
 def test_the_migration_lands_the_seed_files_settings_and_keeps_every_earlier_group(conn):
@@ -90,7 +103,13 @@ def test_the_migration_lands_the_seed_files_settings_and_keeps_every_earlier_gro
 
 @pytest.mark.parametrize(("head", "text", "activity"), CHOICES)
 def test_each_signed_off_k1_choice_is_offered(conn, head, text, activity):
-    lesson = {"tenant_id": tenant(conn), "subject_code": head, "kind": "subject", "text": text, "grade_code": "K1"}
+    lesson = {
+        "tenant_id": tenant(conn),
+        "subject_code": head,
+        "kind": "subject",
+        "text": text,
+        "grade_code": "K1",
+    }
     tt_heads.ensure_offered(conn, lesson, activity)  # refuses (raises) when not offered
 
 

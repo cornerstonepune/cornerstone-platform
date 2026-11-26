@@ -2,25 +2,21 @@
 
 _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 
-**Updated:** 2026-11-26 (session 3) · **By:** Plan (Opus) · **Model:** claude-opus-5-5
-**Milestone:** M6 K1 pilot · **Branch:** plan/k1-pilot-offers (pushed, PR NOT opened yet)
+**Updated:** 2026-11-26 (session 4) · **By:** Plan (Opus) · **Model:** claude-opus-5-5
+**Milestone:** M6 K1 pilot · **Branch:** plan/k1-pilot-offers (pushed, PR opened, NOT merged)
 
 ## State
-- ADR 0113 written: K1's signed-off activity choices offered, F001–F006 skill links, K1 observed weights + rule = K2's.
-- Migration `supabase/migrations/20270218090000_k1_pilot_offers.sql` + `supabase/seed/config.json` (timetable.heads,
-  observed.weights). Both settings are seed_once, so `engine load --settings` never updates live: the migration does.
-- Test `packages/engine/tests/test_k1_pilot_offers.py` written, NOT RUN yet (not in core.txt).
-- Fresh DB built at `postgresql://postgres:postgres@127.0.0.1:54329/k1offers` (migration applied cleanly, 186 migrations;
-  `engine load` was still running at session end — check it finished).
-- Found on live (read-only, 26 Nov): K1 `grade.secure_level` was NULL, so no K1 observed picture even with weights;
-  the migration sets K1's rule to K2's (min_adults 1). Live heads == seed heads before change.
+- ADR 0113 + migration `20270218090000_k1_pilot_offers.sql` + `supabase/seed/config.json`: K1's 8 signed-off activity
+  choices offered, F001–F006 skill links, K1 observed weights + rule = K2's.
+- `tests/test_k1_pilot_offers.py` RUN on local `k1offers` DB: 11 passed (346 s). Red proof (migration blanked, main's
+  config.json): 10 failed, 1 passed (the settings-consistency test, expected). Test reformatted by ruff (bin/check).
+- PROJECT.md: G6.4 now points at this test; G6.7 added (8 choices offered). Not ticked: they tick when live has them.
+- Test left out of tests/core.txt: 6 min is too slow for every PR; it runs nightly.
 
 ## Next step
-1. `DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:54329/k1offers` run the test; prove red by emptying the
-   migration and restoring main's config.json, then green. Fix the test only if it is wrong (e.g. `_lesson` import,
-   `evidence_written` count).
-2. Add `tests/test_k1_pilot_offers.py::*` to tests/core.txt? (needs ENGINE_CORE_MAX bump) — or leave nightly; decide.
-3. PROJECT.md: G6.4 point at this test; add G6.7 "the 8 signed-off K1 choices are offered". Open PR (do not merge).
+1. `loop ci <pr>` for the plan/k1-pilot-offers PR; when green, Nimish (or coordinator, if he says) merges.
+2. After merge + release: the migration itself updates live config (seed_once keys); then on live check the 8 lessons
+   accept their activity and tick G6.4/G6.7.
 
 ## Blocked / for Nimish
 - K2 rhymes/clay/music lessons now also offered K2 Music/English/Maths (heads are not per grade). Ticket after pilot.
@@ -30,3 +26,4 @@ _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 ## Don't repeat
 - Editing config.json alone for a seed_once key does nothing on live.
 - `grep -r` over the repo root times out; use the Grep tool scoped to a folder.
+- Check `pgrep -fl "loop plan"` before working a plan branch: a planner may still be running in this same checkout.
