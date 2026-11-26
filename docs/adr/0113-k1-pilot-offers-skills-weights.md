@@ -67,3 +67,5 @@ A head's groups also say which subject it teaches (`tt_heads.subjects_of`, `head
 may edit), K2 included. The first version added rhymes+`Music`, music+`Maths`, clay+`English` and a new `other` head
 (+`Block Room`), each of which made a head teach a new subject, and copied K2's `min_adults` 1. All were dropped. The
 groups kept are spellings live reads as no subject (`test_no_head_comes_to_teach_a_new_subject`).
+- **Nimish, 26 Nov, after the review: K1 "secure" needs 1 adult**, as K2. Replaces the "stays 2" line above. Not yet in
+  the migration or its test.
