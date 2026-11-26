@@ -2,11 +2,13 @@
 
 _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 
-**Updated:** 2026-11-26 (#952 merged with main) · **By:** Plan (Opus) · **Model:** claude-opus-5-5
-**Lanes:** M6 K1 pilot (PR #952, plan/k1-pilot-offers) · profile mapping G1–G4 (ADR 0115, #953 merged)
+**Updated:** 2026-11-26 (seed #955, branch plan/t955) · **By:** Plan (Opus) · **Model:** claude-opus-5-5
+**Lanes:** M6 K1 pilot (#952 merged; G6.8 = #955, seed plan/t955) · profile mapping G1–G4 (ADR 0115, #953 merged)
 
 ## State
-- K1: PR #952 NOT merged; nothing changed on live. `tests/test_k1_pilot_offers.py` on local DB `k1offers`: 9 passed;
+- G6.8: #955 opened (size:small, ADR 0117, setting `timetable.offers`, migration `20270221090000_k1_offer_only.sql`).
+  On local DB `g68`: seed red 9 failed / 33 passed; with the ~4-line fix 46 passed (reverted). Not built yet.
+- K1: #952 is on main (1fbfa459c); live state unchecked here. `tests/test_k1_pilot_offers.py` on local DB `k1offers`: 9 passed;
   migration blanked: 8 failed, 1 passed. Nimish decided all of ADR 0113 (skill links, K1 = K2 observed rule, 1 adult).
 - Profile mapping: #953 on main (migration `20270219090000_skill_profile_group.sql`, skill `skill-group` v1 inactive,
   32 DRAFT gold cases, GLOSSARY terms). No tickets yet.
@@ -20,6 +22,7 @@ _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 5. Profile mapping: tickets a–g per ADR 0115 §Consequence, seed branches `plan/t<N>`.
 
 ## Ask Nimish
+- Is the 1 Dec French rhyme (ACT-K1-0665) on a `rhymes` lesson? ADR 0117 assumes so.
 - Mark the draft gold in `supabase/seed/skills/skill-group/gold.json` (fix `choice`, set `marked_by`), esp. the 12 with a `doubt`.
 - After deploy: `engine staff grant <his email> profile_approver --by …` (nobody holds the role yet).
 
