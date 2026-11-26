@@ -40,8 +40,9 @@ school skill writes no `evidence_event`; `observed.weights` had only K2; K1's `g
 
    Linked as `source = 'school'` like the other K1 links, because a `machine` link is never evidence.
 3. **Assumption for Nimish:** K1 counts an observed record exactly as K2 does (`observed.weights.K1` = K2's), and K1's
-   observed rule copies K2's secure level (3), secure days (2) and recheck days (14). `min_adults` is **not** copied: K1
-   stays at **2 adults** until Nimish confirms 1. Without a rule K1 has no observed picture at all. Say if K1 should differ.
+   observed rule copies K2's secure level (3), secure days (2), recheck days (14) and `min_adults` (**1 adult**; K1's
+   default was 2). The 1 adult is no longer an assumption: Nimish decided it on 26 Nov. Without a rule K1 has no
+   observed picture at all. Say if the rest should differ.
 
 ## How it reaches live
 `timetable.heads` and `observed.weights` are `seed_once`: `engine load --settings` writes them once and never again,
@@ -54,7 +55,7 @@ It raises if an existing ACT-K1-F00x ends with no skill link (a machine link doe
 ## Consequences (bad news first)
 - **Five of the eight signed-off lessons still refuse their activity** (0665 twice, F003, 0783, F002) until the G6.8
   ticket; the first is 30 Nov. Three can be attached: F001 (26 Nov), 1202 (27 Nov), 0630 (30 Nov).
-- **K1 `secure` needs 2 adults** while K2 needs 1, until Nimish says.
+- **One adult alone can mark a K1 child `secure`** (on 2 days), as in K2: no second adult checks it (Nimish, 26 Nov).
 - The added strand spellings are used by no K2 activity in `registry.json` (K1 and Nursery spell them so), so K2 is
   offered nothing new.
 - `ensure_offered` and `offers` read `activity.band` only, not `also_bands`: ACT-K2-M0018 (clay carrot, shared with K1
@@ -65,7 +66,7 @@ It raises if an existing ACT-K1-F00x ends with no skill link (a machine link doe
 ## Review, 26 Nov: the first version failed
 A head's groups also say which subject it teaches (`tt_heads.subjects_of`, `heads_in`: offer sequence, objectives, who
 may edit), K2 included. The first version added rhymes+`Music`, music+`Maths`, clay+`English` and a new `other` head
-(+`Block Room`), each of which made a head teach a new subject, and copied K2's `min_adults` 1. All were dropped. The
-groups kept are spellings live reads as no subject (`test_no_head_comes_to_teach_a_new_subject`).
-- **Nimish, 26 Nov, after the review: K1 "secure" needs 1 adult**, as K2. Replaces the "stays 2" line above. Not yet in
-  the migration or its test.
+(+`Block Room`), each of which made a head teach a new subject, and copied K2's `min_adults` 1 before Nimish had said
+so. The groups and the head were dropped; the groups kept are spellings live reads as no subject
+(`test_no_head_comes_to_teach_a_new_subject`). `min_adults` stayed 2 only until Nimish chose **1 adult** later on
+26 Nov: the migration copies it again and the test asserts 1.

@@ -96,7 +96,7 @@ def test_the_migration_lands_the_seed_files_settings_and_keeps_every_earlier_gro
     k1 = conn.execute(
         "select min_adults from grade where tenant_id = %s and code = 'K1'", (tenant(conn),)
     ).fetchone()
-    assert k1["min_adults"] == 2  # 1 only once Nimish says so (ADR 0113)
+    assert k1["min_adults"] == 1  # Nimish, 26 Nov (ADR 0113)
     conn.execute(MIGRATION.read_text())  # a second run changes nothing
     assert {h["code"]: h for h in _value(conn, "timetable.heads")} == got
 

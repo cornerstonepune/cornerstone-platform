@@ -40,9 +40,10 @@ begin
     and c.value ? 'K2' and not c.value ? 'K1';
   get diagnostics w = row_count;
 
-  -- 3. K1's observed rule: none was set, so the observed picture left K1 out; K2's, except that K1's own min_adults
-  --    stays until Nimish says (ADR 0113)
-  update grade g set secure_level = k.secure_level, secure_days = k.secure_days, recheck_days = k.recheck_days
+  -- 3. K1's observed rule: none was set, so the observed picture left K1 out; K2's, min_adults included
+  --    (Nimish, 26 Nov: 1 adult marks a K1 child secure, ADR 0113)
+  update grade g set secure_level = k.secure_level, secure_days = k.secure_days, recheck_days = k.recheck_days,
+    min_adults = k.min_adults
   from grade k, tenant t
   where t.slug = 'cornerstone-pune' and g.tenant_id = t.id and g.code = 'K1' and k.tenant_id = t.id and k.code = 'K2'
     and g.secure_level is null and k.secure_level is not null;
