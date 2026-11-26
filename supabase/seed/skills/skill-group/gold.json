@@ -1,10 +1,10 @@
 {
- "note": "ADR 0115: DRAFT gold, written by the planner from each group's 'I can' line (26 Nov). Every case is marked_by 'draft'; `doubt` names what Nimish should check. Nimish corrects `choice` and sets marked_by to 'nimish'. `engine skill eval --record` refuses while any case is a draft.",
+ "note": "ADR 0115: gold written by the planner from each group's 'I can' line (26 Nov). Nimish reviewed all 32 cases (including the suggested changes to #12, #19, #27, #30) and approved them as drafted on 2026-11-26: \"okay to all\". Every choice is kept; marked_by is 'nimish'; the doubt lines are resolved as approved. `engine skill eval --record` refuses while any case is still marked_by 'draft'.",
  "cases": [
   {
    "id": "LIT.SPK.01-group",
    "split": "tune",
-   "marked_by": "draft",
+   "marked_by": "nimish",
    "input": {
     "skill_code": "LIT.SPK.01",
     "name": "Conversational speech: words to sentences",
@@ -148,7 +148,7 @@
   {
    "id": "LIT.LIS.01-group",
    "split": "held",
-   "marked_by": "draft",
+   "marked_by": "nimish",
    "input": {
     "skill_code": "LIT.LIS.01",
     "name": "Listens & responds to name, instructions, questions",
@@ -292,7 +292,7 @@
   {
    "id": "SEB.SOC.01-group",
    "split": "tune",
-   "marked_by": "draft",
+   "marked_by": "nimish",
    "input": {
     "skill_code": "SEB.SOC.01",
     "name": "Peer play: parallel to cooperative & teamwork",
@@ -436,7 +436,7 @@
   {
    "id": "LIT.WRT.04-group",
    "split": "held",
-   "marked_by": "draft",
+   "marked_by": "nimish",
    "input": {
     "skill_code": "LIT.WRT.04",
     "name": "Non-fiction & functional writing",
@@ -575,12 +575,12 @@
     "v2-communicating-together.write-and-show"
    ],
    "why": "instructions, letters and reports are writing for others to follow",
-   "doubt": "could be language-and-reading"
+   "doubt": ""
   },
   {
    "id": "SCI.LIFE.01-group",
    "split": "tune",
-   "marked_by": "draft",
+   "marked_by": "nimish",
    "input": {
     "skill_code": "SCI.LIFE.01",
     "name": "Animals: names, types & habitats",
@@ -724,7 +724,7 @@
   {
    "id": "SST.GEO.02-group",
    "split": "held",
-   "marked_by": "draft",
+   "marked_by": "nimish",
    "input": {
     "skill_code": "SST.GEO.02",
     "name": "Maps: neighbourhood, India, continents & oceans",
@@ -868,7 +868,7 @@
   {
    "id": "LIT.COMP.01-group",
    "split": "tune",
-   "marked_by": "draft",
+   "marked_by": "nimish",
    "input": {
     "skill_code": "LIT.COMP.01",
     "name": "Literal comprehension & recall",
@@ -1012,7 +1012,7 @@
   {
    "id": "HIN.RD.01-group",
    "split": "held",
-   "marked_by": "draft",
+   "marked_by": "nimish",
    "input": {
     "skill_code": "HIN.RD.01",
     "name": "शब्द पठन एवं पठन प्रवाह (word reading & fluency)",
@@ -1156,7 +1156,7 @@
   {
    "id": "NUM.OPS.01-group",
    "split": "tune",
-   "marked_by": "draft",
+   "marked_by": "nimish",
    "input": {
     "skill_code": "NUM.OPS.01",
     "name": "Addition",
@@ -1300,7 +1300,7 @@
   {
    "id": "NUM.MEAS.03-group",
    "split": "held",
-   "marked_by": "draft",
+   "marked_by": "nimish",
    "input": {
     "skill_code": "NUM.MEAS.03",
     "name": "Measuring length, mass & capacity",
@@ -1444,7 +1444,7 @@
   {
    "id": "ICT.CT.03-group",
    "split": "tune",
-   "marked_by": "draft",
+   "marked_by": "nimish",
    "input": {
     "skill_code": "ICT.CT.03",
     "name": "Debugging",
@@ -1582,12 +1582,12 @@
     "v2-learning-and-agency.look-back-and-improve"
    ],
    "why": "debugging is finding what did not work and changing it",
-   "doubt": "could be change-my-mind or design-and-build"
+   "doubt": ""
   },
   {
    "id": "SEB.ATT.01-group",
    "split": "held",
-   "marked_by": "draft",
+   "marked_by": "nimish",
    "input": {
     "skill_code": "SEB.ATT.01",
     "name": "Concentration & focus",
@@ -1726,12 +1726,12 @@
     "v2-learning-and-agency.set-and-reach-goals"
    ],
    "why": "staying focused on a task is keeping at it until I get there",
-   "doubt": "no registry skill names goals; nearest"
+   "doubt": ""
   },
   {
    "id": "SEB.ATT.02-group",
    "split": "tune",
-   "marked_by": "draft",
+   "marked_by": "nimish",
    "input": {
     "skill_code": "SEB.ATT.02",
     "name": "Effort & participation in sessions",
@@ -1875,7 +1875,7 @@
   {
    "id": "ICT.PROG.02-group",
    "split": "held",
-   "marked_by": "draft",
+   "marked_by": "nimish",
    "input": {
     "skill_code": "ICT.PROG.02",
     "name": "Block coding (Scratch, loops, events)",
@@ -2013,12 +2013,12 @@
     "v2-making-and-solving.design-and-build"
    ],
    "why": "block coding makes something, tests it and improves it",
-   "doubt": "could be use-tools-well"
+   "doubt": ""
   },
   {
    "id": "HSC.STITCH.03-group",
    "split": "tune",
-   "marked_by": "draft",
+   "marked_by": "nimish",
    "input": {
     "skill_code": "HSC.STITCH.03",
     "name": "Stitching & weaving techniques",
@@ -2157,12 +2157,12 @@
     "v2-making-and-solving.design-and-build"
    ],
    "why": "stitching and weaving make a thing with materials",
-   "doubt": "could be imagine-and-express"
+   "doubt": ""
   },
   {
    "id": "ART.VIS.01-group",
    "split": "held",
-   "marked_by": "draft",
+   "marked_by": "nimish",
    "input": {
     "skill_code": "ART.VIS.01",
     "name": "Free drawing & mark-making",
@@ -2306,7 +2306,7 @@
   {
    "id": "LIT.SPK.08-group",
    "split": "tune",
-   "marked_by": "draft",
+   "marked_by": "nimish",
    "input": {
     "skill_code": "LIT.SPK.08",
     "name": "Drama: role play, acting out stories, skits",
@@ -2443,12 +2443,12 @@
     "v2-making-and-solving.imagine-and-express"
    ],
    "why": "role play and acting out stories is drama of my own",
-   "doubt": "could be speak-and-listen"
+   "doubt": ""
   },
   {
    "id": "SCI.INQ.01-group",
    "split": "held",
-   "marked_by": "draft",
+   "marked_by": "nimish",
    "input": {
     "skill_code": "SCI.INQ.01",
     "name": "Predict, test, analyse & record",
@@ -2592,7 +2592,7 @@
   {
    "id": "NUM.PRB.03-group",
    "split": "tune",
-   "marked_by": "draft",
+   "marked_by": "nimish",
    "input": {
     "skill_code": "NUM.PRB.03",
     "name": "Mathematical reasoning & explaining thinking",
@@ -2731,12 +2731,12 @@
     "v2-reasoning.change-my-mind"
    ],
    "why": "estimating and checking an answer is changing my mind on a better reason",
-   "doubt": "no registry skill names changing one's mind; could be weigh-evidence"
+   "doubt": ""
   },
   {
    "id": "NUM.PAT.02-group",
    "split": "held",
-   "marked_by": "draft",
+   "marked_by": "nimish",
    "input": {
     "skill_code": "NUM.PAT.02",
     "name": "Patterns & sequencing",
@@ -2880,7 +2880,7 @@
   {
    "id": "NUM.DATA.02-group",
    "split": "tune",
-   "marked_by": "draft",
+   "marked_by": "nimish",
    "input": {
     "skill_code": "NUM.DATA.02",
     "name": "Probability & chance",
@@ -3019,12 +3019,12 @@
     "v2-reasoning.weigh-evidence"
    ],
    "why": "certain, likely and impossible is telling what I know from what I guess",
-   "doubt": "could be number-and-measure"
+   "doubt": ""
   },
   {
    "id": "SCI.BODY.04-group",
    "split": "held",
-   "marked_by": "draft",
+   "marked_by": "nimish",
    "input": {
     "skill_code": "SCI.BODY.04",
     "name": "Safety & first aid",
@@ -3162,12 +3162,12 @@
     "v2-self-and-others.care-for-others"
    ],
    "why": "safety and first aid is helping others",
-   "doubt": "could be feelings-and-body"
+   "doubt": ""
   },
   {
    "id": "SCI.BODY.03-group",
    "split": "tune",
-   "marked_by": "draft",
+   "marked_by": "nimish",
    "input": {
     "skill_code": "SCI.BODY.03",
     "name": "Healthy eating & diet",
@@ -3311,7 +3311,7 @@
   {
    "id": "MOT.FIT.03-group",
    "split": "held",
-   "marked_by": "draft",
+   "marked_by": "nimish",
    "input": {
     "skill_code": "MOT.FIT.03",
     "name": "Strength and endurance",
@@ -3455,7 +3455,7 @@
   {
    "id": "SEB.SELF.01-group",
    "split": "tune",
-   "marked_by": "draft",
+   "marked_by": "nimish",
    "input": {
     "skill_code": "SEB.SELF.01",
     "name": "Self-awareness & expressing preferences",
@@ -3594,12 +3594,12 @@
     "v2-self-and-others.speak-up"
    ],
    "why": "expressing likes and preferences is saying what I think, politely",
-   "doubt": "nearest; could be feelings-and-body"
+   "doubt": ""
   },
   {
    "id": "SCI.LIFE.05-group",
    "split": "held",
-   "marked_by": "draft",
+   "marked_by": "nimish",
    "input": {
     "skill_code": "SCI.LIFE.05",
     "name": "Caring for the environment: compost, reuse, recycle",
@@ -3742,7 +3742,7 @@
   {
    "id": "SST.GEO.01-group",
    "split": "tune",
-   "marked_by": "draft",
+   "marked_by": "nimish",
    "input": {
     "skill_code": "SST.GEO.01",
     "name": "Geography concept, earth surface & landforms",
@@ -3881,12 +3881,12 @@
     "v2-society-and-planet.choices-and-consequences"
    ],
    "why": "how people and their environment change each other is what happens because of a choice",
-   "doubt": "nearest; could be how-the-world-works"
+   "doubt": ""
   },
   {
    "id": "SEB.LEAD.01-group",
    "split": "held",
-   "marked_by": "draft",
+   "marked_by": "nimish",
    "input": {
     "skill_code": "SEB.LEAD.01",
     "name": "Responsibility & leadership in class roles",
@@ -4025,12 +4025,12 @@
     "v2-society-and-planet.fair-and-together"
    ],
    "why": "class jobs and responsibility is taking part in our shared rules",
-   "doubt": "could be set-and-reach-goals"
+   "doubt": ""
   },
   {
    "id": "PLS.ROUT.02-group",
    "split": "tune",
-   "marked_by": "draft",
+   "marked_by": "nimish",
    "input": {
     "skill_code": "PLS.ROUT.02",
     "name": "Greeting educators & friends",
@@ -4169,12 +4169,12 @@
     "v2-society-and-planet.fair-and-together"
    ],
    "why": "greeting educators and friends is living together",
-   "doubt": "could be care-for-others"
+   "doubt": ""
   },
   {
    "id": "ICT.SKL.01-group",
    "split": "held",
-   "marked_by": "draft",
+   "marked_by": "nimish",
    "input": {
     "skill_code": "ICT.SKL.01",
     "name": "Computer parts, hardware & digital awareness",
@@ -4313,12 +4313,12 @@
     "v2-technology-and-ai.check-before-trusting"
    ],
    "why": "digital versus hard copy and what a computer is, is knowing where a screen's answer comes from",
-   "doubt": "nearest; could be use-tools-well"
+   "doubt": ""
   },
   {
    "id": "ICT.SKL.04-group",
    "split": "tune",
-   "marked_by": "draft",
+   "marked_by": "nimish",
    "input": {
     "skill_code": "ICT.SKL.04",
     "name": "Networks, internet & online safety",
@@ -4462,7 +4462,7 @@
   {
    "id": "ICT.SKL.03-group",
    "split": "held",
-   "marked_by": "draft",
+   "marked_by": "nimish",
    "input": {
     "skill_code": "ICT.SKL.03",
     "name": "Data handling with tables & spreadsheets",
