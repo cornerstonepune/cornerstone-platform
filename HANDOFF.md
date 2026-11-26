@@ -2,7 +2,7 @@
 
 _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 
-**Updated:** 2026-11-26 (context full; no PR opened) · **By:** Plan (loop plan, Opus) · **Model:** claude-opus-5-5
+**Updated:** 2026-11-26 (context full; no PR opened; ADR 0116 goal line fixed for test_promises) · **By:** Plan (loop plan, Opus) · **Model:** claude-opus-5-5
 **Milestone:** M7 — G1–G4 profile groups (ADR 0115, 0116) · **Branch:** plan/profile-tickets (pushed, no PR)
 
 ## State

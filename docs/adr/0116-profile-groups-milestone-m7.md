@@ -1,7 +1,7 @@
 # 0116 — M7: the profile-group work as seven tickets, and the contracts between them
 
 Date: 2026-11-26. Status: accepted (planner, unattended; builds on ADR 0115, which Nimish accepted).
-Goal: M7 in PROJECT.md — proved by each ticket's tests and, on live, `engine curriculum profile-check`.
+Goal: none — the M7 tickets are not written yet; proved when each ticket's tests pass and, on live, `engine curriculum profile-check` shows the word kind above 0.
 
 ## Context
 ADR 0115 decided what G1–G4 profile groups are (a skill's approved group, derived through the view
