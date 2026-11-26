@@ -69,3 +69,22 @@ a. Who approves proposed mappings: Nimish, the head of academics, or educators p
 b. May an objective count toward more than one group? Today each counts toward at most one, but most groups carry two words.
 c. Is SCI/GP -> "Changing my mind" deliberate (ADR?) or a mistake?
 d. Where do K1 objectives come from?
+
+## Nimish, 26 Nov (later still): how he wants it solved — "learn from the good, fix the gaps", with Opus
+Dictated: use Opus (`claude-opus-5-5`) through the Claude API. For each mapping stage, have the model study the mappings that
+look right, work out the pattern (why an objective belongs to a group, how it is worded), write that pattern up as a prompt,
+then use that prompt to correct the gaps. Not yet an ADR: he was asked "go with this approach?" and had not answered when
+the session hit its context budget.
+
+Coordinator's proposed fit with the repo rules (told to Nimish):
+1. Bad news: there is nothing to learn from for kind (0 objectives) or 15 other groups, and the SCI/GP mappings may be
+   wrong, so "looks right" can't be read off the data. A human marks a small gold set first (~5 per group, kind included),
+   plus each group's own "I can" lines in supabase/seed/profile.json as the definition.
+2. Prompt-writer step (Opus, run once, offline): reads gold examples + group definitions, drafts the mapping guide prompt.
+   The draft is saved as a seeded, versioned prompt row (purpose e.g. `profile-map`), never a string in code.
+3. `engine eval profile-map` scores the draft on held-out gold examples it never saw; it goes active only above the bar.
+4. The active prompt runs over the gaps (527 unmapped; SCI/GP as "second opinion") and PROPOSES group + reason. Never writes.
+5. Review queue; approval writes a new objective_statement row. One check command shows counts per class falling.
+Classes 4 (K1 empty) and 6 (topic names) are data, not model work. Class 5 (no skill) could be a second purpose later.
+A survey subagent (counts_toward writer, decideProposal fit, prompt/eval tables, ADRs) was started; its result did not
+reach a file — redo it in the next session (graphify first).
