@@ -182,6 +182,18 @@ _Every milestone is a vertical slice Nimish can click through. Goals are yes/no;
   - [ ] G6.6 Every F.N 10 lesson has an activity with four level words: the 15 signed-off rows, ACT-K2-M0018 + ACT-K2-0449 shared with K1, six new K1 activities (ADR 0111) — `tests/test_fn10_words.py`, then the 15 rows' words read back on live after release
 - **Depends on:** #939 (`enrol class --campus`: K1 is at Gurukul and Neev, ADR 0109, 0110); Nimish: the Children List CSV. No new wireframe (S3 covers marking).
 
+### M7 — G1–G4 profile groups through approved skill groups (ADR 0115, 0116) · In progress
+- **Delivers:** each G1–G4 objective counts toward the profile groups its skills reach, once Nimish approves each skill's group; `engine curriculum profile-check` shows how far that has got.
+- **Goals:**
+  - [ ] G7.1 `engine curriculum profile-check` counts objectives by class and every word, `kind` included — `tests/test_profile_check.py`
+  - [ ] G7.2 Only a profile approver decides a skill_group proposal; approve writes `skill_profile_group` — `tests/test_profile_decide.py`
+  - [ ] G7.3 `engine curriculum profile-propose` writes needs_person proposals with the active prompt only, never a group — `tests/test_profile_propose.py`
+  - [ ] G7.4 An active skill needs a recorded passing score for its version and non-draft gold — `tests/test_skill_record.py`
+  - [ ] G7.5 A child's picture counts evidence in full toward each of an objective's groups — `tests/test_chain_picture_groups.py`
+  - [ ] G7.6 Library card decides skill_group proposals; S35 lists several groups — after the redrawn S27/S35 are approved
+  - [ ] G7.7 On live: profile-check shows the word kind above 0 — after Nimish marks the gold and approves groups
+- **Depends on:** PR #953 (merged). Nimish: mark the draft gold; `engine staff grant <email> profile_approver`.
+
 ## 6. Open questions (Plan resolves before the milestone they block)
 - Order: M1–M3 (proof) before M4 (money, dated 1 Dec Sports Day / 31 Dec)? The Sports Day date is 8 days away and slices G–L aren't started — blocks M4.
 - Is n8n hosted, and where? (SPEC §14 item 5) — blocks any notify step.
