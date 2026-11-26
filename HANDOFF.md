@@ -10,7 +10,7 @@ _Overwritten at the end of every session. Keep under 30 lines. Facts only._
   proposal kind `skill_group`, role `profile_approver` (may_grant founder; added to `internal.people_vocabulary` so new
   schools get it). `people.decides.skill_groups = ["profile_approver"]`. Proved on a fresh DB (`bin/testdb fresh` into
   database `pg_profile` on 54329): applies, re-runs clean, view returns 30 rows all origin `default` on the seed.
-  `rules.json` and `db/schema.sql` regenerated. Engine core tests green on that DB.
+  `rules.json` and `db/schema.sql` regenerated. Core tests: see Next step 1 (final rerun unread).
 - Skill folder `supabase/seed/skills/skill-group/` (CHOOSE, v1, active:false), 5 bars `skill_bar.skill-group.*`.
   Gold: 32 DRAFT cases covering all 24 groups (every kind group), each `marked_by: "draft"` with a `doubt` line.
 - GLOSSARY: profile group, skill group, on default, profile approver.
