@@ -2,34 +2,23 @@
 
 _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 
-**Updated:** 2026-11-26 (seed #955, branch plan/t955) · **By:** Plan (Opus) · **Model:** claude-opus-5-5
-**Lanes:** M6 K1 pilot (#952 merged; G6.8 = #955, seed plan/t955) · profile mapping G1–G4 (ADR 0115, #953 merged)
+**Updated:** 2026-11-26 · **By:** Opus, direct (Nimish: "get out of the loop, just get this done")
+**Branch:** plan/profile-map-data
 
 ## State
-- G6.8: #955 opened (size:small, ADR 0117, setting `timetable.offers`, migration `20270221090000_k1_offer_only.sql`).
-  On local DB `g68`: seed red 9 failed / 33 passed; with the ~4-line fix 46 passed (reverted). Not built yet.
-- K1: #952 is on main (1fbfa459c); live state unchecked here. `tests/test_k1_pilot_offers.py` on local DB `k1offers`: 9 passed;
-  migration blanked: 8 failed, 1 passed. Nimish decided all of ADR 0113 (skill links, K1 = K2 observed rule, 1 adult).
-- Profile mapping: #953 on main (migration `20270219090000_skill_profile_group.sql`, skill `skill-group` v1 inactive,
-  32 DRAFT gold cases, GLOSSARY terms). No tickets yet.
+- G1–G4 learner-profile mapping is LIVE (written 26 Nov via the Supabase connector, then recorded as migration 20270222090000):
+  - 399 objective→skill links for 257 G1–G4 objectives that had none (source 'person'). 25 unsure ones left out (Nimish).
+  - skill_profile_group: all 244 skills → one profile group, approver = Nimish (staff 31f56cec…, role founder + profile_approver, no password).
+- Verified on live through view objective_profile_group: G1–G4 kind 130 (was 0), capable 1,474, unafraid 424; 1,666 of 1,667 objectives reach a word.
+- Drafts were model-made (subagents) and checked in code; 67 of 244 skill groups were marked unsure (mostly motor skills → My feelings and my body; values → Fairness and living together). No educator review yet.
+- Mapping Explorer page: https://claude.ai/artifact/8Y939ggPhXLUuBS7p8Fopz (republished from live after this change).
 
-## Next step (in order)
-1. CI green on #952 → loop:reviewer → `gh pr merge 952 --squash --delete-branch`; confirm `migrate live` + `deploy engine`.
-2. K1 attach (ADR 0114 on plan/handoff): `attach.py` in `~/Library/Application Support/Claude/side-session-notes/local_07a3d48e-bf4c-43ef-98fc-95c421cdfa35/`,
-   piped to `sudo docker exec -i deploy-engine-1 python -` on ubuntu@3.111.248.87; dry run expects 3 of 8 ok, then `--apply`.
-3. Check a rubric on the live site; tick G6.x only as live proves; merge #949 (BLOCKED, cause unchecked).
-4. G6.8 = #955 (size:small, ADR 0117, seed `plan/t955`, setting `timetable.offers`): `loop run-ticket 955`; first lesson 30 Nov.
-5. Profile mapping: tickets a–g per ADR 0115 §Consequence, seed branches `plan/t<N>`.
-
-## Ask Nimish
-- Is the 1 Dec French rhyme (ACT-K1-0665) on a `rhymes` lesson? ADR 0117 assumes so.
-- Mark the draft gold in `supabase/seed/skills/skill-group/gold.json` (fix `choice`, set `marked_by`), esp. the 12 with a `doubt`.
-- After deploy: `engine staff grant <his email> profile_approver --by …` (nobody holds the role yet).
+## Next step
+1. Merge this PR (CI green); migrate live will no-op (rows already there).
+2. The 25 objectives still without a skill: the 244-skill list has no fitting skill (Hindi sandhi, keyboard notes, dyeing, …). Needs new skills or Nimish's call.
+3. K2 and K1 are out of this scope (Nimish).
+4. PRs #954 / #956 (loop plan for the same work) are superseded by this; close them.
 
 ## Don't repeat
-- An ADR Goal line naming a PROJECT.md goal must read `Goal: none — proved by …`, or test_promises takes the rest as a path.
-- Use a separate test database per session (`create database <name>`, then `bin/testdb fresh`); not `postgres`.
-- Main checkout may be on another session's branch with uncommitted work: use a worktree, never switch it.
-
-## Blocked / unverified
-- `nightly` on main failed 25 and 26 Nov. Never print child names; passwords/keys typed by Nimish only.
+- Nimish asked for this work to run directly, without loop tickets/planner/builder sessions. Six sessions stalled on the 150k budget doing process work.
+- skill_profile_group.staff_id is NOT NULL: a skill group needs a named approver in staff.
