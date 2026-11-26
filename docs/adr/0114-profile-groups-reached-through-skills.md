@@ -1,4 +1,4 @@
-# 0113 — G1–G4 objectives reach capable, kind and unafraid through their skills
+# 0114 — G1–G4 objectives reach capable, kind and unafraid through their skills
 
 Date: 2026-11-26. Status: accepted (Nimish, 26 Nov 2026: "Yes, through skills").
 Goal: none yet — proved when the mapping tickets' check command shows every G1–G4 objective with a skill reaching a
@@ -21,13 +21,18 @@ groups for the `capability-link` step. Nimish's understanding of the agreed desi
   writes a mapping. Nothing is auto-applied: a wrong mapping changes the profile reports parents read.
 - Every number (counts per issue class) is computed by code, never by the model.
 
-## Open, for the planner (decide in `loop plan`, ask Nimish only if it is a product call)
-- Where the skill → group link lives today (`chain_draft.capability` uses one) and how full it is.
-- An objective with skills in two groups: derive all its groups, or one primary? The unique index allows one today;
-  changing that is a migration.
-- G1–G4 objectives with no skill (447 across all grades) reach nothing until given a skill: a separate proposal job.
-- Who approves (today only a coordinator edits the curriculum) and whether the library page's proposals queue
-  (`curriculum_proposal` + `decideProposal`) carries the new kind.
+## Decided 26 Nov (Nimish: "go with your picks"; renumbered from 0113, which PR #952 took)
+Facts (live, read-only; docs/loop/notes/mapping-explorer.md "Verified"): all 244 registry skills reach one of the 8
+capabilities through the spine (`docs/spine/spine.json`), none reaches a group. 37 skills' capability fixes their
+words (capable/kind/unafraid); 207 need a group picked. 282 G1–G4 objectives have no skill (272 academic, 10 routine/character).
+- An objective counts toward EVERY group its skills reach (two labels are fine). This drops the one-group unique index
+  `objective_statement_one_capability`: a migration in the first ticket.
+- Nimish approves every proposal for now, in the library page's proposals queue (`curriculum_proposal` + `decideProposal`,
+  new kind). An approval writes `source='person'` rows; nothing is auto-applied.
+- Goal: no G1–G4 objective without a skill. Until an objective gets one it keeps its current machine group, counted by
+  the check command as "group not from a skill". Proposing skills for the 282 is a second purpose with its own eval.
+- The gold set (~5 skills per group, kind included) is drafted from each group's "I can" lines; Nimish corrects it before
+  `engine eval` scores any prompt against it.
 
 ## Consequence
 The SCI/GP → "Changing my mind" default stops deciding G1–G4 groups once skills do. Objectives without a skill get

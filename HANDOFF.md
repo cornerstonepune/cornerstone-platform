@@ -2,7 +2,7 @@
 
 _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 
-**Updated:** 2026-11-26 (session 3, end) · **By:** Plan (Opus) · **Model:** claude-opus-5-5
+**Updated:** 2026-11-26 (session 5, end) · **By:** Plan (Opus) · **Model:** claude-opus-5-5
 **Milestone:** M6 K1 pilot · **Branch:** plan/mapping-explorer
 
 ## State
@@ -12,7 +12,13 @@ _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 
 ## Next step
 0. Mapping explorer (Nimish's side ask, a read-only Artifact, not a ticket): page WRITTEN, not checked or published. Source + exact finish steps: docs/loop/notes/mapping-explorer.md ("State" section). New bad news for Nimish: no objective reaches "kind" (all 7 kind groups empty); 16 of 24 groups empty; all Science + Global perspectives objectives map to "Changing my mind", which looks wrong.
-0b. Profile mapping (Nimish, 26 Nov): scope is G1-G4 only. His model: objective -> registry skill (~244) -> group (capable/kind/unafraid); map each SKILL once (Opus proposes group + reason, a person approves), objectives inherit. Read the last 3 sections of docs/loop/notes/mapping-explorer.md (survey, his idea, what to verify). Nimish said yes (ADR 0113). Next: verify the skill->group table and how full it is, count skill-less G1-G4 objectives, then `loop plan`. No tests yet; nothing built.
+0b. Profile mapping (G1-G4): ADR 0114 ACCEPTED with all four answers (every group an objective's skills reach; Nimish
+    approves each proposal; skill-less objectives keep their machine group until skilled, goal = none skill-less; gold set
+    drafted from "I can" lines, Nimish corrects). Facts in docs/loop/notes/mapping-explorer.md "Verified": 244 skills all
+    reach a capability via the spine, none a group (37 decided, 207 need a pick); 282 G1-G4 objectives have no skill.
+    NEXT: `loop plan` from ADR 0114 -> tickets: (1) migration dropping objective_statement_one_capability + per-class
+    check command; (2) skill->group proposal prompt + gold + `engine eval`; (3) proposals-queue kind writing source='person'
+    rows; (4) skill proposals for the 282. Don't touch PR #952 / plan/k1-pilot-offers (it owns ADR 0113).
 1. `loop run-ticket 946` → CI → reviewer → merge.
 2. Then the Gurukul K1 enrol: dry run first, Nimish runs --apply (list is outside git under ~/cornerstone/private/; never copy names).
 3. Queued small ticket: people.py "engine enrol k2" dry-run label and stale "enrol k2" docstrings (people.py:1, signer.py:3, roster.py:130, tests/rows.py). #946 deliberately leaves the label alone.

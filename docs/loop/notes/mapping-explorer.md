@@ -125,7 +125,7 @@ Coordinator's answer (to verify next session, nothing checked against live data)
 Proposed: review ~244 skill rows (Opus proposes group + reason, a person approves) instead of 2,593 objectives. Needs his yes + ADR 0113.
 
 ## Verified, 26 Nov (session 5, live data read-only + `chain_draft._capability_of_skill`)
-- G1–G4: 1,666 live objectives. 1,569 academic all count toward a group (all `source='machine'`, 0 by a person);
+- G1–G4: 1,667 live objectives. 1,569 academic all count toward a group (all `source='machine'`, 0 by a person);
   97 routine + 1 character count toward none. The 411 character objectives are K2, outside this scope.
 - Those 1,569 rows use 7 of 24 groups: language-and-reading 556, number-and-measure 402, change-my-mind 259,
   imagine-and-express 123, design-and-build 117, use-tools-well 88, how-the-world-works 24. Kind: 0.
@@ -135,5 +135,5 @@ Proposed: review ~244 skill rows (Opus proposes group + reason, a person approve
   making 10, technology 8, self & others 7, society & planet 6, learning & agency 2.
 - Through skills, 816 of the 1,385 skill-linked objectives reach one capability and 569 reach two or more, so
   "one group per objective" (unique index) vs "every group its skills reach" is a real choice.
-- 281 G1–G4 objectives have no skill (272 academic that hold a machine group today, 9 routine).
+- 282 G1–G4 objectives have no skill (272 academic that hold a machine group today, 10 routine/character). By subject: NUM 52, HIN 44, COM 30, GP 29, PE 24, ENG 23, HSC 22, MAR 17, ART 16, SCI 15, MUS 1. All 244 skills reach a capability; 37 fix their words, 207 need a group picked.
 - ADR number: 0113 is taken by PR #952 (K1 pilot offers); this decision moves to 0114.
