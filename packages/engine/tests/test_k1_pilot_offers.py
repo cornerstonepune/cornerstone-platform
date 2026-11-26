@@ -11,7 +11,7 @@ from pathlib import Path
 
 import pytest
 
-from engine.core import db
+from engine.core import db, subject_map
 from engine.w1_bank import apply_seed
 from engine.w2_print import tt_heads
 from tests.rows import tenant
@@ -99,6 +99,16 @@ def test_the_migration_lands_the_seed_files_settings_and_keeps_every_earlier_gro
     assert _value(conn, "observed.weights") == SEED["observed.weights"]
     conn.execute(MIGRATION.read_text())  # a second run changes nothing
     assert {h["code"]: h for h in _value(conn, "timetable.heads")} == got
+
+
+def test_no_head_comes_to_teach_a_new_subject(conn):
+    """A head's groups also say which subject it teaches (offer sequence, objectives, who may edit): ADR 0113 changes none."""
+    spell = subject_map.spellings(conn, tenant(conn))
+    after = _value(conn, "timetable.heads")
+    for subject in sorted(set(spell.values())):
+        assert tt_heads.heads_in(after, spell, [subject]) == tt_heads.heads_in(_before(), spell, [subject]), (
+            subject
+        )
 
 
 @pytest.mark.parametrize(("head", "text", "activity"), CHOICES)
