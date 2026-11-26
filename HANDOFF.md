@@ -2,13 +2,14 @@
 
 _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 
-**Updated:** 2026-11-26 · **By:** planning helper (finish K1 release, 5th) · **Model:** claude-sonnet-5-5
+**Updated:** 2026-11-26 (CI fix) · **By:** Plan (Opus) · **Model:** claude-opus-5-5
 **Milestone:** M6 K1 pilot (presentation TODAY) · **Branch:** plan/k1-pilot-offers (PR #952)
 
 ## State
 - PR #952 NOT merged; nothing changed on live. Today's rhyme (F001) still has no activity.
 - `tests/test_k1_pilot_offers.py` on local DB `k1offers`: **9 passed**; with the migration blanked: 8 failed, 1 passed. Ruff clean.
 - PROJECT.md G6.7/G6.8, ADR 0113 and the PR text now match the code. Nothing ticked. CI verdict: `loop ci 952`.
+- CI `engine-checks` was red (test_promises: ADR 0113's Goal line lost its `none —`); fixed in 5d067bde5, test_promises 5 passed locally.
 - Branch is checked out in the worktree `.../7fe176f5-4495-4264-b693-db9898f54842/scratchpad/k1`: work there, or `git worktree remove` it first.
 - Main checkout is on `plan/profile-groups` with someone's uncommitted work: do not switch it. Its new migration has the SAME number 20270218090000: whichever merges second must be renumbered.
 
@@ -20,6 +21,9 @@ _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 
 ## Ask Nimish
 - K1 "secure": 1 adult or 2 (stays 2 until they say)? Check the F001-F006 skill links and K1 weights = K2.
+
+## Don't repeat
+- An ADR Goal line naming a PROJECT.md goal must read `Goal: none — proved by …`, or test_promises takes the rest as a path.
 
 ## Blocked / unverified
 - `nightly` on main failed 25 and 26 Nov. Never print child names; passwords/keys typed by Nimish only.
