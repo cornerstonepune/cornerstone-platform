@@ -2,22 +2,31 @@
 
 _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 
-**Updated:** 2026-11-25 · **By:** Plan (loop plan, Opus) · **Model:** claude-opus-5-5
-**Milestone:** M6 K1 pilot · **Branch:** plan/blank-birthday
+**Updated:** 2026-11-26 (session 3) · **By:** Plan (Opus) · **Model:** claude-opus-5-5
+**Milestone:** M6 K1 pilot · **Branch:** plan/k1-pilot-offers (pushed, PR NOT opened yet)
 
 ## State
-- Nimish, 25 Nov: a blank birthday cell on the class list enrols the child with birthday NULL (ADR 0112). Why: the Gurukul K1 list (21 children) has no birthdays.
-- **#946** (size:small): blank birthday → NULL, written-but-bad still refuses, `_same_person` never mismatches on a blank, grade-neutral age words. Seed `plan/t946` pushed with failing visible tests (tests/test_enrol_blank_birthday.py + one wording line in test_people.py) and hidden tests (tests/holdout/test_enrol_blank_birthday_hidden.py). No seed/schema change: the shared test DB works.
-- #942 and #939 (#945) are merged on main.
+- ADR 0113 written: K1's signed-off activity choices offered, F001–F006 skill links, K1 observed weights + rule = K2's.
+- Migration `supabase/migrations/20270218090000_k1_pilot_offers.sql` + `supabase/seed/config.json` (timetable.heads,
+  observed.weights). Both settings are seed_once, so `engine load --settings` never updates live: the migration does.
+- Test `packages/engine/tests/test_k1_pilot_offers.py` written, NOT RUN yet (not in core.txt).
+- Fresh DB built at `postgresql://postgres:postgres@127.0.0.1:54329/k1offers` (migration applied cleanly, 186 migrations;
+  `engine load` was still running at session end — check it finished).
+- Found on live (read-only, 26 Nov): K1 `grade.secure_level` was NULL, so no K1 observed picture even with weights;
+  the migration sets K1's rule to K2's (min_adults 1). Live heads == seed heads before change.
 
 ## Next step
-1. `loop run-ticket 946` → CI → reviewer → merge.
-2. Then the Gurukul K1 enrol: dry run first, Nimish runs --apply (list is outside git under ~/cornerstone/private/; never copy names).
-3. Queued small ticket: people.py "engine enrol k2" dry-run label and stale "enrol k2" docstrings (people.py:1, signer.py:3, roster.py:130, tests/rows.py). #946 deliberately leaves the label alone.
-4. ADR 0108 ticket 4 (form mark → activity_observation + evidence_event, G6.4) via loop plan.
-- Open question for Nimish: holiday cells (e.g. "Block Room") make no plan lines today; keep or drop them?
+1. `DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:54329/k1offers` run the test; prove red by emptying the
+   migration and restoring main's config.json, then green. Fix the test only if it is wrong (e.g. `_lesson` import,
+   `evidence_written` count).
+2. Add `tests/test_k1_pilot_offers.py::*` to tests/core.txt? (needs ENGINE_CORE_MAX bump) — or leave nightly; decide.
+3. PROJECT.md: G6.4 point at this test; add G6.7 "the 8 signed-off K1 choices are offered". Open PR (do not merge).
+
+## Blocked / for Nimish
+- K2 rhymes/clay/music lessons now also offered K2 Music/English/Maths (heads are not per grade). Ticket after pilot.
+- ACT-K2-M0018 (shared with K1 via also_bands) is still refused on K1 clay: ensure_offered ignores also_bands. Code ticket.
+- Check the six skill choices and the K1 = K2 observed assumption (ADR 0113 tables).
 
 ## Don't repeat
-- A ticket that changes a seed needs a test DB built from its seed branch (bin/testdb fresh …/t<N>) and TEST_DATABASE_URL passed to loop build/finish.
-- Builders run `dontAsk`: one simple command per call, single-line `git commit -m`, no Blocked section left in their handoff.
-- Seed cut from another seed branch conflicts once that ticket squash-merges: cherry-pick onto main. After any merge to main: `gh pr update-branch` + `loop ci` before `gh pr merge`.
+- Editing config.json alone for a seed_once key does nothing on live.
+- `grep -r` over the repo root times out; use the Grep tool scoped to a folder.
