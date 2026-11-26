@@ -2,7 +2,7 @@
 
 _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 
-**Updated:** 2026-11-26 (session 5, end) · **By:** Plan (Opus) · **Model:** claude-opus-5-5
+**Updated:** 2026-11-26 (explorer published) (session 5, end) · **By:** Plan (Opus) · **Model:** claude-opus-5-5
 **Milestone:** M6 K1 pilot · **Branch:** plan/mapping-explorer
 
 ## State
@@ -11,7 +11,7 @@ _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 - #942 and #939 (#945) are merged on main.
 
 ## Next step
-0. Mapping explorer (Nimish's side ask, a read-only Artifact, not a ticket): page WRITTEN, not checked or published. Source + exact finish steps: docs/loop/notes/mapping-explorer.md ("State" section). New bad news for Nimish: no objective reaches "kind" (all 7 kind groups empty); 16 of 24 groups empty; all Science + Global perspectives objectives map to "Changing my mind", which looks wrong.
+0. Mapping explorer PUBLISHED: https://claude.ai/artifact/8Y939ggPhXLUuBS7p8Fopz (live numbers 26 Nov, private). Republish to the same URL as the profile-group fix lands; steps in docs/loop/notes/mapping-explorer.md.
 0b. Profile mapping (G1-G4): ADR 0114 ACCEPTED with all four answers (every group an objective's skills reach; Nimish
     approves each proposal; skill-less objectives keep their machine group until skilled, goal = none skill-less; gold set
     drafted from "I can" lines, Nimish corrects). Facts in docs/loop/notes/mapping-explorer.md "Verified": 244 skills all

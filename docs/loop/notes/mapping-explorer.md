@@ -37,7 +37,10 @@ Result on 26 Nov: 2,593 live objectives, 2,753 objective→skill links, 244 skil
 - All Science (177) and Global perspectives (110) objectives count toward "Changing my mind" (reasoning); "How the world works" gets 34. Looks mis-mapped (e.g. "names a habitat"). Flag to Nimish, don't fix silently.
 - 447 objectives have no skill; 890 have no activity. Topic name is empty for every objective (unit used instead).
 
-## State: page written, NOT checked, NOT published
+## State: PUBLISHED 26 Nov: https://claude.ai/artifact/8Y939ggPhXLUuBS7p8Fopz (private to Nimish; share from its Share menu)
+Rendered and checked in headless Chrome (findings, word x grade grid, mind map, table of 2,593). To refresh after the fix lands: rebuild data.json as below and republish to that URL (Artifact tool `url` param, after an Artifact `read`).
+
+### Earlier state: page written, not checked, not published
 Source: `mapping-explorer/mapping-explorer.html` (d3 7.8.5 mind map, word x grade grid, findings computed in JS, filterable/sortable table, row detail, Copy as CSV) + `build.py`.
 To finish: run the query above, save the `d` object as `mapping-explorer/raw.json` (keep it out of git), `python3 build.py` -> `data.json` + `preview.html` (data inlined). Open preview.html once in the browser pane (one look: mind map labels/links, grid, table filters), fix what it shows, then publish `mapping-explorer.html` with the Artifact tool, `files: {"data.json": ...}`, icon "map". Put the URL here and in HANDOFF.
 

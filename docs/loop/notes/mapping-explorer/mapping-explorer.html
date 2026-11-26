@@ -60,6 +60,7 @@ h2 { font-family: var(--font-serif); font-weight: 600; font-size: var(--t-h2); m
 .finding .big { font-family: var(--font-num); font-size: 28px; font-weight: 600; line-height: 1.1; color: var(--ink); }
 .finding .big small { font-size: var(--t-body-s); font-weight: 500; color: var(--ink-3); margin-left: var(--s-1); }
 .finding p { margin: 0; font-size: var(--t-body-s); color: var(--ink-2); }
+.fix { margin: var(--s-4) 0 0; padding: var(--s-3) var(--s-4); border-radius: var(--r-2); background: var(--signal-pos-soft); color: var(--ink-2); font-size: var(--t-body-s); max-width: 90ch; }
 .linkbtn { all: unset; cursor: pointer; color: var(--accent); font-size: var(--t-caption); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; justify-self: start; }
 .linkbtn:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible, tr:focus-visible, .node:focus-visible { outline: 2px solid var(--accent-2); outline-offset: 2px; }
 
@@ -151,6 +152,7 @@ footer { color: var(--ink-3); font-size: var(--t-caption); max-width: 80ch; }
   <section class="pane" aria-labelledby="h-find">
     <div class="pane-head"><h2 id="h-find">What to notice first</h2><p>Worst first. Each card opens the matching objectives in the table.</p></div>
     <div class="findings" id="findings"></div>
+    <p class="fix"><b>Fix decided 26 Nov, not built yet.</b> For Grades 1–4, each objective will take its profile groups from its skills: every skill is mapped to a group once, so behaviour skills can finally reach kind. The model only suggests a group with a reason. Nimish approves each one before it counts. K2 and K1 are outside this fix. This page will be republished at the same link as the fix lands.</p>
   </section>
 
   <section class="pane" aria-labelledby="h-grid">
@@ -246,7 +248,7 @@ const F = [
     text: `They count toward no profile group, so they reach none of capable, kind or unafraid. All are character (${fmt(ng('character'))}) or routine (${fmt(ng('routine'))}) objectives — the very ones that should feed kind and unafraid.`,
     act: 'Show these objectives', go: () => setFilters({ nogroup: true }) },
   { sev: 'warn', tag: 'Looks mis-mapped — check', big: `${fmt(sciToMind)}<small>of ${fmt(sciGp.length)} Science + Global perspectives</small>`,
-    text: `Every Science and Global perspectives objective counts toward “Changing my mind” (reasoning), e.g. “names a habitat where plants live”. “How the world works” gets only ${hww}. Naming habitats reads like how-the-world-works.`,
+    text: `${sciToMind === sciGp.length ? 'Every' : `All but ${sciGp.length - sciToMind}`} Science and Global perspectives objective${sciToMind === sciGp.length ? '' : 's'} count${sciToMind === sciGp.length ? 's' : ''} toward “Changing my mind” (reasoning), e.g. “names a habitat where plants live”. “How the world works” gets only ${hww}. A setting assigns them by default; no person chose it. Naming habitats reads like how-the-world-works.`,
     act: 'Show Changing my mind', go: () => setFilters({ grp: 'v2-reasoning.change-my-mind' }) },
   { sev: 'warn', tag: 'K1 has nothing', big: `0<small>K1 objectives</small>`,
     text: `Objectives exist only for ${withLos.join(', ')}. K1, the pilot grade, has no objectives or activities in the database. K2 alone holds ${fmt(perGrade('K2'))} (${pct(perGrade('K2'), N)}).`,
