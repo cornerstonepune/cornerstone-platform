@@ -56,6 +56,15 @@ def subjects_of(conn: db.Conn, lesson: dict) -> list[str]:
     return sorted({spell[g] for g in groups_of(listed, head) if g in spell})
 
 
+def offered_only(conn: db.Conn, lesson: dict) -> list[str]:
+    """The groups a lesson is offered without its head teaching them (ADR 0117): the setting `timetable.offers`, by the
+    lesson's grade and then its subject code; none when either is not there. Never read by `subjects_of` or `heads_in`."""
+    if not lesson["subject_code"]:
+        return []
+    offers = settings.config(conn, "timetable.offers", {}) or {}
+    return list((offers.get(lesson["grade_code"]) or {}).get(lesson["subject_code"]) or [])
+
+
 def _linked(conn: db.Conn, lesson: dict, activity_code: str, lo_code: str | None) -> bool:
     """Whether the activity is one of the grade's linked to the lesson's objective (CP-74: offered whatever its group)."""
     if not lo_code:
@@ -77,7 +86,7 @@ def ensure_offered(conn: db.Conn, lesson: dict, activity_code: str, lo_code: str
         return
     listed = heads(conn)
     head = head_of(listed, lesson["subject_code"], lesson["kind"], lesson["text"])
-    groups = groups_of(listed, head)
+    groups = groups_of(listed, head) + offered_only(conn, lesson)
     if not groups:
         raise Refused("A lesson of this kind takes no activity.")
     found = conn.execute(
@@ -107,7 +116,7 @@ def offers(conn: db.Conn, session_id: str, *, who: Any) -> dict:
     )
     listed = heads(conn)
     head = head_of(listed, lesson["subject_code"], lesson["kind"], lesson["text"])
-    groups = groups_of(listed, head)
+    groups = groups_of(listed, head) + offered_only(conn, lesson)
     rows = (
         conn.execute(
             "select a.code, a.name, a.strand,"
