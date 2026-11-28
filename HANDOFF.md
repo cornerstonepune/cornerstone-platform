@@ -3,12 +3,12 @@
 _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 
 **Updated:** 2026-11-28 · **By:** staff-table side session (loop:run) · **Model:** claude-sonnet-5-5
-**Lanes:** staff table (waiting on Nimish) · M6 K1 pilot (G6.8 live) · profile mapping G1–G4 · **Branch:** plan/staff-table (no PR yet)
+**Lanes:** staff table (ready to plan) · M6 K1 pilot (G6.8 live) · profile mapping G1–G4 · **Branch:** plan/staff-table (no PR yet)
 
 ## Staff table /setup/staff — asked 28 Nov, nothing built
 - Findings, open questions and next steps: `docs/loop/handoff/staff-table.md`. Read it first.
-- Decided: owner = all co-founders (ADR 0118). Blocked: Nimish to confirm extra columns. Ask him before merge or release.
-- Tests: none run (docs only). Next: record the columns answer, check the new site address, then `loop plan` (wireframe, tickets).
+- Decided (ADR 0118): owner = all co-founders; columns Email, Password status, Last sign-in, Phone. Ask him before merge or release.
+- Tests: none run (docs only). Next: check the new site address, then `loop plan` (wireframe, tickets).
 - Don't repeat: the loop's approve-command text inside a shell command trips the hook, even in a note.
 
 ## K1 pilot — state (verified 13:06 IST)

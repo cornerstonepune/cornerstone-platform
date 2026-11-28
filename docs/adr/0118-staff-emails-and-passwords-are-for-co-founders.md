@@ -10,6 +10,8 @@ has no owner. Offered: Nimish alone, or all co-founders. He chose all co-founder
 ## Decision
 - "Owner" means a signed-in person who holds the co-founder role (`founder`) today. The server checks it for the columns,
   the search by email and the password action. Hiding them on screen is not the check.
+- Co-founder-only columns (Nimish, 28 Nov): Email, Password status (set / not set / temporary), Last sign-in (needs a new
+  stored value, so it starts from release), Phone (shown only if filled). Inactive people, date added and campus: not shown.
 - The rest of the staff page keeps its present readers (access group `everything`).
 - The temporary password is shown once, only its scrypt hash is stored, and it must be changed at the next sign-in.
 

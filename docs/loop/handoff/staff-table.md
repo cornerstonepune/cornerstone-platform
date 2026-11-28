@@ -9,7 +9,7 @@ now 307-redirects there since 28 Nov; check no job, webhook or callback still ca
 Done = columns show for him, another staff account cannot see or use them (tested), checks pass, ask before merge/release.
 
 ## Decided 28 Nov
-Owner = all co-founders: `docs/adr/0118-staff-emails-and-passwords-are-for-co-founders.md`. Columns: not yet confirmed.
+Owner = all co-founders: `docs/adr/0118-staff-emails-and-passwords-are-for-co-founders.md`. Columns confirmed: Email, Password status, Last sign-in, Phone (if filled). No open product question.
 
 ## Found in code (read, not run)
 - Sign-in is the site's own, not Supabase Auth: `apps/web/lib/auth.ts` (scrypt hash in `pii.staff.password_hash`,
@@ -30,9 +30,6 @@ Owner = all co-founders: `docs/adr/0118-staff-emails-and-passwords-are-for-co-fo
 ## Not checked
 `NEXT_PUBLIC_SITE_URL` on Vercel (emailed links are built from it), `docs/deploy.md`, engine / n8n / repo references to the
 old address, runtime logs for non-browser callers, live data.
-
-## Suggested (not decided)
-Columns: Email, Phone (if filled), Password (set / not yet / temporary), Last sign-in. Inactive people: leave out for now.
 
 ## Unrelated, noticed
 `sendFirstLink` (`lib/password-actions.ts`) only requires a signed-in user: any staff member could trigger that email to any address.
