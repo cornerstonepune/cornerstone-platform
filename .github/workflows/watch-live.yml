@@ -23,7 +23,7 @@ jobs:
         env:
           KEY: "${{ secrets.LIGHTSAIL_SSH_KEY }}"
           HOST: "${{ secrets.LIGHTSAIL_HOST }}"
-          WEB: https://cornerstone-assessment.vercel.app
+          WEB: https://console.cornerstoneschool.in
         # Asked twice a minute apart before anything is said: a deploy restarts the engine for a few seconds.
         run: |
           engine="${HOST//./-}.sslip.io"
