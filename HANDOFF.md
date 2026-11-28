@@ -7,7 +7,7 @@ _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 
 ## Staff table /setup/staff — asked 28 Nov, nothing built
 - Findings and facts: `docs/loop/handoff/staff-table.md`. Read it first. Decided (ADR 0118): owner = all co-founders; columns Email, Password status, Last sign-in, Phone. Ask him before merge or release.
-- Address check done. PR #961 (`plan/new-address`: live watch + deploy.md): CI green. Next: `reviewer` on it, then ask Nimish before merge. Until merged the watch will likely report "sign-in page answered 307".
+- Address check done. PR #961 (`plan/new-address`: live watch + deploy.md): CI green. Next: `reviewer` on it, then ask Nimish before merge. Until merged the watch will likely report "sign-in page answered 307". The app is not watching #961 (attach was denied): run `loop ci 961`.
 - Waiting on Nimish: set production `NEXT_PUBLIC_SITE_URL` to https://console.cornerstoneschool.in and redeploy? (still the old address)
 - Next: `loop plan` the revised S50-staff wireframe (he approves), then `loop plan` tickets and seeds. Tests this session: only #961 CI.
 - Don't repeat: the loop's approve-command text inside a shell command trips the hook, even in a note.
