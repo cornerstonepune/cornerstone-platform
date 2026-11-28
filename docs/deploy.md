@@ -74,12 +74,16 @@ A merge into `main` publishes the website. To publish again without a merge — 
 setting changes, since Vercel applies settings only to new deployments:
 
 ```bash
-npx vercel redeploy https://cornerstone-assessment.vercel.app --target production
+npx vercel redeploy https://console.cornerstoneschool.in --target production --scope cornerstone-school
 ```
 
 The Python engine is not built or deployed; it runs where a coordinator runs it.
 
-Live: **https://cornerstone-assessment.vercel.app**
+Live: **https://console.cornerstoneschool.in**. The old address, https://cornerstone-assessment.vercel.app,
+answers 307 to it (since 2026-11-28).
+
+The Vercel project `cornerstone-assessment` now sits in the Vercel team `cornerstone-school`, so
+the CLI needs `--scope cornerstone-school` (or `vercel switch cornerstone-school` once).
 
 ## Never put a connection string together in the shell
 
