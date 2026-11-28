@@ -8,6 +8,8 @@ _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 ## Staff table /setup/staff — asked 28 Nov, nothing built
 - Findings, open questions and next steps: `docs/loop/handoff/staff-table.md`. Read it first.
 - Blocked: Nimish to say who "owner" is and which extra columns. Ask him before merge or release.
+- Tests: none run (docs only). Next: record both answers, check the new site address, then `loop plan` (wireframe, tickets).
+- Don't repeat: the loop's approve-command text inside a shell command trips the hook, even in a note.
 
 ## K1 pilot — state (verified 13:06 IST)
 - Live: K1-A 21 children, educator account, 99 slots (23 Nov-4 Dec). **17 of 45 teaching slots have a rubric** (rest: 14 Sports Day practice, 10 past 23-25 Nov, 4 with no activity attached). Voice key set. #952 and #957 released; Smelling Bottles rubric seen on the live site.
