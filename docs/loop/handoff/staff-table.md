@@ -27,9 +27,16 @@ Owner = all co-founders: `docs/adr/0118-staff-emails-and-passwords-are-for-co-fo
   and server actions too; `staff_list` must expose the flag. Wireframe S50-staff changes, so Nimish must approve it afresh.
 - Cookie is host-only: people signed in on the old address must sign in once on the new one.
 
+## Site address, checked 28 Nov ~10:35 UTC
+- Old `/login` answers 307 to the new `/login`; new answers 200.
+- Repo: the one job calling the old address was `watch-live.yml`; fixed with `docs/deploy.md` in PR #961 (CI green, not reviewed, not merged).
+  Other mentions are dated notes. No Google client id is set and no Supabase Auth calls were found in `apps/web`.
+- Hosting: Vercel project `cornerstone-assessment` is now in team `cornerstone-school` (use `--scope cornerstone-school`).
+- Production `NEXT_PUBLIC_SITE_URL` still holds the OLD address. Changing it (and redeploying) needs Nimish's yes. Old links redirect.
+- No `SMTP_*` name in the project's or team's Vercel settings: the site likely cannot send set-password emails (not tried).
+
 ## Not checked
-`NEXT_PUBLIC_SITE_URL` on Vercel (emailed links are built from it), `docs/deploy.md`, engine / n8n / repo references to the
-old address, runtime logs for non-browser callers, live data.
+Engine server `.env`, runtime logs for non-browser callers, live data, whether any set-password email has ever been sent.
 
 ## Unrelated, noticed
 `sendFirstLink` (`lib/password-actions.ts`) only requires a signed-in user: any staff member could trigger that email to any address.
