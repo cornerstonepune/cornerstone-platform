@@ -8,6 +8,9 @@ Also check sign-in / site address settings use https://console.cornerstoneschool
 now 307-redirects there since 28 Nov; check no job, webhook or callback still calls it).
 Done = columns show for him, another staff account cannot see or use them (tested), checks pass, ask before merge/release.
 
+## Decided 28 Nov
+Owner = all co-founders: `docs/adr/0118-staff-emails-and-passwords-are-for-co-founders.md`. Columns: not yet confirmed.
+
 ## Found in code (read, not run)
 - Sign-in is the site's own, not Supabase Auth: `apps/web/lib/auth.ts` (scrypt hash in `pii.staff.password_hash`,
   signed cookie `cs_staff`, 30 days; a newer `password_set_at` ends older sessions). Emailed link: `lib/password-links.ts`,

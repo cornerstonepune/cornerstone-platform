@@ -7,8 +7,8 @@ _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 
 ## Staff table /setup/staff — asked 28 Nov, nothing built
 - Findings, open questions and next steps: `docs/loop/handoff/staff-table.md`. Read it first.
-- Blocked: Nimish to say who "owner" is and which extra columns. Ask him before merge or release.
-- Tests: none run (docs only). Next: record both answers, check the new site address, then `loop plan` (wireframe, tickets).
+- Decided: owner = all co-founders (ADR 0118). Blocked: Nimish to confirm extra columns. Ask him before merge or release.
+- Tests: none run (docs only). Next: record the columns answer, check the new site address, then `loop plan` (wireframe, tickets).
 - Don't repeat: the loop's approve-command text inside a shell command trips the hook, even in a note.
 
 ## K1 pilot — state (verified 13:06 IST)
