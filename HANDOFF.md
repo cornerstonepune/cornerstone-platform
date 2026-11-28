@@ -2,8 +2,12 @@
 
 _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 
-**Updated:** 2026-11-26 (~13:25 IST) · **By:** Coordinator (loop:run, side session local_07a3d48e) · **Model:** claude-sonnet-5-5
-**Lanes:** M6 K1 pilot (G6.8 live) · profile mapping G1–G4 (live, #958 merged) · **Branch:** plan/handoff (PR #949)
+**Updated:** 2026-11-28 · **By:** staff-table side session (loop:run) · **Model:** claude-sonnet-5-5
+**Lanes:** staff table (waiting on Nimish) · M6 K1 pilot (G6.8 live) · profile mapping G1–G4 · **Branch:** plan/staff-table (no PR yet)
+
+## Staff table /setup/staff — asked 28 Nov, nothing built
+- Findings, open questions and next steps: `docs/loop/handoff/staff-table.md`. Read it first.
+- Blocked: Nimish to say who "owner" is and which extra columns. Ask him before merge or release.
 
 ## K1 pilot — state (verified 13:06 IST)
 - Live: K1-A 21 children, educator account, 99 slots (23 Nov-4 Dec). **17 of 45 teaching slots have a rubric** (rest: 14 Sports Day practice, 10 past 23-25 Nov, 4 with no activity attached). Voice key set. #952 and #957 released; Smelling Bottles rubric seen on the live site.
